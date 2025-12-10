@@ -22407,9 +22407,19 @@
     delete commonjsGlobal$1.__pretenderNodePolyfill;
   }
 
-  // Handle both CJS and ESM module formats
-  var Pretender = typeof PretenderModule === 'function' ? PretenderModule : Pretender$1 || PretenderModule;
+  var _PretenderModule$defa;
 
+  // Handle CJS/ESM interop - try all possible locations where Pretender constructor might be
+  var Pretender = typeof Pretender$1 === 'function' && Pretender$1 || typeof ((_PretenderModule$defa = Pretender$1) === null || _PretenderModule$defa === void 0 ? void 0 : _PretenderModule$defa.default) === 'function' && Pretender$1.default || typeof PretenderModule === 'function' && PretenderModule || Pretender$1 || PretenderModule;
+
+  /**
+    Mirage Interceptor Class
+
+      urlPrefix;
+  /**
+    Mirage Interceptor Class
+
+      urlPrefix;
   /**
     Mirage Interceptor Class
 
