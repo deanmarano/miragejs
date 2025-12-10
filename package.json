@@ -39,6 +39,7 @@
     "prettier:update": "prettier --write .",
     "dev": "rollup -c -w",
     "build": "rimraf dist && rollup -c",
+    "prepare": "npm run build",
     "prepublishOnly": "yarn run build",
     "test:run": "node --experimental-vm-modules $(yarn bin jest)",
     "test:types": "tsd -f 'tests/*.ts' -t index.d.ts types",
