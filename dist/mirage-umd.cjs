@@ -22171,7 +22171,7 @@
           return this.register(verb, path, handler, async);
       };
   }
-  var Pretender = /** @class */ (function () {
+  var Pretender$1 = /** @class */ (function () {
       function Pretender() {
           var _this = this;
           this.hosts = new Hosts();
@@ -22393,14 +22393,21 @@
       return Pretender;
   }());
 
-  Pretender.parseURL = parseURL;
-  Pretender.Hosts = Hosts;
-  Pretender.Registry = Registry;
+  Pretender$1.parseURL = parseURL;
+  Pretender$1.Hosts = Hosts;
+  Pretender$1.Registry = Registry;
+
+  var PretenderModule = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    default: Pretender$1
+  });
 
   if (typeof commonjsGlobal$1 !== "undefined" && commonjsGlobal$1.__pretenderNodePolyfill) {
     delete commonjsGlobal$1.self;
     delete commonjsGlobal$1.__pretenderNodePolyfill;
   }
+
+  var Pretender = Pretender$1 || PretenderModule;
 
   /**
     Mirage Interceptor Class

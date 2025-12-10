@@ -21,7 +21,7 @@ import assign from 'lodash/assign.js';
 import find from 'lodash/find.js';
 import isInteger from 'lodash/isInteger.js';
 import '@miragejs/pretender-node-polyfill/before.js';
-import Pretender from 'pretender';
+import * as PretenderModule from 'pretender';
 import '@miragejs/pretender-node-polyfill/after.js';
 
 // jscs:disable disallowVar, requireArrayDestructuring
@@ -5931,6 +5931,8 @@ RouteHandler.prototype._container = defaultContainer;
 Serializer.prototype._container = defaultContainer;
 SerializerRegistry.prototype._container = defaultContainer;
 Schema.prototype._container = defaultContainer;
+
+var Pretender = PretenderModule.default || PretenderModule;
 
 /**
   Mirage Interceptor Class

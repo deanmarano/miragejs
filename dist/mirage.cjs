@@ -25,8 +25,27 @@ var assign = require('lodash/assign.js');
 var find = require('lodash/find.js');
 var isInteger = require('lodash/isInteger.js');
 require('@miragejs/pretender-node-polyfill/before.js');
-var Pretender = require('pretender');
+var PretenderModule = require('pretender');
 require('@miragejs/pretender-node-polyfill/after.js');
+
+function _interopNamespaceDefault(e) {
+  var n = Object.create(null);
+  if (e) {
+    Object.keys(e).forEach(function (k) {
+      if (k !== 'default') {
+        var d = Object.getOwnPropertyDescriptor(e, k);
+        Object.defineProperty(n, k, d.get ? d : {
+          enumerable: true,
+          get: function () { return e[k]; }
+        });
+      }
+    });
+  }
+  n.default = e;
+  return Object.freeze(n);
+}
+
+var PretenderModule__namespace = /*#__PURE__*/_interopNamespaceDefault(PretenderModule);
 
 // jscs:disable disallowVar, requireArrayDestructuring
 /**
@@ -5823,6 +5842,8 @@ RouteHandler.prototype._container = defaultContainer;
 Serializer.prototype._container = defaultContainer;
 SerializerRegistry.prototype._container = defaultContainer;
 Schema.prototype._container = defaultContainer;
+
+const Pretender = PretenderModule__namespace.default || PretenderModule__namespace;
 
 /**
   Mirage Interceptor Class
