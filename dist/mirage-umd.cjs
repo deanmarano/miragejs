@@ -22407,8 +22407,13 @@
     delete commonjsGlobal$1.__pretenderNodePolyfill;
   }
 
-  var Pretender = Pretender$1 || PretenderModule;
+  // Handle both CJS and ESM module formats
+  var Pretender = typeof PretenderModule === 'function' ? PretenderModule : Pretender$1 || PretenderModule;
 
+  /**
+    Mirage Interceptor Class
+
+      urlPrefix;
   /**
     Mirage Interceptor Class
 

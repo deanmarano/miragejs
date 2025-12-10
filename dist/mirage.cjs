@@ -5843,8 +5843,13 @@ Serializer.prototype._container = defaultContainer;
 SerializerRegistry.prototype._container = defaultContainer;
 Schema.prototype._container = defaultContainer;
 
-const Pretender = PretenderModule__namespace.default || PretenderModule__namespace;
+// Handle both CJS and ESM module formats
+const Pretender = typeof PretenderModule__namespace === 'function' ? PretenderModule__namespace : PretenderModule__namespace.default || PretenderModule__namespace;
 
+/**
+  Mirage Interceptor Class
+
+    urlPrefix;
 /**
   Mirage Interceptor Class
 
