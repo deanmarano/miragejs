@@ -264,6 +264,71 @@ module.exports = function transformer(file, api) {
     }
   });
 
+  // Handle exported function declarations (e.g., export function create() {...})
+  root.find(j.ExportNamedDeclaration).forEach(path => {
+    const declaration = path.value.declaration;
+    
+    if (declaration && declaration.type === 'FunctionDeclaration') {
+      const func = declaration;
+      
+      // Check if function has schema/db parameters
+      const params = func.params;
+      const hasSchemaOrDb = params.some(param => 
+        param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
+      ) || params.some(param => {
+        // Check for destructured parameters like { sessions, userV2s }
+        if (param.type === 'ObjectPattern') {
+          return true; // Assume destructured params might contain db collections
+        }
+        return false;
+      });
+      
+      if (hasSchemaOrDb && shouldBeAsync(func)) {
+        if (!func.async) {
+          func.async = true;
+          hasChanges = true;
+        }
+        
+        j(func).find(j.CallExpression).forEach(callPath => {
+          addAwaitToCall(callPath);
+        });
+      }
+    }
+  });
+
+  // Handle regular function declarations (non-exported)
+  root.find(j.FunctionDeclaration).forEach(path => {
+    // Skip if already handled as part of export
+    if (path.parent.value.type === 'ExportNamedDeclaration') {
+      return;
+    }
+    
+    const func = path.value;
+    
+    // Check if function has schema/db parameters
+    const params = func.params;
+    const hasSchemaOrDb = params.some(param => 
+      param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
+    ) || params.some(param => {
+      // Check for destructured parameters
+      if (param.type === 'ObjectPattern') {
+        return true;
+      }
+      return false;
+    });
+    
+    if (hasSchemaOrDb && shouldBeAsync(func)) {
+      if (!func.async) {
+        func.async = true;
+        hasChanges = true;
+      }
+      
+      j(func).find(j.CallExpression).forEach(callPath => {
+        addAwaitToCall(callPath);
+      });
+    }
+  });
+
   return hasChanges ? root.toSource({ quote: 'single' }) : null;
 };
 
