@@ -227,7 +227,7 @@ module.exports = function transformer(file, api) {
         param.name === 'schema' || param.name === 'db'
       );
       
-      if (hasSchemaOrDb && shouldBeAsync(j(init))) {
+      if (hasSchemaOrDb && shouldBeAsync(init)) {
         if (!init.async) {
           init.async = true;
           hasChanges = true;
@@ -251,7 +251,7 @@ module.exports = function transformer(file, api) {
     if (handler && (handler.type === 'FunctionExpression' || 
                     handler.type === 'ArrowFunctionExpression')) {
       
-      if (shouldBeAsync(j(handler))) {
+      if (shouldBeAsync(handler)) {
         if (!handler.async) {
           handler.async = true;
           hasChanges = true;
