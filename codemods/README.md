@@ -44,6 +44,16 @@ npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js src/server.
 npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js src/
 ```
 
+### For Ember projects with separate route handler files
+
+If your route handlers are imported from separate files (e.g., `app/mirage/routes/`), run the codemod on your entire mirage directory:
+
+```bash
+npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js app/mirage/
+```
+
+This will process both your config file and all imported handler files.
+
 ## Example Transformations
 
 ### Before
