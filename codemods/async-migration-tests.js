@@ -4,6 +4,7 @@
  */
 
 const asyncSchemaMethods = new Set(['create', 'all', 'find', 'findBy', 'findOrCreateBy', 'where', 'first', 'new']);
+const asyncDbMethods = new Set(['insert', 'find', 'findBy', 'where', 'update', 'remove', 'firstOrCreate', 'all']);
 
 module.exports = function(fileInfo, api) {
   const j = api.jscodeshift;
@@ -31,10 +32,22 @@ module.exports = function(fileInfo, api) {
       if (callee.type === 'MemberExpression' &&
           callee.object.type === 'MemberExpression' &&
           callee.object.object.type === 'MemberExpression' &&
-          callee.object.object.object.type === 'ThisExpression' &&
-          callee.object.object.property.name === 'server' &&
-          callee.object.property.name === 'schema') {
+          callee.object.object.object.type === 'MemberExpression' &&
+          callee.object.object.object.property.name === 'server' &&
+          callee.object.object.property.name === 'schema') {
         if (asyncSchemaMethods.has(callee.property.name)) {
+          needsAsync = true;
+        }
+      }
+      
+      // Check for this.server.db.collection.method()
+      if (callee.type === 'MemberExpression' &&
+          callee.object.type === 'MemberExpression' &&
+          callee.object.object.type === 'MemberExpression' &&
+          callee.object.object.object.type === 'MemberExpression' &&
+          callee.object.object.object.property.name === 'server' &&
+          callee.object.object.property.name === 'db') {
+        if (asyncDbMethods.has(callee.property.name)) {
           needsAsync = true;
         }
       }
@@ -68,10 +81,22 @@ module.exports = function(fileInfo, api) {
     if (callee.type === 'MemberExpression' &&
         callee.object.type === 'MemberExpression' &&
         callee.object.object.type === 'MemberExpression' &&
-        callee.object.object.object.type === 'ThisExpression' &&
-        callee.object.object.property.name === 'server' &&
-        callee.object.property.name === 'schema') {
+        callee.object.object.object.type === 'MemberExpression' &&
+        callee.object.object.object.property.name === 'server' &&
+        callee.object.object.property.name === 'schema') {
       if (asyncSchemaMethods.has(callee.property.name)) {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for this.server.db.collection.method()
+    if (callee.type === 'MemberExpression' &&
+        callee.object.type === 'MemberExpression' &&
+        callee.object.object.type === 'MemberExpression' &&
+        callee.object.object.object.type === 'MemberExpression' &&
+        callee.object.object.object.property.name === 'server' &&
+        callee.object.object.property.name === 'db') {
+      if (asyncDbMethods.has(callee.property.name)) {
         shouldAwait = true;
       }
     }
