@@ -54,10 +54,11 @@ module.exports = function transformer(file, api) {
     j(node).find(j.CallExpression).forEach(callPath => {
       const { callee } = callPath.value;
       
-      // Check for schema.modelName.method() calls
+      // Check for schema.modelName.method() or schemas.modelName.method() calls
+      // Matches any identifier.collection.method() pattern where method is async
       if (callee.type === 'MemberExpression' &&
           callee.object.type === 'MemberExpression' &&
-          callee.object.object.name === 'schema') {
+          callee.object.object.type === 'Identifier') {
         if (asyncSchemaMethods.has(callee.property.name)) {
           needsAsync = true;
         }
@@ -118,12 +119,13 @@ module.exports = function transformer(file, api) {
     return needsAsync;
   }
 
-  // Helper to check if function has relevant parameters (schema, db, server, or destructured)
+  // Helper to check if function has relevant parameters (schema, db, server, schemas, or destructured)
   function hasRelevantParams(params) {
     return params.some(param => {
-      // Check for schema, db, or server parameters
+      // Check for schema/schemas, db, or server parameters
       if (param.type === 'Identifier' && 
-          (param.name === 'schema' || param.name === 'db' || param.name === 'server')) {
+          (param.name === 'schema' || param.name === 'schemas' || 
+           param.name === 'db' || param.name === 'server')) {
         return true;
       }
       // Check for destructured parameters like { sessions, userV2s }
@@ -145,10 +147,11 @@ module.exports = function transformer(file, api) {
     
     let shouldAwait = false;
     
-    // Check for schema.modelName.method() calls
+    // Check for schema.modelName.method() or schemas.modelName.method() calls
+    // Matches any identifier.collection.method() pattern where method is async
     if (callee.type === 'MemberExpression' &&
         callee.object.type === 'MemberExpression' &&
-        callee.object.object.name === 'schema') {
+        callee.object.object.type === 'Identifier') {
       if (asyncSchemaMethods.has(callee.property.name)) {
         shouldAwait = true;
       }
