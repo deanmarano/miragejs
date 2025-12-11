@@ -39,9 +39,9 @@
     "prettier:update": "prettier --write .",
     "dev": "rollup -c -w",
     "build": "rimraf dist && rollup -c",
-    "prepare": "npm run build",
-    "prepublishOnly": "yarn run build",
-    "test:run": "node --experimental-vm-modules $(yarn bin jest)",
+    "prepare": "pnpm run build",
+    "prepublishOnly": "pnpm run build",
+    "test:run": "node --experimental-vm-modules $(pnpm bin)/jest",
     "test:types": "tsd -f 'tests/*.ts' -t index.d.ts types",
     "test": "run-s build test:types test:run",
     "ci": "run-s lint prettier:check test"
@@ -81,5 +81,5 @@
     "tsd": "^0.32.0",
     "typescript": "^5.4.5"
   },
-  "packageManager": "yarn@4.3.0+sha512.1606bef7c84bc7d83b8576063de2fd08f7d69f9939015bed800f9585a002390268ecc777e9feeba7e26e9556aef6beaad4806968db2182ab5dd3e955ab3b9a0b"
+  "packageManager": "pnpm@9.14.4"
 }
