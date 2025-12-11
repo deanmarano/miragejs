@@ -35,6 +35,13 @@ const asyncSchemaMethods = new Set([
   'new'
 ]);
 
+const asyncModelMethods = new Set([
+  'save',
+  'update',
+  'destroy',
+  'reload'
+]);
+
 module.exports = function transformer(file, api) {
   const j = api.jscodeshift;
   const root = j(file.source);
@@ -76,9 +83,55 @@ module.exports = function transformer(file, api) {
           needsAsync = true;
         }
       }
+      
+      // Check for model instance methods: model.save(), model.update(), model.destroy()
+      // This handles any call to these methods, e.g., user.save(), run.apply.update()
+      if (callee.type === 'MemberExpression' &&
+          callee.property.type === 'Identifier') {
+        if (asyncModelMethods.has(callee.property.name)) {
+          needsAsync = true;
+        }
+      }
+      
+      // Check for server.create() and server.createList() calls
+      if (callee.type === 'MemberExpression' &&
+          callee.object.type === 'Identifier' &&
+          callee.object.name === 'server' &&
+          callee.property.type === 'Identifier' &&
+          (callee.property.name === 'create' || callee.property.name === 'createList')) {
+        needsAsync = true;
+      }
+      
+      // Check for server.schema.* calls (e.g., server.schema.users.create())
+      if (callee.type === 'MemberExpression' &&
+          callee.object.type === 'MemberExpression' &&
+          callee.object.object.type === 'MemberExpression' &&
+          callee.object.object.object.type === 'Identifier' &&
+          callee.object.object.object.name === 'server' &&
+          callee.object.object.property.name === 'schema') {
+        if (asyncSchemaMethods.has(callee.property.name)) {
+          needsAsync = true;
+        }
+      }
     });
     
     return needsAsync;
+  }
+
+  // Helper to check if function has relevant parameters (schema, db, server, or destructured)
+  function hasRelevantParams(params) {
+    return params.some(param => {
+      // Check for schema, db, or server parameters
+      if (param.type === 'Identifier' && 
+          (param.name === 'schema' || param.name === 'db' || param.name === 'server')) {
+        return true;
+      }
+      // Check for destructured parameters like { sessions, userV2s }
+      if (param.type === 'ObjectPattern') {
+        return true;
+      }
+      return false;
+    });
   }
 
   // Helper to wrap calls with await
@@ -118,6 +171,36 @@ module.exports = function transformer(file, api) {
         callee.object.type === 'Identifier' &&
         callee.property.type === 'Identifier') {
       if (asyncDbMethods.has(callee.property.name) || asyncSchemaMethods.has(callee.property.name)) {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for model instance methods: model.save(), model.update(), model.destroy()
+    // This handles any call to these methods, e.g., user.save(), run.apply.update()
+    if (callee.type === 'MemberExpression' &&
+        callee.property.type === 'Identifier') {
+      if (asyncModelMethods.has(callee.property.name)) {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for server.create() and server.createList() calls
+    if (callee.type === 'MemberExpression' &&
+        callee.object.type === 'Identifier' &&
+        callee.object.name === 'server' &&
+        callee.property.type === 'Identifier' &&
+        (callee.property.name === 'create' || callee.property.name === 'createList')) {
+      shouldAwait = true;
+    }
+    
+    // Check for server.schema.* calls (e.g., server.schema.users.create())
+    if (callee.type === 'MemberExpression' &&
+        callee.object.type === 'MemberExpression' &&
+        callee.object.object.type === 'MemberExpression' &&
+        callee.object.object.object.type === 'Identifier' &&
+        callee.object.object.object.name === 'server' &&
+        callee.object.object.property.name === 'schema') {
+      if (asyncSchemaMethods.has(callee.property.name)) {
         shouldAwait = true;
       }
     }
@@ -265,13 +348,8 @@ module.exports = function transformer(file, api) {
     if (init && (init.type === 'FunctionExpression' || 
                  init.type === 'ArrowFunctionExpression')) {
       
-      // Check if it has schema or db parameters
-      const params = init.params;
-      const hasSchemaOrDb = params.some(param => 
-        param.name === 'schema' || param.name === 'db'
-      );
-      
-      if (hasSchemaOrDb && shouldBeAsync(init)) {
+      // Check if it has relevant parameters
+      if (hasRelevantParams(init.params) && shouldBeAsync(init)) {
         if (!init.async) {
           init.async = true;
           hasChanges = true;
@@ -304,6 +382,43 @@ module.exports = function transformer(file, api) {
     }
   });
 
+  // Handle trait afterCreate hooks: trait({ afterCreate(model) { ... } })
+  // Find all trait() calls and check for afterCreate properties
+  root.find(j.CallExpression, {
+    callee: {
+      type: 'Identifier',
+      name: 'trait'
+    }
+  }).forEach(path => {
+    const args = path.value.arguments;
+    if (args.length > 0 && args[0].type === 'ObjectExpression') {
+      const traitObj = args[0];
+      
+      // Find afterCreate property in the trait object
+      traitObj.properties.forEach(prop => {
+        if (prop.type === 'ObjectProperty' && 
+            prop.key && 
+            prop.key.name === 'afterCreate') {
+          
+          const handler = prop.value;
+          
+          if (handler && (handler.type === 'FunctionExpression' || 
+                          handler.type === 'ArrowFunctionExpression')) {
+            
+            if (shouldBeAsync(handler)) {
+              if (!handler.async) {
+                handler.async = true;
+                hasChanges = true;
+              }
+              
+              addAwaitToCallsInFunction(handler);
+            }
+          }
+        }
+      });
+    }
+  });
+
   // Handle exported function declarations (e.g., export function create() {...})
   root.find(j.ExportNamedDeclaration).forEach(path => {
     const declaration = path.value.declaration;
@@ -311,19 +426,8 @@ module.exports = function transformer(file, api) {
     if (declaration && declaration.type === 'FunctionDeclaration') {
       const func = declaration;
       
-      // Check if function has schema/db parameters
-      const params = func.params;
-      const hasSchemaOrDb = params.some(param => 
-        param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
-      ) || params.some(param => {
-        // Check for destructured parameters like { sessions, userV2s }
-        if (param.type === 'ObjectPattern') {
-          return true; // Assume destructured params might contain db collections
-        }
-        return false;
-      });
-      
-      if (hasSchemaOrDb && shouldBeAsync(func)) {
+      // Check if function has relevant parameters
+      if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
         if (!func.async) {
           func.async = true;
           hasChanges = true;
@@ -343,19 +447,8 @@ module.exports = function transformer(file, api) {
     
     const func = path.value;
     
-    // Check if function has schema/db parameters
-    const params = func.params;
-    const hasSchemaOrDb = params.some(param => 
-      param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
-    ) || params.some(param => {
-      // Check for destructured parameters
-      if (param.type === 'ObjectPattern') {
-        return true;
-      }
-      return false;
-    });
-    
-    if (hasSchemaOrDb && shouldBeAsync(func)) {
+    // Check if function has relevant parameters
+    if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
@@ -369,19 +462,8 @@ module.exports = function transformer(file, api) {
   root.find(j.FunctionExpression).forEach(path => {
     const func = path.value;
     
-    // Check if function has schema/db parameters
-    const params = func.params;
-    const hasSchemaOrDb = params.some(param => 
-      param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
-    ) || params.some(param => {
-      // Check for destructured parameters
-      if (param.type === 'ObjectPattern') {
-        return true;
-      }
-      return false;
-    });
-    
-    if (hasSchemaOrDb && shouldBeAsync(func)) {
+    // Check if function has relevant parameters
+    if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
@@ -395,19 +477,8 @@ module.exports = function transformer(file, api) {
   root.find(j.ArrowFunctionExpression).forEach(path => {
     const func = path.value;
     
-    // Check if function has schema/db parameters
-    const params = func.params;
-    const hasSchemaOrDb = params.some(param => 
-      param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
-    ) || params.some(param => {
-      // Check for destructured parameters
-      if (param.type === 'ObjectPattern') {
-        return true;
-      }
-      return false;
-    });
-    
-    if (hasSchemaOrDb && shouldBeAsync(func)) {
+    // Check if function has relevant parameters
+    if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
