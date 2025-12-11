@@ -66,6 +66,16 @@ module.exports = function transformer(file, api) {
           needsAsync = true;
         }
       }
+      
+      // Check for destructured collection calls: collectionName.method()
+      // This handles cases like: ({ users }, req) => users.find(...)
+      if (callee.type === 'MemberExpression' &&
+          callee.object.type === 'Identifier' &&
+          callee.property.type === 'Identifier') {
+        if (asyncDbMethods.has(callee.property.name) || asyncSchemaMethods.has(callee.property.name)) {
+          needsAsync = true;
+        }
+      }
     });
     
     return needsAsync;
@@ -98,6 +108,16 @@ module.exports = function transformer(file, api) {
          (callee.object.object.type === 'MemberExpression' &&
           callee.object.object.property.name === 'db'))) {
       if (asyncDbMethods.has(callee.property.name)) {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for destructured collection calls: collectionName.method()
+    // This handles cases like: ({ users }, req) => users.find(...)
+    if (callee.type === 'MemberExpression' &&
+        callee.object.type === 'Identifier' &&
+        callee.property.type === 'Identifier') {
+      if (asyncDbMethods.has(callee.property.name) || asyncSchemaMethods.has(callee.property.name)) {
         shouldAwait = true;
       }
     }
