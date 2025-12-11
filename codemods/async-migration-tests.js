@@ -137,6 +137,20 @@ module.exports = function(fileInfo, api) {
     }
   });
 
+  // Find all FunctionDeclarations
+  root.find(j.FunctionDeclaration).forEach(path => {
+    const func = path.value;
+    
+    if (shouldBeAsync(func)) {
+      if (!func.async) {
+        func.async = true;
+        hasChanges = true;
+      }
+      
+      addAwaitToCallsInFunction(func);
+    }
+  });
+
   return hasChanges ? root.toSource({ quote: 'single' }) : null;
 };
 
