@@ -41,10 +41,10 @@ module.exports = function transformer(file, api) {
   let hasChanges = false;
 
   // Helper to check if a function should be made async
-  function shouldBeAsync(path) {
+  function shouldBeAsync(node) {
     let needsAsync = false;
     
-    j(path).find(j.CallExpression).forEach(callPath => {
+    j(node).find(j.CallExpression).forEach(callPath => {
       const { callee } = callPath.value;
       
       // Check for schema.modelName.method() calls
@@ -199,7 +199,7 @@ module.exports = function transformer(file, api) {
       const handler = args[handlerIndex];
       
       // Check if function needs to be async
-      if (shouldBeAsync(j(handler))) {
+      if (shouldBeAsync(handler)) {
         // Make function async if not already
         if (!handler.async) {
           handler.async = true;
