@@ -110,6 +110,32 @@ module.exports = function transformer(file, api) {
     }
   }
 
+  // Helper to add await to calls in a function, but NOT in nested functions
+  function addAwaitToCallsInFunction(funcNode) {
+    j(funcNode).find(j.CallExpression).forEach(callPath => {
+      // Check if this call is inside a nested function
+      // by walking up the tree until we hit a function or the root
+      let currentPath = callPath.parent;
+      let isInNestedFunction = false;
+      
+      while (currentPath && currentPath.value !== funcNode) {
+        const nodeType = currentPath.value.type;
+        if (nodeType === 'FunctionExpression' || 
+            nodeType === 'ArrowFunctionExpression' ||
+            nodeType === 'FunctionDeclaration') {
+          isInNestedFunction = true;
+          break;
+        }
+        currentPath = currentPath.parent;
+      }
+      
+      // Only add await if not in a nested function
+      if (!isInNestedFunction) {
+        addAwaitToCall(callPath);
+      }
+    });
+  }
+
   // 1. Update Server configuration to add async: true
   root.find(j.CallExpression, {
     callee: {
@@ -207,9 +233,7 @@ module.exports = function transformer(file, api) {
         }
         
         // Add await to appropriate calls
-        j(handler).find(j.CallExpression).forEach(callPath => {
-          addAwaitToCall(callPath);
-        });
+        addAwaitToCallsInFunction(handler);
       }
     });
   });
@@ -233,9 +257,7 @@ module.exports = function transformer(file, api) {
           hasChanges = true;
         }
         
-        j(init).find(j.CallExpression).forEach(callPath => {
-          addAwaitToCall(callPath);
-        });
+        addAwaitToCallsInFunction(init);
       }
     }
   });
@@ -257,9 +279,7 @@ module.exports = function transformer(file, api) {
           hasChanges = true;
         }
         
-        j(handler).find(j.CallExpression).forEach(callPath => {
-          addAwaitToCall(callPath);
-        });
+        addAwaitToCallsInFunction(handler);
       }
     }
   });
@@ -289,9 +309,7 @@ module.exports = function transformer(file, api) {
           hasChanges = true;
         }
         
-        j(func).find(j.CallExpression).forEach(callPath => {
-          addAwaitToCall(callPath);
-        });
+        addAwaitToCallsInFunction(func);
       }
     }
   });
@@ -323,9 +341,7 @@ module.exports = function transformer(file, api) {
         hasChanges = true;
       }
       
-      j(func).find(j.CallExpression).forEach(callPath => {
-        addAwaitToCall(callPath);
-      });
+      addAwaitToCallsInFunction(func);
     }
   });
 
@@ -351,9 +367,7 @@ module.exports = function transformer(file, api) {
         hasChanges = true;
       }
       
-      j(func).find(j.CallExpression).forEach(callPath => {
-        addAwaitToCall(callPath);
-      });
+      addAwaitToCallsInFunction(func);
     }
   });
 
@@ -379,9 +393,7 @@ module.exports = function transformer(file, api) {
         hasChanges = true;
       }
       
-      j(func).find(j.CallExpression).forEach(callPath => {
-        addAwaitToCall(callPath);
-      });
+      addAwaitToCallsInFunction(func);
     }
   });
 
