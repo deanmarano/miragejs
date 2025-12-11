@@ -329,6 +329,62 @@ module.exports = function transformer(file, api) {
     }
   });
 
+  // Handle all FunctionExpressions (including those passed as arguments to helpers)
+  root.find(j.FunctionExpression).forEach(path => {
+    const func = path.value;
+    
+    // Check if function has schema/db parameters
+    const params = func.params;
+    const hasSchemaOrDb = params.some(param => 
+      param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
+    ) || params.some(param => {
+      // Check for destructured parameters
+      if (param.type === 'ObjectPattern') {
+        return true;
+      }
+      return false;
+    });
+    
+    if (hasSchemaOrDb && shouldBeAsync(func)) {
+      if (!func.async) {
+        func.async = true;
+        hasChanges = true;
+      }
+      
+      j(func).find(j.CallExpression).forEach(callPath => {
+        addAwaitToCall(callPath);
+      });
+    }
+  });
+
+  // Handle all ArrowFunctionExpressions
+  root.find(j.ArrowFunctionExpression).forEach(path => {
+    const func = path.value;
+    
+    // Check if function has schema/db parameters
+    const params = func.params;
+    const hasSchemaOrDb = params.some(param => 
+      param.type === 'Identifier' && (param.name === 'schema' || param.name === 'db')
+    ) || params.some(param => {
+      // Check for destructured parameters
+      if (param.type === 'ObjectPattern') {
+        return true;
+      }
+      return false;
+    });
+    
+    if (hasSchemaOrDb && shouldBeAsync(func)) {
+      if (!func.async) {
+        func.async = true;
+        hasChanges = true;
+      }
+      
+      j(func).find(j.CallExpression).forEach(callPath => {
+        addAwaitToCall(callPath);
+      });
+    }
+  });
+
   return hasChanges ? root.toSource({ quote: 'single' }) : null;
 };
 
