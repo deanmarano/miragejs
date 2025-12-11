@@ -54,6 +54,41 @@ npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js app/mirage/
 
 This will process both your config file and all imported handler files.
 
+## Patterns Handled
+
+The codemod automatically detects and transforms the following patterns:
+
+### Route Handlers
+- Inline handlers: `this.get('/path', (schema) => { })`
+- Function expressions: `this.post('/path', function(schema) { })`
+- Exported functions: `export function index(schema) { }`
+- Destructured parameters: `this.get('/path', ({ users }) => { })`
+
+### Factory afterCreate Hooks
+- Main factory hooks: `afterCreate(model, server) { }`
+- Trait hooks: `trait({ afterCreate(model) { } })`
+
+### Scenario Functions
+- Default scenarios: `export default function(server) { }`
+- Named scenarios: `export function myScenario(server) { }`
+
+### Async Method Calls
+- **Schema methods**: `create`, `all`, `find`, `findBy`, `findOrCreateBy`, `where`, `first`, `new`
+  - `schema.users.create({ })`
+  - `schema.users.find(id)`
+  - `schemas.posts.all()` (supports plural 'schemas')
+- **DB methods**: `insert`, `find`, `findBy`, `where`, `update`, `remove`, `firstOrCreate`, `all`
+  - `db.users.insert({ })`
+  - `db.users.where({ active: true })`
+- **Model methods**: `save`, `update`, `destroy`, `reload`
+  - `user.save()`
+  - `post.update({ title: 'New' })`
+  - `run.apply.update({ })` (chained relationships)
+- **Server methods**: `create`, `createList`
+  - `server.create('user')`
+  - `server.createList('post', 5)`
+- **Server schema methods**: `server.schema.users.create({ })`
+
 ## Example Transformations
 
 ### Before
