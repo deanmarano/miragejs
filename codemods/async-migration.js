@@ -142,9 +142,23 @@ module.exports = function transformer(file, api) {
   function addAwaitToCall(path) {
     const { callee } = path.value;
     
-    // Check if already awaited
-    if (path.parent.value.type === 'AwaitExpression') {
-      return;
+    // Check if already awaited - need to check both direct parent and up the tree
+    // because optional chaining can create intermediate nodes
+    let checkPath = path;
+    while (checkPath.parent) {
+      if (checkPath.parent.value.type === 'AwaitExpression') {
+        return;
+      }
+      // Stop checking after we leave the expression context
+      if (checkPath.parent.value.type === 'ExpressionStatement' ||
+          checkPath.parent.value.type === 'VariableDeclarator' ||
+          checkPath.parent.value.type === 'AssignmentExpression' ||
+          checkPath.parent.value.type === 'ReturnStatement' ||
+          checkPath.parent.value.type === 'IfStatement' ||
+          checkPath.parent.value.type === 'BlockStatement') {
+        break;
+      }
+      checkPath = checkPath.parent;
     }
     
     let shouldAwait = false;
@@ -184,7 +198,8 @@ module.exports = function transformer(file, api) {
     
     // Check for model instance methods: model.save(), model.update(), model.destroy()
     // This handles any call to these methods, e.g., user.save(), run.apply.update()
-    if (callee.type === 'MemberExpression' &&
+    // Also handles optional chaining: model?.save(), run.workspace?.update()
+    if ((callee.type === 'MemberExpression' || callee.type === 'OptionalMemberExpression') &&
         callee.property.type === 'Identifier') {
       if (asyncModelMethods.has(callee.property.name)) {
         shouldAwait = true;
