@@ -134,9 +134,16 @@ module.exports = function(fileInfo, api) {
     });
   }
 
-  // Find all FunctionExpressions (test functions, hooks, etc.)
+  // Find all FunctionExpressions
   root.find(j.FunctionExpression).forEach(path => {
     const func = path.value;
+    
+    // Skip if this is a module() callback - QUnit doesn't support async module callbacks
+    if (path.parent.value.type === 'CallExpression' &&
+        path.parent.value.callee.type === 'Identifier' &&
+        path.parent.value.callee.name === 'module') {
+      return;
+    }
     
     if (shouldBeAsync(func)) {
       if (!func.async) {
@@ -151,6 +158,13 @@ module.exports = function(fileInfo, api) {
   // Find all ArrowFunctionExpressions
   root.find(j.ArrowFunctionExpression).forEach(path => {
     const func = path.value;
+    
+    // Skip if this is a module() callback - QUnit doesn't support async module callbacks
+    if (path.parent.value.type === 'CallExpression' &&
+        path.parent.value.callee.type === 'Identifier' &&
+        path.parent.value.callee.name === 'module') {
+      return;
+    }
     
     if (shouldBeAsync(func)) {
       if (!func.async) {
