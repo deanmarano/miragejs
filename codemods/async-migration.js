@@ -116,6 +116,19 @@ module.exports = function transformer(file, api) {
           needsAsync = true;
         }
       }
+      
+      // Check for function parameter calls that look like route handlers
+      // Pattern: paramName(schema, request) where paramName is a function parameter
+      if (callee.type === 'Identifier' && callPath.value.arguments.length === 2) {
+        const args = callPath.value.arguments;
+        // Check if arguments match (schema/schemas, request) pattern
+        if (args[0].type === 'Identifier' && 
+            (args[0].name === 'schema' || args[0].name === 'schemas') &&
+            args[1].type === 'Identifier' && 
+            args[1].name === 'request') {
+          needsAsync = true;
+        }
+      }
     });
     
     return needsAsync;
@@ -223,6 +236,19 @@ module.exports = function transformer(file, api) {
         callee.object.object.object.name === 'server' &&
         callee.object.object.property.name === 'schema') {
       if (asyncSchemaMethods.has(callee.property.name)) {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for function parameter calls that look like route handlers
+    // Pattern: paramName(schema, request) where paramName is a function parameter
+    if (callee.type === 'Identifier' && path.value.arguments.length === 2) {
+      const args = path.value.arguments;
+      // Check if arguments match (schema/schemas, request) pattern
+      if (args[0].type === 'Identifier' && 
+          (args[0].name === 'schema' || args[0].name === 'schemas') &&
+          args[1].type === 'Identifier' && 
+          args[1].name === 'request') {
         shouldAwait = true;
       }
     }
