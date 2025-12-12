@@ -287,6 +287,67 @@ module.exports = function transformer(file, api) {
     });
   }
 
+  // Helper to transform .models access patterns in async functions
+  // Patterns: association.models.get(...) or association.models[index]
+  // These need the association to be awaited first
+  function transformModelsAccess(funcNode) {
+    // Find all MemberExpression nodes where property is 'models'
+    j(funcNode).find(j.MemberExpression, {
+      property: { name: 'models' }
+    }).forEach(modelsPath => {
+      const modelsExpr = modelsPath.value;
+      const association = modelsExpr.object; // This could be run.runEvents or just runEvents
+      
+      // Skip if the association itself is accessing .models (nested .models)
+      if (association.type === 'MemberExpression' && association.property.name === 'models') {
+        return;
+      }
+      
+      // Check if association is already awaited by checking parent
+      let isAlreadyAwaited = false;
+      let checkPath = modelsPath;
+      while (checkPath.parent) {
+        const parentNode = checkPath.parent.value;
+        if (parentNode.type === 'AwaitExpression') {
+          // Check if the await is wrapping our association
+          const awaitArg = parentNode.argument;
+          if (awaitArg === association ||
+              (awaitArg.type === 'Identifier' && association.type === 'Identifier' &&
+               awaitArg.name === association.name) ||
+              (awaitArg.type === 'MemberExpression' && association.type === 'MemberExpression' &&
+               JSON.stringify(awaitArg) === JSON.stringify(association))) {
+            isAlreadyAwaited = true;
+            break;
+          }
+        }
+        // Stop at statement boundaries
+        if (parentNode.type === 'VariableDeclarator' ||
+            parentNode.type === 'ExpressionStatement' ||
+            parentNode.type === 'BlockStatement') {
+          break;
+        }
+        checkPath = checkPath.parent;
+      }
+      
+      if (!isAlreadyAwaited) {
+        // Replace association.models with (await association).models
+        // Handle both Identifier (runEvents) and MemberExpression (run.runEvents)
+        const awaitedAssociation = association.type === 'Identifier' 
+          ? j.awaitExpression(j.identifier(association.name))
+          : j.awaitExpression(association);
+          
+        j(modelsPath).replaceWith(
+          j.memberExpression(
+            awaitedAssociation,
+            modelsExpr.property,
+            false
+          )
+        );
+        hasChanges = true;
+      }
+    });
+  }
+
   // 1. Update Server configuration to add async: true
   root.find(j.CallExpression, {
     callee: {
@@ -426,6 +487,7 @@ module.exports = function transformer(file, api) {
         }
         
         addAwaitToCallsInFunction(handler);
+        transformModelsAccess(handler);
       }
     }
   });
@@ -460,6 +522,7 @@ module.exports = function transformer(file, api) {
               }
               
               addAwaitToCallsInFunction(handler);
+              transformModelsAccess(handler);
             }
           }
         }
