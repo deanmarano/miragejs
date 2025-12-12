@@ -56,9 +56,11 @@ module.exports = function transformer(file, api) {
       
       // Check for schema.modelName.method() or schemas.modelName.method() calls
       // Matches any identifier.collection.method() pattern where method is async
+      // But excludes .models.method() which is an array, not a Mirage collection
       if (callee.type === 'MemberExpression' &&
           callee.object.type === 'MemberExpression' &&
-          callee.object.object.type === 'Identifier') {
+          callee.object.object.type === 'Identifier' &&
+          callee.object.property.name !== 'models') { // Exclude .models which is an array
         if (asyncSchemaMethods.has(callee.property.name)) {
           needsAsync = true;
         }
@@ -149,9 +151,11 @@ module.exports = function transformer(file, api) {
     
     // Check for schema.modelName.method() or schemas.modelName.method() calls
     // Matches any identifier.collection.method() pattern where method is async
+    // But excludes .models.method() which is an array, not a Mirage collection
     if (callee.type === 'MemberExpression' &&
         callee.object.type === 'MemberExpression' &&
-        callee.object.object.type === 'Identifier') {
+        callee.object.object.type === 'Identifier' &&
+        callee.object.property.name !== 'models') { // Exclude .models which is an array
       if (asyncSchemaMethods.has(callee.property.name)) {
         shouldAwait = true;
       }
