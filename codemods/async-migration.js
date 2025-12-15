@@ -310,6 +310,23 @@ module.exports = function transformer(file, api) {
         return;
       }
       
+      // Skip if the association contains optional chaining (OptionalMemberExpression)
+      // Pattern: workspace.organization?.projects?.models
+      // These need manual handling as wrapping with await breaks the optional chain
+      function containsOptionalChaining(node) {
+        if (node.type === 'OptionalMemberExpression') {
+          return true;
+        }
+        if (node.type === 'MemberExpression' && node.object) {
+          return containsOptionalChaining(node.object);
+        }
+        return false;
+      }
+      
+      if (containsOptionalChaining(association)) {
+        return;
+      }
+      
       // Check if association is already awaited by checking parent
       let isAlreadyAwaited = false;
       let checkPath = modelsPath;
