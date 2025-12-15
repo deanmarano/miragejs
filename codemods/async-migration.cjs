@@ -48,7 +48,41 @@ module.exports = function transformer(file, api) {
   let hasChanges = false;
 
   // Helper to check if a function should be made async
-  function shouldBeAsync(node) {
+  function shouldBeAsync(node, path) {
+    // Skip QUnit module() callbacks - they cannot be async
+    // Pattern: module('name', function(hooks) { ... })
+    if (path && path.parent && path.parent.value.type === 'CallExpression') {
+      const parentCall = path.parent.value;
+      if (parentCall.callee.type === 'Identifier' && parentCall.callee.name === 'module') {
+        return false;
+      }
+    }
+    
+    // Skip config methods like routes(), seeds(), scenarios() in createServer/new Server
+    // These are just configuration functions, not route handlers
+    if (path && path.parent && path.parent.value.type === 'Property') {
+      const prop = path.parent.value;
+      const configMethods = ['routes', 'seeds', 'scenarios', 'baseConfig', 'testConfig'];
+      if (prop.key && prop.key.name && configMethods.includes(prop.key.name)) {
+        // Check if this property is in a createServer or new Server config
+        let ancestor = path.parent.parent;
+        while (ancestor) {
+          if (ancestor.value.type === 'CallExpression') {
+            const callee = ancestor.value.callee;
+            if ((callee.type === 'Identifier' && callee.name === 'createServer') ||
+                (callee.type === 'MemberExpression' && callee.object.name === 'Server')) {
+              return false;
+            }
+          }
+          if (ancestor.value.type === 'NewExpression' && 
+              ancestor.value.callee.name === 'Server') {
+            return false;
+          }
+          ancestor = ancestor.parent;
+        }
+      }
+    }
+    
     let needsAsync = false;
     
     j(node).find(j.CallExpression).forEach(callPath => {
@@ -639,7 +673,7 @@ module.exports = function transformer(file, api) {
       const func = declaration;
       
       // Check if function should be async
-      if (shouldBeAsync(func)) {
+      if (shouldBeAsync(func, null)) {
         if (!func.async) {
           func.async = true;
           hasChanges = true;
@@ -660,7 +694,7 @@ module.exports = function transformer(file, api) {
     const func = path.value;
     
     // Check if function should be async
-    if (shouldBeAsync(func)) {
+    if (shouldBeAsync(func, null)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
@@ -675,7 +709,7 @@ module.exports = function transformer(file, api) {
     const func = path.value;
     
     // Check if function should be async
-    if (shouldBeAsync(func)) {
+    if (shouldBeAsync(func, path)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
@@ -690,7 +724,7 @@ module.exports = function transformer(file, api) {
     const func = path.value;
     
     // Check if function should be async
-    if (shouldBeAsync(func)) {
+    if (shouldBeAsync(func, path)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;

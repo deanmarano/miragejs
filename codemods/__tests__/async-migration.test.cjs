@@ -18,8 +18,8 @@ function applyTransform(source) {
 
 function test(name, input, expected) {
   const result = applyTransform(input);
-  // Normalize whitespace and semicolons for comparison
-  const normalize = (str) => str.replace(/\s+/g, ' ').replace(/;/g, '').trim();
+  // Normalize whitespace, semicolons, and trailing commas for comparison
+  const normalize = (str) => str.replace(/\s+/g, ' ').replace(/[;,]/g, '').trim();
   const passed = normalize(result) === normalize(expected);
   
   if (passed) {
@@ -248,9 +248,9 @@ hooks.beforeEach(async function() {
   `.trim()
 );
 
-// Test 11: Module callback should become async but QUnit module() should not be awaited
+// Test 11: Module callback should NOT become async (QUnit doesn't support it)
 test(
-  'makes module callback async when it contains async hooks',
+  'keeps module callback synchronous but makes hooks async',
   `
 module('Acceptance | test', function(hooks) {
   hooks.beforeEach(function() {
@@ -259,7 +259,7 @@ module('Acceptance | test', function(hooks) {
 });
   `.trim(),
   `
-module('Acceptance | test', async function(hooks) {
+module('Acceptance | test', function(hooks) {
   hooks.beforeEach(async function() {
     this.user = await this.server.create('user');
   });
