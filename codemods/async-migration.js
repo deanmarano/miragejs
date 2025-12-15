@@ -290,16 +290,23 @@ module.exports = function transformer(file, api) {
   // Helper to transform .models access patterns in async functions
   // Patterns: association.models.get(...) or association.models[index]
   // These need the association to be awaited first
+  // BUT skip if the association is a CallExpression (schema.where() already returns awaited collection)
   function transformModelsAccess(funcNode) {
     // Find all MemberExpression nodes where property is 'models'
     j(funcNode).find(j.MemberExpression, {
       property: { name: 'models' }
     }).forEach(modelsPath => {
       const modelsExpr = modelsPath.value;
-      const association = modelsExpr.object; // This could be run.runEvents or just runEvents
+      const association = modelsExpr.object;
       
       // Skip if the association itself is accessing .models (nested .models)
       if (association.type === 'MemberExpression' && association.property.name === 'models') {
+        return;
+      }
+      
+      // Skip if the association is a CallExpression - these are schema/db method calls
+      // that already return awaited collections (e.g., schema.where(), db.find())
+      if (association.type === 'CallExpression') {
         return;
       }
       
@@ -309,9 +316,10 @@ module.exports = function transformer(file, api) {
       while (checkPath.parent) {
         const parentNode = checkPath.parent.value;
         if (parentNode.type === 'AwaitExpression') {
-          // Check if the await is wrapping our association
+          // Check if the await is wrapping our association or the .models access
           const awaitArg = parentNode.argument;
           if (awaitArg === association ||
+              awaitArg === modelsExpr ||
               (awaitArg.type === 'Identifier' && association.type === 'Identifier' &&
                awaitArg.name === association.name) ||
               (awaitArg.type === 'MemberExpression' && association.type === 'MemberExpression' &&
