@@ -88,6 +88,8 @@ The codemod automatically detects and transforms the following patterns:
   - `server.create('user')`
   - `server.createList('post', 5)`
 - **Server schema methods**: `server.schema.users.create({ })`
+- **Route handler function parameters**: Calls to function parameters with `(schema, request)` signature
+  - `route(schema, request)` in wrapper functions like `paginate()`
 
 ## Example Transformations
 
@@ -171,6 +173,28 @@ export function makeServer() {
       });
     },
   });
+}
+```
+
+### Wrapper Functions
+
+Route handler wrapper functions that call other route handlers are also transformed:
+
+```javascript
+// Before
+export default function paginate(route) {
+  return function(schema, request) {
+    let records = route(schema, request);
+    // ... pagination logic
+  }
+}
+
+// After
+export default function paginate(route) {
+  return async function(schema, request) {
+    let records = await route(schema, request);
+    // ... pagination logic
+  }
 }
 ```
 
