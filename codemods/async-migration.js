@@ -299,6 +299,12 @@ module.exports = function transformer(file, api) {
       const modelsExpr = modelsPath.value;
       const association = modelsExpr.object;
       
+      // Skip if the .models access itself uses optional chaining (?.models)
+      // This is indicated by the optional property on the MemberExpression
+      if (modelsExpr.optional) {
+        return;
+      }
+      
       // Skip if the association itself is accessing .models (nested .models)
       if (association.type === 'MemberExpression' && association.property.name === 'models') {
         return;
