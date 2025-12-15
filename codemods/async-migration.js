@@ -314,7 +314,8 @@ module.exports = function transformer(file, api) {
       // Pattern: workspace.organization?.projects?.models
       // These need manual handling as wrapping with await breaks the optional chain
       function containsOptionalChaining(node) {
-        if (node.type === 'OptionalMemberExpression') {
+        if (!node) return false;
+        if (node.type === 'OptionalMemberExpression' || node.type === 'OptionalCallExpression') {
           return true;
         }
         if (node.type === 'MemberExpression' && node.object) {
@@ -323,7 +324,7 @@ module.exports = function transformer(file, api) {
         return false;
       }
       
-      if (containsOptionalChaining(association)) {
+      if (association.type === 'OptionalMemberExpression' || containsOptionalChaining(association)) {
         return;
       }
       
