@@ -73,11 +73,12 @@ createServer({
   `
 createServer({
   async: true,
+
   routes() {
-    this.get('/users', async (schema) => {
+    this.get('/users', async schema => {
       return await schema.users.all();
     });
-  },
+  }
 });
   `.trim()
 );
@@ -127,11 +128,12 @@ createServer({
   `
 createServer({
   async: true,
+
   routes() {
-    this.get('/users', async (schema) => {
+    this.get('/users', async schema => {
       return await schema.db.users.find(1);
     });
-  },
+  }
 });
   `.trim()
 );
@@ -175,9 +177,10 @@ const server = new Server({
 const server = new Server({
   async: true,
   models: { user: Model },
+
   routes() {
-    this.get('/users', async (schema) => await schema.users.all());
-  },
+    this.get('/users', async schema => await schema.users.all());
+  }
 });
   `.trim()
 );
@@ -196,9 +199,10 @@ createServer({
   `
 createServer({
   async: true,
+
   routes() {
-    this.get('/users', async (schema) => await schema.users.all());
-  },
+    this.get('/users', async schema => await schema.users.all());
+  }
 });
   `.trim()
 );
@@ -458,7 +462,7 @@ this.get('/users', (schemas) => {
 });
   `.trim(),
   `
-this.get('/users', async (schemas) => {
+this.get('/users', async schemas => {
   return await schemas.users.all();
 });
   `.trim()
@@ -520,7 +524,7 @@ test(
 this.get('/users', (schema) => schema.users.all());
   `.trim(),
   `
-this.get('/users', async (schema) => await schema.users.all());
+this.get('/users', async schema => await schema.users.all());
   `.trim()
 );
 

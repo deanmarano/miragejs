@@ -176,6 +176,7 @@ module.exports = function transformer(file, api) {
       
       // Check for function parameter calls that look like route handlers
       // Pattern: paramName(schema, request) where paramName is a function parameter
+      // Skip if call is inside a nested function (not in the immediate function body)
       if (callee.type === 'Identifier' && callPath.value.arguments.length === 2) {
         const args = callPath.value.arguments;
         // Check if arguments match (schema/schemas, request) pattern
@@ -183,8 +184,69 @@ module.exports = function transformer(file, api) {
             (args[0].name === 'schema' || args[0].name === 'schemas') &&
             args[1].type === 'Identifier' && 
             args[1].name === 'request') {
-          needsAsync = true;
+          // Check if call is in immediate function body or inside a nested function
+          let currentPath = callPath.parent;
+          let isInNestedFunction = false;
+          while (currentPath && currentPath.value !== node) {
+            if ((currentPath.value.type === 'FunctionExpression' ||
+                 currentPath.value.type === 'ArrowFunctionExpression' ||
+                 currentPath.value.type === 'FunctionDeclaration') &&
+                currentPath.value !== node) {
+              isInNestedFunction = true;
+              break;
+            }
+            currentPath = currentPath.parent;
+          }
+          // Only mark as needing async if not in nested function
+          if (!isInNestedFunction) {
+            needsAsync = true;
+          }
         }
+      }
+    });
+    
+    // Check for .models access on associations
+    // Pattern: association.models.get() or association.models[0]
+    // Skip if inside a nested function
+    j(node).find(j.MemberExpression, {
+      property: { name: 'models' }
+    }).forEach(modelsPath => {
+      const modelsExpr = modelsPath.value;
+      const association = modelsExpr.object;
+      
+      // Skip if already has optional chaining
+      if (modelsExpr.optional) {
+        return;
+      }
+      
+      // Skip if association is a CallExpression (already async)
+      if (association.type === 'CallExpression') {
+        return;
+      }
+      
+      // Skip if association is an awaited CallExpression
+      if (association.type === 'AwaitExpression' && 
+          association.argument && association.argument.type === 'CallExpression') {
+        return;
+      }
+      
+      // Check if this .models access is in the immediate function body or inside a nested function
+      let currentPath = modelsPath.parent;
+      let isInNestedFunction = false;
+      while (currentPath && currentPath.value !== node) {
+        if ((currentPath.value.type === 'FunctionExpression' ||
+             currentPath.value.type === 'ArrowFunctionExpression' ||
+             currentPath.value.type === 'FunctionDeclaration') &&
+            currentPath.value !== node) {
+          isInNestedFunction = true;
+          break;
+        }
+        currentPath = currentPath.parent;
+      }
+      
+      // Only mark as needing async if not in nested function
+      if (!isInNestedFunction) {
+        needsAsync = true;
       }
     });
     
