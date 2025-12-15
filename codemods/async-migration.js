@@ -316,6 +316,14 @@ module.exports = function transformer(file, api) {
         return;
       }
       
+      // Skip if the association is an AwaitExpression wrapping a CallExpression
+      // Pattern: (await server.schema.projects.where(...)).models
+      // The await already returns the resolved collection, no need to wrap again
+      if (association.type === 'AwaitExpression' && 
+          association.argument && association.argument.type === 'CallExpression') {
+        return;
+      }
+      
       // Skip if the association contains optional chaining (OptionalMemberExpression)
       // Pattern: workspace.organization?.projects?.models
       // These need manual handling as wrapping with await breaks the optional chain
