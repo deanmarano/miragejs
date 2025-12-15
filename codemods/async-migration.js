@@ -370,15 +370,9 @@ module.exports = function transformer(file, api) {
       }
       
       if (!isAlreadyAwaited) {
-        // Check if .models is being accessed further (e.g., .models.get() or .models[0])
-        // If so, we need to await the entire .models expression, not just the association
-        const parent = modelsPath.parent.value;
-        const needsModelsAwait = parent && (
-          parent.type === 'MemberExpression' ||  // .models.get() or .models.firstObject
-          parent.type === 'CallExpression'       // Should not happen but check anyway
-        );
-        
         // Replace association.models with (await association).models
+        // In async mode, we await the association to get the Collection,
+        // but .models itself is a synchronous property access
         // Handle both Identifier (runEvents) and MemberExpression (run.runEvents)
         const awaitedAssociation = association.type === 'Identifier' 
           ? j.awaitExpression(j.identifier(association.name))
@@ -390,14 +384,7 @@ module.exports = function transformer(file, api) {
           false
         );
         
-        // If .models is being accessed further, wrap it in await
-        if (needsModelsAwait) {
-          j(modelsPath).replaceWith(
-            j.awaitExpression(newModelsExpr)
-          );
-        } else {
-          j(modelsPath).replaceWith(newModelsExpr);
-        }
+        j(modelsPath).replaceWith(newModelsExpr);
         hasChanges = true;
       }
     });
