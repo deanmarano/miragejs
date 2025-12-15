@@ -117,6 +117,29 @@ module.exports = function transformer(file, api) {
         }
       }
       
+      // Check for this.server.schema.* calls (e.g., this.server.schema.sessions.first())
+      if (callee.type === 'MemberExpression' &&
+          callee.object.type === 'MemberExpression' &&
+          callee.object.object.type === 'MemberExpression' &&
+          callee.object.object.object.type === 'MemberExpression' &&
+          callee.object.object.object.object.type === 'ThisExpression' &&
+          callee.object.object.object.property.name === 'server' &&
+          callee.object.object.property.name === 'schema') {
+        if (asyncSchemaMethods.has(callee.property.name)) {
+          needsAsync = true;
+        }
+      }
+      
+      // Check for this.server.create() and this.server.createList() calls
+      if (callee.type === 'MemberExpression' &&
+          callee.object.type === 'MemberExpression' &&
+          callee.object.object.type === 'ThisExpression' &&
+          callee.object.property.name === 'server' &&
+          callee.property.type === 'Identifier' &&
+          (callee.property.name === 'create' || callee.property.name === 'createList')) {
+        needsAsync = true;
+      }
+      
       // Check for function parameter calls that look like route handlers
       // Pattern: paramName(schema, request) where paramName is a function parameter
       if (callee.type === 'Identifier' && callPath.value.arguments.length === 2) {
@@ -238,6 +261,29 @@ module.exports = function transformer(file, api) {
       if (asyncSchemaMethods.has(callee.property.name)) {
         shouldAwait = true;
       }
+    }
+    
+    // Check for this.server.schema.* calls (e.g., this.server.schema.sessions.first())
+    if (callee.type === 'MemberExpression' &&
+        callee.object.type === 'MemberExpression' &&
+        callee.object.object.type === 'MemberExpression' &&
+        callee.object.object.object.type === 'MemberExpression' &&
+        callee.object.object.object.object.type === 'ThisExpression' &&
+        callee.object.object.object.property.name === 'server' &&
+        callee.object.object.property.name === 'schema') {
+      if (asyncSchemaMethods.has(callee.property.name)) {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for this.server.create() and this.server.createList() calls
+    if (callee.type === 'MemberExpression' &&
+        callee.object.type === 'MemberExpression' &&
+        callee.object.object.type === 'ThisExpression' &&
+        callee.object.property.name === 'server' &&
+        callee.property.type === 'Identifier' &&
+        (callee.property.name === 'create' || callee.property.name === 'createList')) {
+      shouldAwait = true;
     }
     
     // Check for function parameter calls that look like route handlers
@@ -592,8 +638,8 @@ module.exports = function transformer(file, api) {
     if (declaration && declaration.type === 'FunctionDeclaration') {
       const func = declaration;
       
-      // Check if function has relevant parameters
-      if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
+      // Check if function should be async
+      if (shouldBeAsync(func)) {
         if (!func.async) {
           func.async = true;
           hasChanges = true;
@@ -613,8 +659,8 @@ module.exports = function transformer(file, api) {
     
     const func = path.value;
     
-    // Check if function has relevant parameters
-    if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
+    // Check if function should be async
+    if (shouldBeAsync(func)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
@@ -628,8 +674,8 @@ module.exports = function transformer(file, api) {
   root.find(j.FunctionExpression).forEach(path => {
     const func = path.value;
     
-    // Check if function has relevant parameters
-    if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
+    // Check if function should be async
+    if (shouldBeAsync(func)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
@@ -643,8 +689,8 @@ module.exports = function transformer(file, api) {
   root.find(j.ArrowFunctionExpression).forEach(path => {
     const func = path.value;
     
-    // Check if function has relevant parameters
-    if (hasRelevantParams(func.params) && shouldBeAsync(func)) {
+    // Check if function should be async
+    if (shouldBeAsync(func)) {
       if (!func.async) {
         func.async = true;
         hasChanges = true;
