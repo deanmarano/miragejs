@@ -820,6 +820,100 @@ describe("Unit | Server #create", function () {
     server.shutdown();
   });
 
+  test("Factory afterCreate without await causes relationship to be null", async () => {
+    // Reproduce Atlas timeout issue where factory afterCreate creates a related model
+    // without await and passes the Promise to model.update()
+    // 
+    // Atlas error: "You're trying to create a data-retention-policy-dont-delete-v2 model 
+    // and you passed in '[object Promise]' under the target key, but that key is 
+    // a BelongsTo relationship. You must pass in a Model or null."
+    //
+    // This happens when:
+    // 1. afterCreate calls server.create() without await
+    // 2. afterCreate calls model.update() without await
+    // 3. The Promise never resolves, leaving the relationship null/undefined
+    // 4. Later code tries to access properties on the null relationship → crash
+    
+    let Workspace = Model.extend({});
+    let Policy = Model.extend({
+      target: belongsTo('workspace')
+    });
+    
+    let WorkspaceFactory = Factory.extend({
+      name: "workspace-1",
+    });
+    
+    let PolicyFactory = Factory.extend({
+      name: "policy-1",
+      afterCreate(policy, server) {
+        // BUG: Not awaiting server.create() - returns Promise
+        const workspace = server.create('workspace', { name: 'target-workspace' });
+        // BUG: Not awaiting policy.update() - update doesn't complete
+        policy.update({ target: workspace });
+        // afterCreate returns, but the async operations haven't finished
+      }
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        workspace: Workspace,
+        policy: Policy,
+      },
+      factories: {
+        workspace: WorkspaceFactory,
+        policy: PolicyFactory,
+      },
+    });
+
+    // Create the policy with broken afterCreate
+    const policy = await server.create("policy");
+    
+    // BUG REVEALED: target is null because afterCreate's update() never completed
+    // In Atlas, this causes "Cannot set properties of undefined (setting 'categories')"
+    // when route handlers try to access relationships that are unexpectedly null
+    const target = policy.target;
+    
+    // EXPECTED: target should be a Workspace model
+    // ACTUAL: target is null because the Promise chain wasn't awaited
+    expect(target).toBeNull(); // This is the bug - it's null when it shouldn't be
+
+    server.shutdown();
+    
+    // Now test with properly async afterCreate (as the codemod would fix it)
+    let PolicyFactoryFixed = Factory.extend({
+      name: "policy-1",
+      async afterCreate(policy, server) {
+        // FIXED: Properly awaiting async operations
+        const workspace = await server.create('workspace', { name: 'target-workspace' });
+        await policy.update({ target: workspace });
+        return policy;
+      }
+    });
+
+    let serverFixed = new Server({
+      environment: "test",
+      models: {
+        workspace: Workspace,
+        policy: Policy,
+      },
+      factories: {
+        workspace: WorkspaceFactory,
+        policy: PolicyFactoryFixed,
+      },
+    });
+
+    // Create the policy with fixed afterCreate
+    const policyFixed = await serverFixed.create("policy");
+    const targetFixed = policyFixed.target;
+    
+    // NOW IT WORKS: target is properly set
+    expect(targetFixed).not.toBeNull();
+    expect(targetFixed.name).toBe('target-workspace');
+
+    serverFixed.shutdown();
+  });
+
   test("GET route handler that returns model created without await should fail", async () => {
     // Reproduce Atlas issue where GET request handler creates a model
     // without await and returns undefined because the Promise isn't awaited
