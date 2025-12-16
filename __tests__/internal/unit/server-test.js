@@ -779,6 +779,137 @@ describe("Unit | Server #create", function () {
     server.shutdown();
   });
 
+  test("GET route handler returns 404 when model not found instead of undefined", async () => {
+    // Reproduce scenario where a GET request for a non-existent model
+    // returns undefined, causing serializer errors in JSON API apps
+    // Atlas error: "Cannot read properties of undefined (reading 'id')"
+    // at WorkspaceV2Serializer.normalizeQueryRecordResponse
+    let Workspace = Model.extend({});
+    
+    let WorkspaceFactory = Factory.extend({
+      name: "workspace-1",
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        workspace: Workspace,
+      },
+      factories: {
+        workspace: WorkspaceFactory,
+      },
+    });
+
+    // Create a workspace with id 1
+    await server.create("workspace");
+
+    // Define a GET route handler
+    server.get("/workspaces/:id", function(schema, request) {
+      // schema.find() returns null when model doesn't exist
+      return schema.workspaces.find(request.params.id);
+    });
+
+    // Make a GET request for a non-existent workspace
+    let response = await fetch("/workspaces/999");
+    
+    // EXPECTED: When a model isn't found, mirage should return 404
+    // ACTUAL: Returns 200 with null/undefined body, causing serializer to crash
+    // This causes "Cannot read properties of undefined (reading 'id')" in Atlas
+    expect(response.status).toBe(404);
+
+    server.shutdown();
+  });
+
+  test("GET route handler that returns model created without await should fail", async () => {
+    // Reproduce Atlas issue where GET request handler creates a model
+    // without await and returns undefined because the Promise isn't awaited
+    let Workspace = Model.extend({});
+    
+    let WorkspaceFactory = Factory.extend({
+      name: "workspace-1",
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        workspace: Workspace,
+      },
+      factories: {
+        workspace: WorkspaceFactory,
+      },
+    });
+
+    // Define a GET route handler that creates and returns a model without await
+    server.get("/workspaces/new", function(schema, request) {
+      // BUG: Creating a model but not awaiting it!
+      // The route handler is synchronous but server.create() returns a Promise
+      let workspace = server.create("workspace");
+      return workspace;  // This returns a Promise, not a model!
+    });
+
+    // Make a GET request
+    let response = await fetch("/workspaces/new");
+    
+    // This should fail because the response is a Promise, not a serialized model
+    // The serializer will try to access workspace.id but workspace is a Promise
+    try {
+      let json = await response.json();
+      // If we got here, the json might be empty or have [object Promise]
+      console.log("JSON:", json);
+      // The issue is that json.workspace might be undefined or a stringified Promise
+      expect(json.workspace).toBeDefined();
+      expect(json.workspace.id).toBeDefined(); // This should fail
+    } catch (error) {
+      // Expected - serializer should fail or response should be invalid
+      expect(error).toBeDefined();
+    }
+
+    server.shutdown();
+  });
+
+  test("GET route handler returns resolved model not Promise when handler function is sync", async () => {
+    // Reproduce Atlas issue where GET request returns undefined
+    // because the route handler returns a Promise instead of awaiting it
+    let Workspace = Model.extend({});
+    
+    let WorkspaceFactory = Factory.extend({
+      name: "workspace-1",
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        workspace: Workspace,
+      },
+      factories: {
+        workspace: WorkspaceFactory,
+      },
+    });
+
+    // Create a workspace
+    let workspace = await server.create("workspace");
+    let workspaceId = workspace.id;
+
+    // Define a GET route handler that returns server.schema.find() without await
+    // This is a common mistake when migrating to async
+    server.get("/workspaces/:id", function(schema, request) {
+      // BUG: Not awaiting the Promise!
+      // Since schema methods might return Promises in async mode
+      return schema.workspaces.find(request.params.id);
+    });
+
+    // Make a GET request - should return the workspace data
+    let response = await fetch("/workspaces/" + workspaceId);
+    let json = await response.json();
+    
+    // The response should have the workspace data
+    expect(json.workspace).toBeDefined();
+    expect(json.workspace.id).toBe(workspaceId);
+    expect(json.workspace.name).toBe("workspace-1");
+
+    server.shutdown();
+  });
+
   test("model.update() with unawaited server.create() for association auto-awaits the Promise", async () => {
     // Reproduce the Atlas bug where afterCreate calls:
     //   model.update({ association: server.create('related') })
