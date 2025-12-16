@@ -779,6 +779,221 @@ describe("Unit | Server #create", function () {
     server.shutdown();
   });
 
+  test("model.update() with unawaited server.create() for association auto-awaits the Promise", async () => {
+    // Reproduce the Atlas bug where afterCreate calls:
+    //   model.update({ association: server.create('related') })
+    // Without await, server.create() returns a Promise.
+    // Model.update() should detect this and auto-await it.
+    
+    let Organization = Model.extend({});
+    
+    let FeatureSet = Model.extend({});
+    
+    let Subscription = Model.extend({
+      organization: belongsTo(),
+      featureSet: belongsTo(),
+    });
+    
+    let FeatureSetFactory = Factory.extend({
+      name: 'Standard',
+    });
+    
+    let SubscriptionFactory = Factory.extend({
+      async afterCreate(subscription, server) {
+        // Missing await before server.create()!
+        // Model.update() should auto-await the Promise
+        await subscription.update({
+          featureSet: server.create('featureSet'),  // <-- Missing await, returns Promise
+        });
+        return subscription;
+      },
+    });
+    
+    let OrganizationFactory = Factory.extend({
+      name: 'Test Org',
+      async afterCreate(organization, server) {
+        await server.create('subscription', { organization });
+        return organization;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        organization: Organization,
+        subscription: Subscription,
+        featureSet: FeatureSet,
+      },
+      factories: {
+        organization: OrganizationFactory,
+        subscription: SubscriptionFactory,
+        featureSet: FeatureSetFactory,
+      },
+    });
+
+    // This should work now - update() will auto-await the Promise
+    let org = await server.create("organization");
+    expect(org.name).toBe("Test Org");
+    
+    // Check that the subscription was created with the feature set
+    let subscriptions = server.schema.subscriptions.all();
+    expect(subscriptions.length).toBe(1);
+    let subscription = subscriptions.models[0];
+    expect(subscription.featureSet).toBeDefined();
+    expect(subscription.featureSet.name).toBe("Standard");
+
+    server.shutdown();
+  });
+
+  test("model methods are available when updating associations in nested afterCreate with async factories", async () => {
+    // Reproduce the Atlas scenario more accurately:
+    // - organization-v2 has hasMany teams
+    // - team-v2 has belongsTo organization
+    // - team-v2 has async properties
+    // - team-v2 afterCreate creates a member and updates it
+    
+    let Organization = Model.extend({
+      teams: hasMany('team'),
+    });
+    
+    let Team = Model.extend({
+      organization: belongsTo(),
+    });
+    
+    let Member = Model.extend({});
+    
+    let MemberFactory = Factory.extend({
+      memberId: (i) => `member-${i}`,
+    });
+
+    let TeamFactory = Factory.extend({
+      name: async (i) => {
+        return Promise.resolve(`Team ${i + 1}`);
+      },
+      async afterCreate(team, server) {
+        // Create and update a member
+        let member = await server.create('member', {
+          memberId: team.id,
+        });
+        member.update({ memberName: team.name });
+        
+        return team;
+      },
+    });
+    
+    let OrganizationFactory = Factory.extend({
+      name: 'Test Org',
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        organization: Organization,
+        team: Team,
+        member: Member,
+      },
+      factories: {
+        organization: OrganizationFactory,
+        team: TeamFactory,
+        member: MemberFactory,
+      },
+    });
+
+    // Create organization with a team (which has async properties and nested creation)
+    let org = await server.create("organization");
+    let team = await server.create("team", { organization: org });
+
+    // The team should be created successfully
+    expect(team.name).toBe("Team 1");
+    expect(typeof team.hasInverseFor).toBe("function");
+    
+    // The org should have the team in its collection
+    expect(org.teams.models.length).toBe(1);
+
+    server.shutdown();
+  });
+
+  test("model.update() works correctly in nested afterCreate with async factory properties", async () => {
+    // Simulate the Atlas scenario: 
+    // - team-v2 factory has async properties (name, ssoTeamId)
+    // - team-v2 afterCreate creates a member-role-v2
+    // - member-role-v2 might call update() on associations
+    
+    let MemberFactory = Factory.extend({
+      memberId: (i) => `member-${i}`,
+      memberName: (i) => `Member ${i}`,
+    });
+
+    let TeamFactory = Factory.extend({
+      name: async (i) => {
+        return Promise.resolve(`Team ${i + 1}`);
+      },
+      async afterCreate(team, server) {
+        // Create a member in afterCreate
+        let member = await server.create('member', {
+          memberId: team.id,
+          memberName: team.name,
+        });
+        
+        // Try to update it (this is what happens in some Atlas scenarios)
+        member.update({ memberType: 'groups' });
+        
+        return team;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        team: Model,
+        member: Model,
+      },
+      factories: {
+        team: TeamFactory,
+        member: MemberFactory,
+      },
+    });
+
+    let team = await server.create("team");
+
+    // The team should be created successfully with its async name
+    expect(team.name).toBe("Team 1");
+    expect(typeof team.hasInverseFor).toBe("function");
+
+    server.shutdown();
+  });
+
+  test("model.update() works correctly in afterCreate with async factory properties", async () => {
+    let UserFactory = Factory.extend({
+      username: async (i) => {
+        return Promise.resolve(`user_${i + 1}`);
+      },
+      afterCreate(user) {
+        // This is a common pattern - updating the model in afterCreate
+        user.update({ username: `updated_${user.username}` });
+        return user;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        user: Model,
+      },
+      factories: {
+        user: UserFactory,
+      },
+    });
+
+    let user = await server.create("user");
+
+    // The model should have been updated in afterCreate
+    expect(user.username).toBe("updated_user_1");
+    expect(typeof user.hasInverseFor).toBe("function");
+
+    server.shutdown();
+  });
+
   test("create throws errors when using trait that is not defined and distinquishes between traits and non-traits", async () => {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
