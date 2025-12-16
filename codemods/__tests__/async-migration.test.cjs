@@ -285,6 +285,7 @@ Factory.extend({
 Factory.extend({
   async afterCreate(run, server) {
     const lastEvent = (await (await run.runEvents).models).get('lastObject');
+    return run;
   }
 });
   `.trim()
@@ -304,6 +305,7 @@ Factory.extend({
 Factory.extend({
   async afterCreate(project, server) {
     const first = (await (await project.runs).models)[0];
+    return project;
   }
 });
   `.trim()
@@ -323,6 +325,7 @@ Factory.extend({
 Factory.extend({
   async afterCreate(project, server) {
     const first = (await (await project.runs).models).firstObject;
+    return project;
   }
 });
   `.trim()
@@ -405,6 +408,7 @@ Factory.extend({
   withPosts: trait({
     async afterCreate(user, server) {
       await server.createList('post', 3, { user });
+      return user;
     }
   })
 });
@@ -427,6 +431,7 @@ Factory.extend({
   async afterCreate(user, server) {
     await user.update({ verified: true });
     await user.save();
+    return user;
   }
 });
   `.trim()
@@ -497,6 +502,7 @@ Factory.extend({
 Factory.extend({
   async afterCreate(project, server) {
     await project.latestRun.apply.update({ status: 'applied' });
+    return project;
   }
 });
   `.trim()
@@ -627,6 +633,7 @@ Factory.extend({
     (await (await project.runs).models).forEach(run => {
       console.log(run.id);
     });
+    return project;
   }
 });
   `.trim()
@@ -665,6 +672,7 @@ Factory.extend({
 Factory.extend({
   async afterCreate(organization, server) {
     (await server.schema.organizationMembershipV2s.where({ organizationId: organization.id })).models.forEach(async m => await m.destroy());
+    return organization;
   }
 });
   `.trim()
@@ -690,6 +698,87 @@ function runEventTimestamps(run, target) {
   });
   return timestamps;
 }
+  `.trim()
+);
+
+// Test 36: Async afterCreate should add return statement
+test(
+  'adds return statement to async afterCreate without explicit return',
+  `
+import { Factory } from 'miragejs';
+
+export default Factory.extend({
+  afterCreate(agentPool) {
+    agentPool.update({ organizationId: agentPool.organization.id });
+  }
+});
+  `.trim(),
+  `
+import { Factory } from 'miragejs';
+
+export default Factory.extend({
+  async afterCreate(agentPool) {
+    await agentPool.update({ organizationId: agentPool.organization.id });
+    return agentPool;
+  }
+});
+  `.trim()
+);
+
+// Test 37: Async afterCreate with existing return should not duplicate
+test(
+  'does not add return statement when afterCreate already returns',
+  `
+import { Factory } from 'miragejs';
+
+export default Factory.extend({
+  afterCreate(model) {
+    model.update({ foo: 'bar' });
+    return model;
+  }
+});
+  `.trim(),
+  `
+import { Factory } from 'miragejs';
+
+export default Factory.extend({
+  async afterCreate(model) {
+    await model.update({ foo: 'bar' });
+    return model;
+  }
+});
+  `.trim()
+);
+
+// Test 38: Trait afterCreate should also get return statement
+test(
+  'adds return statement to trait afterCreate',
+  `
+import { Factory, trait } from 'miragejs';
+
+export default Factory.extend({
+  withDefaults: trait({
+    async afterCreate(auditConfiguration) {
+      await auditConfiguration.update({
+        hcpAuditLogStreaming: { enabled: true }
+      });
+    }
+  })
+});
+  `.trim(),
+  `
+import { Factory, trait } from 'miragejs';
+
+export default Factory.extend({
+  withDefaults: trait({
+    async afterCreate(auditConfiguration) {
+      await auditConfiguration.update({
+        hcpAuditLogStreaming: { enabled: true }
+      });
+      return auditConfiguration;
+    }
+  })
+});
   `.trim()
 );
 

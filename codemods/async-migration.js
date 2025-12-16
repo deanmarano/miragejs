@@ -296,6 +296,59 @@ module.exports = function transformer(file, api) {
     });
   }
 
+  // Helper to ensure async afterCreate hooks return the model
+  // When afterCreate becomes async, it must explicitly return the model instance
+  // Otherwise the factory will return null/undefined instead of the created model
+  function ensureAfterCreateReturnsModel(func) {
+    if (!func.async || !func.body || func.body.type !== 'BlockStatement') {
+      return;
+    }
+
+    // Get the parameter name (e.g., 'model', 'agentPool', 'auditConfiguration')
+    if (!func.params || func.params.length === 0) {
+      return;
+    }
+
+    const paramName = func.params[0].name;
+    if (!paramName) {
+      return;
+    }
+
+    const body = func.body.body;
+    
+    // Check if function already has a return statement
+    function hasReturnStatement(statements) {
+      return statements.some(stmt => {
+        if (stmt.type === 'ReturnStatement') {
+          return true;
+        }
+        // Check in if statements
+        if (stmt.type === 'IfStatement') {
+          const consequentHasReturn = stmt.consequent && 
+            (stmt.consequent.type === 'ReturnStatement' ||
+             (stmt.consequent.type === 'BlockStatement' && 
+              hasReturnStatement(stmt.consequent.body)));
+          const alternateHasReturn = stmt.alternate && 
+            (stmt.alternate.type === 'ReturnStatement' ||
+             (stmt.alternate.type === 'BlockStatement' && 
+              hasReturnStatement(stmt.alternate.body)));
+          return consequentHasReturn || alternateHasReturn;
+        }
+        return false;
+      });
+    }
+
+    // If no return statement found, add one at the end
+    if (!hasReturnStatement(body)) {
+      body.push(
+        j.returnStatement(
+          j.identifier(paramName)
+        )
+      );
+      hasChanges = true;
+    }
+  }
+
   // Helper to wrap calls with await
   function addAwaitToCall(path) {
     const { callee } = path.value;
@@ -715,6 +768,7 @@ module.exports = function transformer(file, api) {
         
         addAwaitToCallsInFunction(handler);
         transformModelsAccess(handler);
+        ensureAfterCreateReturnsModel(handler);
       }
     }
   });
@@ -750,6 +804,7 @@ module.exports = function transformer(file, api) {
               
               addAwaitToCallsInFunction(handler);
               transformModelsAccess(handler);
+              ensureAfterCreateReturnsModel(handler);
             }
           }
         }
