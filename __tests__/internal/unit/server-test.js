@@ -718,7 +718,68 @@ describe("Unit | Server #create", function () {
     server.shutdown();
   });
 
-  test("create throws errors when using trait that is not defined and distinquishes between traits and non-traits", () => {
+  test("destructuring properties from created model works correctly", async () => {
+    let UserFactory = Factory.extend({
+      username: "testuser",
+      email: "test@example.com",
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        user: Model,
+      },
+      factories: {
+        user: UserFactory,
+      },
+    });
+
+    let user = await server.create("user");
+    let { id, username } = user;
+
+    // Properties should be actual values, not Promises
+    expect(typeof id).toBe("string");
+    expect(typeof username).toBe("string");
+    expect(username).toBe("testuser");
+    expect(`Admin Users ${username}`).toBe("Admin Users testuser");
+
+    server.shutdown();
+  });
+
+  test("async factory property functions are awaited during create", async () => {
+    let UserFactory = Factory.extend({
+      username: async (i) => {
+        // Simulate async operation like calling chance.first()
+        return Promise.resolve(`user_${i + 1}`);
+      },
+      email() {
+        return `${this.username}@example.com`;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      models: {
+        user: Model,
+      },
+      factories: {
+        user: UserFactory,
+      },
+    });
+
+    let user = await server.create("user");
+    let { id, username } = user;
+
+    // Properties from async functions should be resolved values, not Promises
+    expect(typeof username).toBe("string");
+    expect(username).toBe("user_1");
+    expect(username).not.toContain("[object Promise]");
+    expect(`Admin Users ${username}`).toBe("Admin Users user_1");
+
+    server.shutdown();
+  });
+
+  test("create throws errors when using trait that is not defined and distinquishes between traits and non-traits", async () => {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
 
@@ -739,9 +800,9 @@ describe("Unit | Server #create", function () {
       },
     });
 
-    expect(() => {
-      server.create("article", "private");
-    }).toThrow("'private' trait is not registered in 'article' factory");
+    await expect(async () => {
+      await server.create("article", "private");
+    }).rejects.toThrow("'private' trait is not registered in 'article' factory");
 
     server.shutdown();
   });
@@ -1038,7 +1099,7 @@ describe("Unit | Server #createList", function () {
     });
   });
 
-  test("createList throws errors when using trait that is not defined and distinquishes between traits and non-traits", () => {
+  test("createList throws errors when using trait that is not defined and distinquishes between traits and non-traits", async () => {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
 
@@ -1056,12 +1117,12 @@ describe("Unit | Server #createList", function () {
       article: ArticleFactory,
     });
 
-    expect(() => {
-      server.createList("article", 2, "private");
-    }).toThrow("'private' trait is not registered in 'article' factory");
+    await expect(async () => {
+      await server.createList("article", 2, "private");
+    }).rejects.toThrow("'private' trait is not registered in 'article' factory");
   });
 
-  test("createList throws an error if the second argument is not an integer", () => {
+  test("createList throws an error if the second argument is not an integer", async () => {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
 
@@ -1075,9 +1136,9 @@ describe("Unit | Server #createList", function () {
       article: ArticleFactory,
     });
 
-    expect(() => {
-      server.createList("article", "published");
-    }).toThrow(
+    await expect(async () => {
+      await server.createList("article", "published");
+    }).rejects.toThrow(
       "Mirage: second argument has to be an integer, you passed: string"
     );
   });
@@ -1401,7 +1462,7 @@ describe("Unit | Server #build", function () {
     });
   });
 
-  test("build throws errors when using trait that is not defined and distinquishes between traits and non-traits", () => {
+  test("build throws errors when using trait that is not defined and distinquishes between traits and non-traits", async () => {
     server.config({
       factories: {
         article: Factory.extend({
@@ -1419,12 +1480,12 @@ describe("Unit | Server #build", function () {
       },
     });
 
-    expect(() => {
-      server.build("article", "private");
-    }).toThrow("'private' trait is not registered in 'article' factory");
+    await expect(async () => {
+      await server.build("article", "private");
+    }).rejects.toThrow("'private' trait is not registered in 'article' factory");
   });
 
-  test("build does not build objects and throws error if model is not registered and association helper is used", () => {
+  test("build does not build objects and throws error if model is not registered and association helper is used", async () => {
     server.config({
       factories: {
         article: Factory.extend({
@@ -1450,12 +1511,12 @@ describe("Unit | Server #build", function () {
       },
     });
 
-    expect(() => {
-      server.build("article", "withCategory");
-    }).toThrow("Mirage: Model not registered: article");
+    await expect(async () => {
+      await server.build("article", "withCategory");
+    }).rejects.toThrow("Mirage: Model not registered: article");
   });
 
-  test("build does not build objects and throws error if model for given association is not registered", () => {
+  test("build does not build objects and throws error if model for given association is not registered", async () => {
     server.config({
       factories: {
         article: Factory.extend({
@@ -1481,9 +1542,9 @@ describe("Unit | Server #build", function () {
       },
     });
 
-    expect(() => {
-      server.build("article", "withCategory");
-    }).toThrow(
+    await expect(async () => {
+      await server.build("article", "withCategory");
+    }).rejects.toThrow(
       "Mirage: You're using the `association` factory helper on the 'category' attribute of your article factory, but that attribute is not a `belongsTo` association."
     );
   });
@@ -1629,7 +1690,7 @@ describe("Unit | Server #buildList", function () {
     });
   });
 
-  test("buildList throws errors when using trait that is not defined and distinquishes between traits and non-traits", () => {
+  test("buildList throws errors when using trait that is not defined and distinquishes between traits and non-traits", async () => {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
 
@@ -1647,12 +1708,12 @@ describe("Unit | Server #buildList", function () {
       article: ArticleFactory,
     });
 
-    expect(() => {
-      server.buildList("article", 2, "private");
-    }).toThrow("'private' trait is not registered in 'article' factory");
+    await expect(async () => {
+      await server.buildList("article", 2, "private");
+    }).rejects.toThrow("'private' trait is not registered in 'article' factory");
   });
 
-  test("buildList throws an error if the second argument is not an integer", function () {
+  test("buildList throws an error if the second argument is not an integer", async function () {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
 
@@ -1666,9 +1727,9 @@ describe("Unit | Server #buildList", function () {
       article: ArticleFactory,
     });
 
-    expect(() => {
-      server.buildList("article", "published");
-    }).toThrow(
+    await expect(async () => {
+      await server.buildList("article", "published");
+    }).rejects.toThrow(
       "Mirage: second argument has to be an integer, you passed: string"
     );
   });
