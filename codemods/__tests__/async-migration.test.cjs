@@ -632,4 +632,65 @@ Factory.extend({
   `.trim()
 );
 
+// Test 33: (await association).models should NOT be transformed
+test(
+  'does not transform (await association).models pattern',
+  `
+Factory.extend({
+  async afterCreate(run, server) {
+    let { createdAt } = (await run.runEvents).models.get('lastObject');
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(run, server) {
+    let { createdAt } = (await run.runEvents).models.get('lastObject');
+  }
+});
+  `.trim()
+);
+
+// Test 34: forEach with model.destroy() in callback
+test(
+  'handles forEach with model.destroy() correctly',
+  `
+Factory.extend({
+  async afterCreate(organization, server) {
+    (await server.schema.organizationMembershipV2s.where({ organizationId: organization.id })).models.forEach(m => m.destroy());
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(organization, server) {
+    (await server.schema.organizationMembershipV2s.where({ organizationId: organization.id })).models.forEach(async m => await m.destroy());
+  }
+});
+  `.trim()
+);
+
+// Test 35: Function accessing .models on parameter should not be made async
+test(
+  'does not make function async when accessing .models on parameter',
+  `
+function runEventTimestamps(run, target) {
+  let timestamps = {};
+  run.runEvents.models.forEach(event => {
+    timestamps[event.action] = event.createdAt;
+  });
+  return timestamps;
+}
+  `.trim(),
+  `
+function runEventTimestamps(run, target) {
+  let timestamps = {};
+  run.runEvents.models.forEach(event => {
+    timestamps[event.action] = event.createdAt;
+  });
+  return timestamps;
+}
+  `.trim()
+);
+
 console.log('\n✅ All tests completed!');

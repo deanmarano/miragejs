@@ -224,10 +224,36 @@ module.exports = function transformer(file, api) {
         return;
       }
       
-      // Skip if association is an awaited CallExpression
-      if (association.type === 'AwaitExpression' && 
-          association.argument && association.argument.type === 'CallExpression') {
-        return;
+      // Skip if association is an awaited CallExpression or MemberExpression
+      if (association.type === 'AwaitExpression' && association.argument) {
+        const argType = association.argument.type;
+        if (argType === 'CallExpression' || argType === 'MemberExpression') {
+          return;
+        }
+      }
+      
+      // Skip if accessing .models on a parameter in a non-Mirage function
+      // Check if the function doesn't have server/schema parameters (utility function)
+      // Pattern: run.runEvents.models where run is the function parameter
+      const funcParams = node.params || [];
+      const hasServerParam = funcParams.some(p => 
+        p.type === 'Identifier' && (p.name === 'server' || p.name === 'schema' || p.name === 'schemas')
+      );
+      
+      if (!hasServerParam) {
+        // This function doesn't have server/schema params, likely a utility function
+        // Skip transforming .models access on what looks like model parameters
+        let root = association;
+        while (root.type === 'MemberExpression' && root.object) {
+          root = root.object;
+        }
+        if (root.type === 'Identifier') {
+          // Common model param names that shouldn't trigger async in utility functions
+          const modelParamPattern = /^(run|project|organization|workspace|model|user|team|entity|record)$/i;
+          if (modelParamPattern.test(root.name)) {
+            return;
+          }
+        }
       }
       
       // Check if this .models access is in the immediate function body or inside a nested function
@@ -458,12 +484,16 @@ module.exports = function transformer(file, api) {
         return;
       }
       
-      // Skip if the association is an AwaitExpression wrapping a CallExpression
-      // Pattern: (await server.schema.projects.where(...)).models
+      // Skip if the association is an AwaitExpression wrapping a CallExpression or MemberExpression
+      // Patterns: 
+      // - (await server.schema.projects.where(...)).models
+      // - (await run.runEvents).models
       // The await already returns the resolved collection, no need to wrap again
-      if (association.type === 'AwaitExpression' && 
-          association.argument && association.argument.type === 'CallExpression') {
-        return;
+      if (association.type === 'AwaitExpression' && association.argument) {
+        const argType = association.argument.type;
+        if (argType === 'CallExpression' || argType === 'MemberExpression') {
+          return;
+        }
       }
       
       // Skip if the association contains optional chaining (OptionalMemberExpression)
