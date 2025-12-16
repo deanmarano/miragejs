@@ -547,6 +547,177 @@ describe("Unit | Server #create", function () {
     server.shutdown();
   });
 
+  test("create handles async afterCreate callbacks", async () => {
+    let CommentFactory = Factory.extend({
+      content: "content",
+    });
+    let ArticleFactory = Factory.extend({
+      title: "Lorem ipsum",
+
+      withComments: trait({
+        async afterCreate(article, server) {
+          await server.createList("comment", 3, { article });
+        },
+      }),
+    });
+
+    let server = new Server({
+      environment: "test",
+      factories: {
+        article: ArticleFactory,
+        comment: CommentFactory,
+      },
+    });
+
+    let articleWithComments = await server.create("article", "withComments");
+
+    expect(articleWithComments).toEqual({ id: "1", title: "Lorem ipsum" });
+    expect(server.db.comments).toHaveLength(3);
+
+    server.shutdown();
+  });
+
+  test("create uses return value from async afterCreate when model is returned", async () => {
+    let ArticleFactory = Factory.extend({
+      title: "Lorem ipsum",
+      status: "draft",
+
+      async afterCreate(article, server) {
+        // Simulate async operation that modifies and returns the model
+        await new Promise((resolve) => setTimeout(resolve, 1));
+        article.status = "published";
+        return article;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      factories: {
+        article: ArticleFactory,
+      },
+    });
+
+    let article = await server.create("article");
+
+    expect(article).toEqual({
+      id: "1",
+      title: "Lorem ipsum",
+      status: "published",
+    });
+
+    server.shutdown();
+  });
+
+  test("create uses return value from async afterCreate in trait when model is returned", async () => {
+    let ArticleFactory = Factory.extend({
+      title: "Lorem ipsum",
+      status: "draft",
+
+      published: trait({
+        async afterCreate(article, server) {
+          await new Promise((resolve) => setTimeout(resolve, 1));
+          article.status = "published";
+          article.publishedAt = "2024-01-01";
+          return article;
+        },
+      }),
+    });
+
+    let server = new Server({
+      environment: "test",
+      factories: {
+        article: ArticleFactory,
+      },
+    });
+
+    let article = await server.create("article", "published");
+
+    expect(article).toEqual({
+      id: "1",
+      title: "Lorem ipsum",
+      status: "published",
+      publishedAt: "2024-01-01",
+    });
+
+    server.shutdown();
+  });
+
+  test("create handles sync afterCreate callbacks that return models", async () => {
+    let ArticleFactory = Factory.extend({
+      title: "Lorem ipsum",
+      status: "draft",
+
+      afterCreate(article, server) {
+        article.status = "modified";
+        return article;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      factories: {
+        article: ArticleFactory,
+      },
+    });
+
+    let article = await server.create("article");
+
+    expect(article).toEqual({
+      id: "1",
+      title: "Lorem ipsum",
+      status: "modified",
+    });
+
+    server.shutdown();
+  });
+
+  test("create handles multiple async afterCreate callbacks in order", async () => {
+    let executionOrder = [];
+    let ArticleFactory = Factory.extend({
+      title: "Lorem ipsum",
+      count: 0,
+
+      firstTrait: trait({
+        async afterCreate(article, server) {
+          await new Promise((resolve) => setTimeout(resolve, 10));
+          executionOrder.push("first");
+          article.count = article.count + 1;
+          return article;
+        },
+      }),
+
+      secondTrait: trait({
+        async afterCreate(article, server) {
+          await new Promise((resolve) => setTimeout(resolve, 5));
+          executionOrder.push("second");
+          article.count = article.count + 10;
+          return article;
+        },
+      }),
+
+      async afterCreate(article, server) {
+        executionOrder.push("base");
+        article.count = article.count + 100;
+        return article;
+      },
+    });
+
+    let server = new Server({
+      environment: "test",
+      factories: {
+        article: ArticleFactory,
+      },
+    });
+
+    let article = await server.create("article", "firstTrait", "secondTrait");
+
+    // Base afterCreate runs first, then trait callbacks in order
+    expect(executionOrder).toEqual(["base", "first", "second"]);
+    expect(article.count).toBe(111);
+
+    server.shutdown();
+  });
+
   test("create throws errors when using trait that is not defined and distinquishes between traits and non-traits", () => {
     let ArticleFactory = Factory.extend({
       title: "Lorem ipsum",
