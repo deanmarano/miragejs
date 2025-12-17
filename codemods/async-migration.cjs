@@ -203,6 +203,38 @@ module.exports = function transformer(file, api) {
           }
         }
       }
+      
+      // Check for Collection methods (sort, filter, where) with async functions
+      // Pattern: collection.sort(async (a,b) => ...) or collection.filter(async item => ...)
+      if (callee.type === 'MemberExpression' &&
+          callee.property.type === 'Identifier' &&
+          (callee.property.name === 'sort' || 
+           callee.property.name === 'filter' || 
+           callee.property.name === 'where')) {
+        const firstArg = callPath.value.arguments[0];
+        if (firstArg && 
+            (firstArg.type === 'ArrowFunctionExpression' || 
+             firstArg.type === 'FunctionExpression') &&
+            firstArg.async === true) {
+          // Check if call is in immediate function body or inside a nested function
+          let currentPath = callPath.parent;
+          let isInNestedFunction = false;
+          while (currentPath && currentPath.value !== node) {
+            if ((currentPath.value.type === 'FunctionExpression' ||
+                 currentPath.value.type === 'ArrowFunctionExpression' ||
+                 currentPath.value.type === 'FunctionDeclaration') &&
+                currentPath.value !== node) {
+              isInNestedFunction = true;
+              break;
+            }
+            currentPath = currentPath.parent;
+          }
+          // Only mark as needing async if not in nested function
+          if (!isInNestedFunction) {
+            needsAsync = true;
+          }
+        }
+      }
     });
     
     // Check for .models access on associations
@@ -470,6 +502,25 @@ module.exports = function transformer(file, api) {
           (args[0].name === 'schema' || args[0].name === 'schemas') &&
           args[1].type === 'Identifier' && 
           args[1].name === 'request') {
+        shouldAwait = true;
+      }
+    }
+    
+    // Check for Collection methods (sort, filter, where) with async functions
+    // Pattern: collection.sort(async (a, b) => {...})
+    // Pattern: collection.filter(async (item) => {...})
+    // Pattern: collection.where(async (item) => {...})
+    if (callee.type === 'MemberExpression' &&
+        callee.property.type === 'Identifier' &&
+        (callee.property.name === 'sort' || 
+         callee.property.name === 'filter' || 
+         callee.property.name === 'where')) {
+      // Check if the first argument is an async function
+      const firstArg = path.value.arguments[0];
+      if (firstArg && 
+          (firstArg.type === 'ArrowFunctionExpression' || 
+           firstArg.type === 'FunctionExpression') &&
+          firstArg.async === true) {
         shouldAwait = true;
       }
     }

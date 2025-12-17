@@ -782,4 +782,196 @@ export default Factory.extend({
   `.trim()
 );
 
+// Test 39: Add await to server.create() in test scenarios
+test(
+  'adds await to unawaited server.create() calls',
+  `
+test('creates a user', function() {
+  let user = server.create('user');
+  visit('/users/' + user.id);
+});
+  `.trim(),
+  `
+test('creates a user', async function() {
+  let user = await server.create('user');
+  visit('/users/' + user.id);
+});
+  `.trim()
+);
+
+// Test 40: Add await to this.server.create() calls
+test(
+  'adds await to this.server.create() calls',
+  `
+test('creates a user', function() {
+  let user = this.server.create('user');
+  expect(user.name).toBe('John');
+});
+  `.trim(),
+  `
+test('creates a user', async function() {
+  let user = await this.server.create('user');
+  expect(user.name).toBe('John');
+});
+  `.trim()
+);
+
+// Test 41: Add await to server.createList() calls
+test(
+  'adds await to unawaited server.createList() calls',
+  `
+test('creates multiple users', function() {
+  let users = server.createList('user', 5);
+  expect(users.length).toBe(5);
+});
+  `.trim(),
+  `
+test('creates multiple users', async function() {
+  let users = await server.createList('user', 5);
+  expect(users.length).toBe(5);
+});
+  `.trim()
+);
+
+// Test 42: Add await to server.create in beforeEach hooks
+test(
+  'adds await to server.create in beforeEach hooks',
+  `
+module('test suite', function(hooks) {
+  hooks.beforeEach(function() {
+    this.user = this.server.create('user');
+  });
+  
+  test('uses user', function() {
+    expect(this.user.id).toBe('1');
+  });
+});
+  `.trim(),
+  `
+module('test suite', function(hooks) {
+  hooks.beforeEach(async function() {
+    this.user = await this.server.create('user');
+  });
+  
+  test('uses user', function() {
+    expect(this.user.id).toBe('1');
+  });
+});
+  `.trim()
+);
+
+// Test 43: Handle multiple server.create calls in one function
+test(
+  'adds await to multiple server.create calls',
+  `
+test('creates multiple models', function() {
+  let user = server.create('user');
+  let post = server.create('post', { author: user });
+  expect(post.author.id).toBe(user.id);
+});
+  `.trim(),
+  `
+test('creates multiple models', async function() {
+  let user = await server.create('user');
+  let post = await server.create('post', { author: user });
+  expect(post.author.id).toBe(user.id);
+});
+  `.trim()
+);
+
+// Test 44: Skip already awaited calls
+test(
+  'does not add await when server.create is already awaited',
+  `
+test('creates a user', async function() {
+  let user = await server.create('user');
+  expect(user.id).toBe('1');
+});
+  `.trim(),
+  `
+test('creates a user', async function() {
+  let user = await server.create('user');
+  expect(user.id).toBe('1');
+});
+  `.trim()
+);
+
+// Test 45: Handle server.create without variable assignment
+test(
+  'adds await to server.create without assignment',
+  `
+test('creates a user', function() {
+  server.create('user');
+  visit('/users');
+});
+  `.trim(),
+  `
+test('creates a user', async function() {
+  await server.create('user');
+  visit('/users');
+});
+  `.trim()
+);
+
+// Test: Collection methods with async functions
+test(
+  'adds await to collection.sort() with async comparator',
+  `
+export function index({ workspaceV2s }) {
+  let workspaces = workspaceV2s.all();
+  return workspaces.sort(async (a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+}
+  `.trim(),
+  `
+export async function index({ workspaceV2s }) {
+  let workspaces = await workspaceV2s.all();
+  return await workspaces.sort(async (a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+}
+  `.trim()
+);
+
+test(
+  'adds await to collection.filter() with async predicate',
+  `
+export function filter({ projectV2s }) {
+  let projects = projectV2s.all();
+  projects = projects.filter(async project => {
+    return project.isActive === true;
+  });
+  return projects;
+}
+  `.trim(),
+  `
+export async function filter({ projectV2s }) {
+  let projects = await projectV2s.all();
+  projects = await projects.filter(async project => {
+    return project.isActive === true;
+  });
+  return projects;
+}
+  `.trim()
+);
+
+test(
+  'adds await to schema.where() with async predicate',
+  `
+export function where({ varV2s }) {
+  return varV2s.where(async function (v) {
+    return v.someCondition === true;
+  });
+}
+  `.trim(),
+  `
+export async function where({ varV2s }) {
+  return await varV2s.where(async function (v) {
+    return v.someCondition === true;
+  });
+}
+  `.trim()
+);
+
 console.log('\n✅ All tests completed!');
