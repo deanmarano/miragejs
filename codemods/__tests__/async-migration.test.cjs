@@ -16,21 +16,31 @@ function applyTransform(source) {
   return transform({ path: 'test.js', source }, api) || source;
 }
 
-function test(name, input, expected) {
+function test(name, input, expected, expectFailure = false) {
   const result = applyTransform(input);
   // Normalize whitespace, semicolons, and trailing commas for comparison
   const normalize = (str) => str.replace(/\s+/g, ' ').replace(/[;,]/g, '').trim();
   const passed = normalize(result) === normalize(expected);
   
-  if (passed) {
-    console.log(`✓ ${name}`);
+  if (expectFailure) {
+    // For known limitations, we expect the test to fail (codemod doesn't produce expected output)
+    if (!passed) {
+      console.log(`✓ ${name} (known limitation - fails as expected)`);
+    } else {
+      console.log(`✗ ${name} (expected to fail but passed - limitation may be fixed!)`);
+      console.log('This known limitation test is now passing. Consider moving it to regular tests.');
+    }
   } else {
-    console.log(`✗ ${name}`);
-    console.log('Expected:');
-    console.log(expected);
-    console.log('\nGot:');
-    console.log(result);
-    console.log('\n');
+    if (passed) {
+      console.log(`✓ ${name}`);
+    } else {
+      console.log(`✗ ${name}`);
+      console.log('Expected:');
+      console.log(expected);
+      console.log('\nGot:');
+      console.log(result);
+      console.log('\n');
+    }
   }
 }
 
@@ -1169,45 +1179,70 @@ Factory.extend({
   `.trim()
 );
 
-// Known limitation: Model relationship properties need manual awaiting
-// The codemod cannot distinguish between regular properties and relationships
-// TODO: Add relationship detection or require explicit hints
-// test(
-//   'awaits model property access in conditional',
-//   `
-// export function show({ sessions }, { params }) {
-//   let session = sessions.find(params.id);
-//   if (session && session.user) {
-//     return session.user;
-//   }
-//   return notFound();
-// }
-//   `.trim(),
-//   `
-// export async function show({ sessions }, { params }) {
-//   let session = await sessions.find(params.id);
-//   if (session && (await session.user)) {
-//     return await session.user;
-//   }
-//   return notFound();
-// }
-//   `.trim()
-// );
+// ============================================================================
+// KNOWN LIMITATIONS - Tests that demonstrate patterns we cannot handle yet
+// ============================================================================
 
-// test(
-//   'awaits relationship property on model',
-//   `
-// this.get('/api/runs/:id/permissions', function({ runs }, request) {
-//   let run = runs.find(request.params.id);
-//   return run.permissions;
-// });
-//   `.trim(),
-//   `
-// this.get('/api/runs/:id/permissions', async function({ runs }, request) {
-//   let run = await runs.find(request.params.id);
-//   return await run.permissions;
-// });
-//   `.trim()
-// );
+test(
+  'KNOWN LIMITATION: does not await relationship property in conditional',
+  `
+export function show({ sessions }, { params }) {
+  let session = sessions.find(params.id);
+  if (session && session.user) {
+    return session.user;
+  }
+  return notFound();
+}
+  `.trim(),
+  `
+export async function show({ sessions }, { params }) {
+  let session = await sessions.find(params.id);
+  if (session && (await session.user)) {
+    return await session.user;
+  }
+  return notFound();
+}
+  `.trim(),
+  true // expectFailure flag
+);
 
-console.log('\n✅ All tests completed!');
+test(
+  'KNOWN LIMITATION: does not await relationship property on model',
+  `
+this.get('/api/runs/:id/permissions', function({ runs }, request) {
+  let run = runs.find(request.params.id);
+  return run.permissions;
+});
+  `.trim(),
+  `
+this.get('/api/runs/:id/permissions', async function({ runs }, request) {
+  let run = await runs.find(request.params.id);
+  return await run.permissions;
+});
+  `.trim(),
+  true // expectFailure flag
+);
+
+test(
+  'KNOWN LIMITATION: does not await nested relationship access',
+  `
+this.get('/api/workspaces/:id/owner', function({ workspaces }, request) {
+  let workspace = workspaces.find(request.params.id);
+  return workspace.organization.owner;
+});
+  `.trim(),
+  `
+this.get('/api/workspaces/:id/owner', async function({ workspaces }, request) {
+  let workspace = await workspaces.find(request.params.id);
+  return await workspace.organization.owner;
+});
+  `.trim(),
+  true // expectFailure flag
+);
+
+console.log('\n' + '='.repeat(70));
+console.log('✅ Test run completed!');
+console.log('='.repeat(70));
+console.log('Note: Tests marked "known limitation" are expected to fail.');
+console.log('These document patterns the codemod cannot handle automatically.');
+console.log('='.repeat(70));
