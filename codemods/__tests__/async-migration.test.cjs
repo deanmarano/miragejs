@@ -13,32 +13,38 @@ const transform = require('../async-migration.cjs');
 const mockModelRelationships = new Map([
   ['user', new Set(['organization', 'teams', 'workspaces'])],
   ['users', new Set(['organization', 'teams', 'workspaces'])],
-  ['run', new Set(['workspace', 'plan', 'apply', 'createdBy', 'permissions'])],
-  ['runs', new Set(['workspace', 'plan', 'apply', 'createdBy', 'permissions'])],
-  ['workspace', new Set(['organization', 'runs', 'currentRun'])],
-  ['workspaces', new Set(['organization', 'runs', 'currentRun', 'owner'])],
-  ['organization', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner'])],
-  ['organizations', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner'])],
+  ['run', new Set(['workspace', 'plan', 'apply', 'createdBy', 'permissions', 'runEvents'])],
+  ['runs', new Set(['workspace', 'plan', 'apply', 'createdBy', 'permissions', 'runEvents'])],
+  ['workspace', new Set(['organization', 'runs', 'currentRun', 'project'])],
+  ['workspaces', new Set(['organization', 'runs', 'currentRun', 'owner', 'project'])],
+  ['organization', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner', 'oauthClients'])],
+  ['organizations', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner', 'oauthClients'])],
+  ['oauthClient', new Set(['oauthTokens'])],
+  ['oauthClients', new Set(['oauthTokens'])],
+  ['oauthToken', new Set(['authorizedRepos'])],
+  ['oauthTokens', new Set(['authorizedRepos'])],
   ['model', new Set(['workspace', 'user'])],
   ['models', new Set(['workspace', 'user'])],
   ['session', new Set(['user'])],
   ['sessions', new Set(['user'])],
+  ['project', new Set(['workspace', 'organization', 'runs'])],
+  ['projects', new Set(['workspace', 'organization', 'runs'])],
 ]);
 
-function applyTransform(source) {
+function applyTransform(source, filepath = 'test.js') {
   const api = {
     jscodeshift: jscodeshift.withParser('babel'),
   };
   // Pass mock relationships through file object
   return transform({ 
-    path: 'test.js', 
+    path: filepath, 
     source,
     _mockModelRelationships: mockModelRelationships 
   }, api) || source;
 }
 
-function test(name, input, expected, expectFailure = false) {
-  const result = applyTransform(input);
+function test(name, input, expected, expectFailure = false, filepath = 'test.js') {
+  const result = applyTransform(input, filepath);
   // Normalize whitespace, semicolons, and trailing commas for comparison
   const normalize = (str) => str.replace(/\s+/g, ' ').replace(/[;,]/g, '').trim();
   const passed = normalize(result) === normalize(expected);
@@ -315,11 +321,13 @@ Factory.extend({
   `
 Factory.extend({
   async afterCreate(run, server) {
-    const lastEvent = (await (await run.runEvents).models).get('lastObject');
+    const lastEvent = (await run.runEvents).models.get('lastObject');
     return run;
   }
 });
-  `.trim()
+  `.trim(),
+  false,
+  'factories/run.js' // Pass factory filename as context
 );
 
 // Test 13: Association .models with array index
@@ -335,11 +343,13 @@ Factory.extend({
   `
 Factory.extend({
   async afterCreate(project, server) {
-    const first = (await (await project.runs).models)[0];
+    const first = (await project.runs).models[0];
     return project;
   }
 });
-  `.trim()
+  `.trim(),
+  false,
+  'factories/project.js' // Pass factory filename as context
 );
 
 // Test 14: Association .models with .firstObject
@@ -355,11 +365,13 @@ Factory.extend({
   `
 Factory.extend({
   async afterCreate(project, server) {
-    const first = (await (await project.runs).models).firstObject;
+    const first = (await project.runs).models.firstObject;
     return project;
   }
 });
-  `.trim()
+  `.trim(),
+  false,
+  'factories/project.js' // Pass factory filename as context
 );
 
 // Test 15: Awaited where() with .models should only await once
@@ -661,13 +673,15 @@ Factory.extend({
   `
 Factory.extend({
   async afterCreate(project, server) {
-    (await (await project.runs).models).forEach(run => {
+    (await project.runs).models.forEach(run => {
       console.log(run.id);
     });
     return project;
   }
 });
-  `.trim()
+  `.trim(),
+  false,
+  'factories/project.js' // Pass factory filename as context
 );
 
 // Test 33: (await association).models should NOT be transformed
@@ -1249,7 +1263,7 @@ this.get('/api/workspaces/:id/owner', function({ workspaces }, request) {
   `
 this.get('/api/workspaces/:id/owner', async function({ workspaces }, request) {
   let workspace = await workspaces.find(request.params.id);
-  return await workspace.organization.owner;
+  return await (await workspace.organization).owner;
 });
   `.trim()
 );
@@ -1572,6 +1586,74 @@ this.get('/projects/:id', async function({ projects }, request) {
   return project;
 });
   `.trim()
+);
+
+// Test awaiting relationship access inside array literals
+test(
+  'awaits relationship access inside array literals',
+  `
+this.post('/varsets', async function({ workspaces }, request) {
+  let workspace = await workspaces.find(request.params.id);
+  
+  let varset = await this.create('varset-v2', {
+    name: 'test-varset',
+    projects: [workspace.project],
+  });
+  
+  return varset;
+});
+  `.trim(),
+  `
+this.post('/varsets', async function({ workspaces }, request) {
+  let workspace = await workspaces.find(request.params.id);
+  
+  let varset = await this.create('varset-v2', {
+    name: 'test-varset',
+    projects: [await workspace.project],
+  });
+  
+  return varset;
+});
+  `.trim()
+);
+
+// Test chained relationship access with .models
+test(
+  'awaits chained relationship access correctly',
+  `
+this.post('/workspaces', function(schema) {
+  schema.workspaces.create({
+    async afterCreate(workspace, server) {
+      if (!workspace.organization || !workspace.organization.oauthClients.models[0]) {
+        await server.create('vcs-repo-v2', { workspace });
+        return;
+      }
+      
+      let oauthClient = workspace.organization.oauthClients.models[0];
+      let oauthToken = oauthClient.oauthTokens.models[0];
+      let authorizedRepo = oauthToken.authorizedRepos.models[0];
+    }
+  });
+});
+  `.trim(),
+  `
+this.post('/workspaces', async function(schema) {
+  await schema.workspaces.create({
+    async afterCreate(workspace, server) {
+      if (!(await workspace.organization) || !(await (await workspace.organization).oauthClients).models[0]) {
+        await server.create('vcs-repo-v2', { workspace });
+        return;
+      }
+      
+      let oauthClient = (await (await workspace.organization).oauthClients).models[0];
+      let oauthToken = (await (await oauthClient).oauthTokens).models[0];
+      let authorizedRepo = (await (await oauthToken).authorizedRepos).models[0];
+    }
+  });
+});
+  `.trim(),
+  false,
+  'factories/workspace.js' // Pass factory filename as context
 );
 
 console.log('\n' + '='.repeat(70));

@@ -33,6 +33,7 @@ const asyncSchemaMethods = new Set([
   'find',
   'findBy',
   'findOrCreateBy',
+  'findWhere',
   'where',
   'first',
   'new'
@@ -687,11 +688,192 @@ module.exports = function transformer(file, api) {
     });
   }
 
+  // Helper to recursively build awaited member expression chains
+  // Breaks down workspace.organization.oauthClients into proper awaited steps
+  function buildAwaitedMemberChain(expr, modelVariables, modelRelationshipMap, parameterModels = new Set()) {
+    // Base case: identifier - if it's a model variable (but not a parameter), wrap in await
+    if (expr.type === 'Identifier') {
+      if (modelVariables.has(expr.name) && !parameterModels.has(expr.name)) {
+        return j.awaitExpression(expr);
+      }
+      return expr;
+    }
+    
+    // Base case: not a member expression
+    if (expr.type !== 'MemberExpression') {
+      return expr;
+    }
+    
+    // First, determine the type of the object (what we're accessing the property on)
+    let objectType = null;
+    
+    // If the object is an identifier, check if it's a tracked model variable
+    if (expr.object.type === 'Identifier' && modelVariables.has(expr.object.name)) {
+      objectType = modelVariables.get(expr.object.name);
+    }
+    // If the object is a member expression, we need to trace through the chain
+    else if (expr.object.type === 'MemberExpression') {
+      // Walk up the chain to find the root variable and trace through relationships
+      const chain = [];
+      let current = expr.object;
+      while (current.type === 'MemberExpression') {
+        chain.unshift(current.property.name);
+        current = current.object;
+      }
+      if (current.type === 'Identifier' && modelVariables.has(current.name)) {
+        // Now trace through the relationships to determine the final type
+        objectType = modelVariables.get(current.name);
+        for (const propName of chain) {
+          if (objectType && modelRelationshipMap.has(objectType)) {
+            const relationships = modelRelationshipMap.get(objectType);
+            if (relationships.has(propName)) {
+              // The relationship name becomes the new type (e.g., organization relationship -> organization type)
+              // Try singular and plural forms
+              objectType = propName;
+              // If the plural form exists in the map, keep it; otherwise try to find singular
+              if (!modelRelationshipMap.has(objectType)) {
+                // Try to find in the map by checking both singular and plural
+                const singularForm = propName.endsWith('s') ? propName.slice(0, -1) : propName;
+                if (modelRelationshipMap.has(singularForm)) {
+                  objectType = singularForm;
+                }
+              }
+            } else {
+              // Not a relationship, type unknown
+              objectType = null;
+              break;
+            }
+          } else {
+            objectType = null;
+            break;
+          }
+        }
+      }
+    }
+    
+    // Check if the current property access is a relationship
+    const propertyName = expr.property.name;
+    let isRelationship = false;
+    
+    if (objectType) {
+      // Check both the objectType and its singular/plural forms
+      if (modelRelationshipMap.has(objectType) && modelRelationshipMap.get(objectType).has(propertyName)) {
+        isRelationship = true;
+      } else {
+        // Try singular form if current is plural
+        const singularType = objectType.endsWith('s') ? objectType.slice(0, -1) : null;
+        if (singularType && modelRelationshipMap.has(singularType) && modelRelationshipMap.get(singularType).has(propertyName)) {
+          isRelationship = true;
+        }
+      }
+    }
+    
+    // Recursively process the object part
+    const processedObject = buildAwaitedMemberChain(expr.object, modelVariables, modelRelationshipMap, parameterModels);
+    
+    // Build the new member expression
+    const newMember = j.memberExpression(processedObject, expr.property, expr.computed);
+    
+    // If this is a relationship access, wrap in await
+    if (isRelationship) {
+      return j.awaitExpression(newMember);
+    }
+    
+    return newMember;
+  }
+
   // Helper to transform .models access patterns in async functions
   // Patterns: association.models.get(...) or association.models[index]
   // These need the association to be awaited first
   // BUT skip if the association is a CallExpression (schema.where() already returns awaited collection)
-  function transformModelsAccess(funcNode) {
+  function transformModelsAccess(funcNode, modelRelationshipMap, factoryModelType = null) {
+    // Run transformation iteratively until no more changes are made
+    // This allows variables assigned from .models[0] to be tracked for subsequent accesses
+    let madeChanges = true;
+    let iterations = 0;
+    const maxIterations = 10; // Prevent infinite loops
+    
+    while (madeChanges && iterations < maxIterations) {
+      madeChanges = false;
+      iterations++;
+      
+      // Build modelVariables map by tracking assignments from collection methods
+      const modelVariables = new Map();
+      const parameterModels = new Set(); // Track which variables are function parameters (already resolved)
+      
+      // Track function parameters for afterCreate, beforeCreate hooks
+      // In afterCreate(model, server), the first parameter is the model instance
+      if (factoryModelType && funcNode.params && funcNode.params.length > 0) {
+        const firstParam = funcNode.params[0];
+        if (firstParam.type === 'Identifier') {
+          modelVariables.set(firstParam.name, factoryModelType);
+          parameterModels.add(firstParam.name); // Mark as parameter
+        }
+      }
+      
+      j(funcNode).find(j.VariableDeclarator).forEach(varPath => {
+        const init = varPath.value.init;
+        if (!init) return;
+        
+        let call = null;
+        
+        if (init.type === 'AwaitExpression' && init.argument.type === 'CallExpression') {
+          call = init.argument;
+        } else if (init.type === 'CallExpression') {
+          call = init;
+        }
+        
+        if (call && call.callee.type === 'MemberExpression') {
+          const methodName = call.callee.property.name;
+          let objectName = call.callee.object.name;
+          
+          if (call.callee.object.type === 'MemberExpression') {
+            objectName = call.callee.object.property.name;
+          }
+          
+          if (methodName === 'find' || methodName === 'findBy' || methodName === 'first' || methodName === 'findWhere' ||
+              methodName === 'all' || methodName === 'where' || methodName === 'filter' || methodName === 'sort') {
+            modelVariables.set(varPath.value.id.name, objectName);
+          }
+        }
+        
+        // Track server.create calls
+        if (init.type === 'AwaitExpression' && 
+            init.argument.type === 'CallExpression' &&
+            init.argument.callee.type === 'MemberExpression' &&
+            init.argument.callee.property.name === 'create') {
+          const args = init.argument.arguments;
+          if (args.length > 0 && args[0].type === 'Literal') {
+            modelVariables.set(varPath.value.id.name, args[0].value);
+          }
+        }
+        
+        // Track variables assigned from .models[0] or similar patterns
+        // Pattern: let oauthClient = (await workspace.organization.oauthClients).models[0]
+        // We need to infer the type from the relationship name
+        if (init && init.type === 'MemberExpression' && init.computed) {
+          // Check if this is .models[0]
+          const obj = init.object;
+          if (obj && obj.type === 'MemberExpression' && obj.property && obj.property.name === 'models') {
+            // obj.object is the association, obj.property is 'models'
+            // The association might be awaited, so unwrap AwaitExpression
+            let association = obj.object;
+            while (association && association.type === 'AwaitExpression') {
+              association = association.argument;
+            }
+            
+            // Try to determine the type from the property name
+            // e.g., workspace.oauthClients -> type is 'oauthClient' (singular)
+            if (association && association.type === 'MemberExpression') {
+              const relationshipName = association.property.name;
+              // Convert plural to singular (simple heuristic: remove trailing 's')
+              const singularType = relationshipName.endsWith('s') ? relationshipName.slice(0, -1) : relationshipName;
+              modelVariables.set(varPath.value.id.name, singularType);
+            }
+          }
+        }
+      });
+    
     // Find all MemberExpression nodes where property is 'models'
     j(funcNode).find(j.MemberExpression, {
       property: { name: 'models' }
@@ -774,19 +956,15 @@ module.exports = function transformer(file, api) {
       }
       
       if (!isAlreadyAwaited) {
-        // Check if .models is being accessed further (e.g., .models.get() or .models[0])
-        // If so, we need to await the entire .models expression, not just the association
-        const parent = modelsPath.parent.value;
-        const needsModelsAwait = parent && (
-          parent.type === 'MemberExpression' ||  // .models.get() or .models.firstObject
-          parent.type === 'CallExpression'       // Should not happen but check anyway
-        );
+        // .models itself is synchronous - it's just a property on the Collection that returns a plain array
+        // Only the relationship access needs await, not .models
+        // Transform: relationship.models -> (await relationship).models
         
-        // Replace association.models with (await association).models
-        // Handle both Identifier (runEvents) and MemberExpression (run.runEvents)
+        // Use buildAwaitedMemberChain to properly handle chained relationships
+        // This will transform workspace.organization.oauthClients into (await (await workspace.organization).oauthClients)
         const awaitedAssociation = association.type === 'Identifier' 
-          ? j.awaitExpression(j.identifier(association.name))
-          : j.awaitExpression(association);
+          ? (parameterModels.has(association.name) ? j.identifier(association.name) : j.awaitExpression(j.identifier(association.name)))
+          : buildAwaitedMemberChain(association, modelVariables, modelRelationshipMap, parameterModels);
           
         const newModelsExpr = j.memberExpression(
           awaitedAssociation,
@@ -794,24 +972,29 @@ module.exports = function transformer(file, api) {
           false
         );
         
-        // If .models is being accessed further, wrap it in await
-        if (needsModelsAwait) {
-          j(modelsPath).replaceWith(
-            j.awaitExpression(newModelsExpr)
-          );
-        } else {
-          j(modelsPath).replaceWith(newModelsExpr);
-        }
+        // Never wrap .models itself in await - it's synchronous
+        j(modelsPath).replaceWith(newModelsExpr);
+        madeChanges = true;
         hasChanges = true;
       }
     });
+    } // End of while loop
   }
 
   // Helper to add await to model relationship property access
   // Detects property access on variables that came from collection.find/findBy or server.create
-  function transformRelationshipAccess(funcNode, modelRelationshipMap) {
+  function transformRelationshipAccess(funcNode, modelRelationshipMap, factoryModelType = null) {
     // Track variables that hold model instances from find/findBy/server.create
     const modelVariables = new Map(); // variable name -> model type (if known)
+    
+    // Track function parameters for afterCreate, beforeCreate hooks
+    // In afterCreate(model, server), the first parameter is the model instance
+    if (factoryModelType && funcNode.params && funcNode.params.length > 0) {
+      const firstParam = funcNode.params[0];
+      if (firstParam.type === 'Identifier') {
+        modelVariables.set(firstParam.name, factoryModelType);
+      }
+    }
     
     // Find all variable assignments from collection methods or server.create
     j(funcNode).find(j.VariableDeclarator).forEach(varPath => {
@@ -860,6 +1043,31 @@ module.exports = function transformer(file, api) {
             if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
               modelVariables.set(varPath.value.id.name, modelNameArg.value);
             }
+          }
+        }
+      }
+      
+      // Track variables assigned from .models[0] or similar patterns
+      // Pattern: let oauthClient = (await workspace.organization.oauthClients).models[0]
+      // We need to infer the type from the relationship name
+      if (init && init.type === 'MemberExpression' && init.computed) {
+        // Check if this is .models[0]
+        const obj = init.object;
+        if (obj && obj.type === 'MemberExpression' && obj.property && obj.property.name === 'models') {
+          // obj.object is the association, obj.property is 'models'
+          // The association might be awaited, so unwrap AwaitExpression
+          let association = obj.object;
+          while (association && association.type === 'AwaitExpression') {
+            association = association.argument;
+          }
+          
+          // Try to determine the type from the property name
+          // e.g., workspace.oauthClients -> type is 'oauthClient' (singular)
+          if (association && association.type === 'MemberExpression') {
+            const relationshipName = association.property.name;
+            // Convert plural to singular (simple heuristic: remove trailing 's')
+            const singularType = relationshipName.endsWith('s') ? relationshipName.slice(0, -1) : relationshipName;
+            modelVariables.set(varPath.value.id.name, singularType);
           }
         }
       }
@@ -973,9 +1181,112 @@ module.exports = function transformer(file, api) {
       }
     });
     
+    // Helper to recursively build awaited member expression chains
+    // Breaks down workspace.organization.oauthClients into proper awaited steps
+    function buildAwaitedMemberChain(expr, modelVariables, modelRelationshipMap) {
+      // Base case: identifier
+      if (expr.type === 'Identifier') {
+        return expr;
+      }
+      
+      // Base case: not a member expression
+      if (expr.type !== 'MemberExpression') {
+        return expr;
+      }
+      
+      // First, determine the type of the object (what we're accessing the property on)
+      let objectType = null;
+      
+      // If the object is an identifier, check if it's a tracked model variable
+      if (expr.object.type === 'Identifier' && modelVariables.has(expr.object.name)) {
+        objectType = modelVariables.get(expr.object.name);
+      }
+      // If the object is a member expression, we need to trace through the chain
+      else if (expr.object.type === 'MemberExpression') {
+        // Walk up the chain to find the root variable and trace through relationships
+        const chain = [];
+        let current = expr.object;
+        while (current.type === 'MemberExpression') {
+          chain.unshift(current.property.name);
+          current = current.object;
+        }
+        if (current.type === 'Identifier' && modelVariables.has(current.name)) {
+          // Now trace through the relationships to determine the final type
+          objectType = modelVariables.get(current.name);
+          for (const propName of chain) {
+            if (objectType && modelRelationshipMap.has(objectType)) {
+              const relationships = modelRelationshipMap.get(objectType);
+              if (relationships.has(propName)) {
+                // The relationship name becomes the new type (e.g., organization relationship -> organization type)
+                // Try singular and plural forms
+                objectType = propName;
+                // If the plural form exists in the map, keep it; otherwise try to find singular
+                if (!modelRelationshipMap.has(objectType)) {
+                  // Try to find in the map by checking both singular and plural
+                  const singularForm = propName.endsWith('s') ? propName.slice(0, -1) : propName;
+                  if (modelRelationshipMap.has(singularForm)) {
+                    objectType = singularForm;
+                  }
+                }
+              } else {
+                // Not a relationship, type unknown
+                objectType = null;
+                break;
+              }
+            } else {
+              objectType = null;
+              break;
+            }
+          }
+        }
+      }
+      
+      // Check if the current property access is a relationship
+      const propertyName = expr.property.name;
+      let isRelationship = false;
+      
+      if (objectType) {
+        // Check both the objectType and its singular/plural forms
+        if (modelRelationshipMap.has(objectType) && modelRelationshipMap.get(objectType).has(propertyName)) {
+          isRelationship = true;
+        } else {
+          // Try singular form if current is plural
+          const singularType = objectType.endsWith('s') ? objectType.slice(0, -1) : null;
+          if (singularType && modelRelationshipMap.has(singularType) && modelRelationshipMap.get(singularType).has(propertyName)) {
+            isRelationship = true;
+          }
+        }
+      }
+      
+      // Recursively process the object part
+      const processedObject = buildAwaitedMemberChain(expr.object, modelVariables, modelRelationshipMap);
+      
+      // Build the new member expression
+      const newMember = j.memberExpression(processedObject, expr.property, expr.computed);
+      
+      // If this is a relationship access, wrap in await
+      if (isRelationship) {
+        return j.awaitExpression(newMember);
+      }
+      
+      return newMember;
+    }
+    
     // Now find property accesses on these model variables
     j(funcNode).find(j.MemberExpression).forEach(memberPath => {
       const node = memberPath.value;
+      
+      // Skip if this node is part of a larger member expression (we'll process the root)
+      // This prevents processing workspace.organization when we should process workspace.organization.oauthClients
+      if (memberPath.parent.value.type === 'MemberExpression' && 
+          memberPath.parent.value.object === node) {
+        return;
+      }
+      
+      // Skip if already awaited
+      if (memberPath.parent.value.type === 'AwaitExpression') {
+        return;
+      }
       
       // Helper to check if a node chain starts with a model variable
       function startsWithModelVariable(expr) {
@@ -989,100 +1300,69 @@ module.exports = function transformer(file, api) {
       }
       
       // Check if this expression starts with a model variable
-      const modelVarName = startsWithModelVariable(node.object);
-      if (modelVarName) {
-        const propertyName = node.property.name;
-        const modelType = modelVariables.get(modelVarName);
+      const modelVarName = startsWithModelVariable(node);
+      if (!modelVarName) {
+        return;
+      }
+      
+      // Check if this is in a conditional, return statement, or object property
+      let parent = memberPath.parent;
+      let shouldTransform = false;
+      
+      // Check if used in if condition, return, assignment, or object property
+      while (parent) {
+        const pValue = parent.value;
         
-        // DEBUG: Log what we're checking
-        if (process.env.DEBUG_TRANSFORM) {
-          console.log('[DEBUG] Variable:', modelVarName, 'Type:', modelType, 'Property:', propertyName);
-          console.log('[DEBUG] Has model?', modelRelationshipMap.has(modelType));
-          if (modelType && modelRelationshipMap.has(modelType)) {
-            console.log('[DEBUG] Relationships:', Array.from(modelRelationshipMap.get(modelType)));
-            console.log('[DEBUG] Has relationship?', modelRelationshipMap.get(modelType).has(propertyName));
+        if (pValue.type === 'IfStatement') {
+          shouldTransform = true;
+          break;
+        }
+        if (pValue.type === 'LogicalExpression') {
+          shouldTransform = true;
+          break;
+        }
+        if (pValue.type === 'ReturnStatement') {
+          shouldTransform = true;
+          break;
+        }
+        if (pValue.type === 'VariableDeclarator') {
+          shouldTransform = true;
+          break;
+        }
+        if (pValue.type === 'AssignmentExpression') {
+          // Only transform if this is the right-hand side (value being read),
+          // not the left-hand side (assignment target)
+          if (pValue.right === memberPath.value || j(pValue.right).find(j.MemberExpression).some(p => p.value === memberPath.value)) {
+            shouldTransform = true;
           }
+          break;
+        }
+        if (pValue.type === 'Property' && parent.parent.value.type === 'ObjectExpression') {
+          // Inside an object literal property value
+          shouldTransform = true;
+          break;
+        }
+        if (pValue.type === 'ArrayExpression') {
+          // Inside an array literal
+          shouldTransform = true;
+          break;
         }
         
-        // Check if we have relationship information for this model type
-        let isRelationship = false;
-        if (modelType && modelRelationshipMap.has(modelType)) {
-          const relationships = modelRelationshipMap.get(modelType);
-          isRelationship = relationships.has(propertyName);
-        } else {
-          // If we don't have the model definition, skip it
-          // We should not guess based on heuristics
-          return;
+        // Stop at statement boundaries
+        if (pValue.type === 'BlockStatement' || pValue.type === 'Program') {
+          break;
         }
         
-        if (!isRelationship) {
-          return; // Skip if not a relationship
-        }
+        parent = parent.parent;
+      }
+      
+      if (shouldTransform) {
+        // Use the helper to properly chain awaits
+        const transformed = buildAwaitedMemberChain(node, modelVariables, modelRelationshipMap);
         
-        // Also skip common non-relationship properties (defensive)
-        const skipProperties = [
-          'id', 'attrs', 'modelName', 'name', 'type', 'length',
-          'status', 'state', 'isNew', 'isDeleted', 'isDirty',
-          'createdAt', 'updatedAt', 'description', 'title',
-          'errors', 'changes'
-        ];
-        if (skipProperties.includes(propertyName)) {
-          return;
-        }
-        
-        // Skip if already awaited
-        if (memberPath.parent.value.type === 'AwaitExpression') {
-          return;
-        }
-        
-        // Check if this is in a conditional, return statement, or object property
-        let parent = memberPath.parent;
-        let shouldAwait = false;
-        
-        // Check if used in if condition, return, assignment, or object property
-        while (parent) {
-          const pValue = parent.value;
-          
-          if (pValue.type === 'IfStatement') {
-            shouldAwait = true;
-            break;
-          }
-          if (pValue.type === 'LogicalExpression') {
-            shouldAwait = true;
-            break;
-          }
-          if (pValue.type === 'ReturnStatement') {
-            shouldAwait = true;
-            break;
-          }
-          if (pValue.type === 'VariableDeclarator') {
-            shouldAwait = true;
-            break;
-          }
-          if (pValue.type === 'AssignmentExpression') {
-            // Only await if this is the right-hand side (value being read),
-            // not the left-hand side (assignment target)
-            if (pValue.right === memberPath.value || j(pValue.right).find(j.MemberExpression).some(p => p.value === memberPath.value)) {
-              shouldAwait = true;
-            }
-            break;
-          }
-          if (pValue.type === 'Property' && parent.parent.value.type === 'ObjectExpression') {
-            // Inside an object literal property value
-            shouldAwait = true;
-            break;
-          }
-          
-          // Stop at statement boundaries
-          if (pValue.type === 'BlockStatement' || pValue.type === 'Program') {
-            break;
-          }
-          
-          parent = parent.parent;
-        }
-        
-        if (shouldAwait) {
-          j(memberPath).replaceWith(j.awaitExpression(node));
+        // Only replace if the transformation actually changed something
+        if (transformed !== node) {
+          j(memberPath).replaceWith(transformed);
           hasChanges = true;
           
           // Make the containing arrow function async if it isn't already
@@ -1239,6 +1519,16 @@ module.exports = function transformer(file, api) {
     if (handler && (handler.type === 'FunctionExpression' || 
                     handler.type === 'ArrowFunctionExpression')) {
       
+      // Try to infer the model type from the filename
+      // Factory files are typically named like 'workspace-v2.js' or 'user.js'
+      let modelType = null;
+      if (file.path) {
+        const match = file.path.match(/factories\/([^\/]+)\.js$/);
+        if (match) {
+          modelType = match[1]; // e.g., 'workspace-v2', 'user'
+        }
+      }
+      
       if (shouldBeAsync(handler)) {
         if (!handler.async) {
           handler.async = true;
@@ -1246,8 +1536,8 @@ module.exports = function transformer(file, api) {
         }
         
         addAwaitToCallsInFunction(handler);
-        transformModelsAccess(handler);
-        transformRelationshipAccess(handler, modelRelationshipMap);
+        transformModelsAccess(handler, modelRelationshipMap, modelType);
+        transformRelationshipAccess(handler, modelRelationshipMap, modelType);
         ensureAfterCreateReturnsModel(handler);
       }
     }
@@ -1276,6 +1566,15 @@ module.exports = function transformer(file, api) {
           if (handler && (handler.type === 'FunctionExpression' || 
                           handler.type === 'ArrowFunctionExpression')) {
             
+            // Try to infer the model type from the filename for traits too
+            let modelType = null;
+            if (file.path) {
+              const match = file.path.match(/factories\/([^\/]+)\.js$/);
+              if (match) {
+                modelType = match[1];
+              }
+            }
+            
             if (shouldBeAsync(handler)) {
               if (!handler.async) {
                 handler.async = true;
@@ -1283,8 +1582,8 @@ module.exports = function transformer(file, api) {
               }
               
               addAwaitToCallsInFunction(handler);
-              transformModelsAccess(handler);
-              transformRelationshipAccess(handler, modelRelationshipMap);
+              transformModelsAccess(handler, modelRelationshipMap, modelType);
+              transformRelationshipAccess(handler, modelRelationshipMap, modelType);
               ensureAfterCreateReturnsModel(handler);
             }
           }
