@@ -1016,4 +1016,27 @@ export default function destroyRoute(collection, param = 'id') {
   `.trim()
 );
 
+test(
+  'makes afterCreate async when it has model.update calls',
+  `
+export default Model.extend({
+  afterCreate(model) {
+    if (!model.tags) {
+      model.update({ tags: [] });
+    }
+  }
+});
+  `.trim(),
+  `
+export default Model.extend({
+  async afterCreate(model) {
+    if (!model.tags) {
+      await model.update({ tags: [] });
+    }
+    return model;
+  }
+});
+  `.trim()
+);
+
 console.log('\n✅ All tests completed!');
