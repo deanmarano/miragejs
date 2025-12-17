@@ -2173,4 +2173,109 @@ describe("Unit | Server #buildList", function () {
       "Mirage: second argument has to be an integer, you passed: string"
     );
   });
+
+  test("Collection.sort() with async comparator should await the comparator", async () => {
+    // Reproduces Atlas issue where route handlers use .sort() with async comparators
+    // e.g., projects.sort(async (a, b) => { ... })
+    // The sort happens synchronously and returns immediately with wrong/undefined results
+    
+    let Project = Model.extend({});
+    let server = new Server({
+      environment: "test",
+      models: {
+        project: Project,
+      },
+    });
+
+    // Create projects with different names
+    await server.create("project", { name: "zebra-project" });
+    await server.create("project", { name: "alpha-project" });
+    await server.create("project", { name: "middle-project" });
+
+    // Get all projects
+    let projects = await server.schema.projects.all();
+    
+    // Sort with an async comparator (simulating Atlas route handler pattern)
+    // This should await the comparator function calls
+    let sorted = await projects.sort(async (a, b) => {
+      // Simulate async work (e.g., accessing related models)
+      await new Promise(resolve => setTimeout(resolve, 1));
+      return a.name.localeCompare(b.name);
+    });
+
+    // The sorted collection should have items in alphabetical order
+    expect(sorted.models.length).toBe(3);
+    expect(sorted.models[0].name).toBe("alpha-project");
+    expect(sorted.models[1].name).toBe("middle-project");
+    expect(sorted.models[2].name).toBe("zebra-project");
+
+    server.shutdown();
+  });
+
+  test("Collection.filter() with async predicate should await the predicate", async () => {
+    // Reproduces Atlas issue where route handlers use .filter() with async predicates
+    // e.g., projects.filter(async (p) => { return await someCheck(p); })
+    
+    let Project = Model.extend({});
+    let server = new Server({
+      environment: "test",
+      models: {
+        project: Project,
+      },
+    });
+
+    // Create projects
+    await server.create("project", { name: "active-1", isActive: true });
+    await server.create("project", { name: "inactive-1", isActive: false });
+    await server.create("project", { name: "active-2", isActive: true });
+
+    // Get all projects
+    let projects = await server.schema.projects.all();
+    
+    // Filter with an async predicate (simulating Atlas route handler pattern)
+    let filtered = await projects.filter(async (project) => {
+      // Simulate async work (e.g., checking permissions)
+      await new Promise(resolve => setTimeout(resolve, 1));
+      return project.isActive === true;
+    });
+
+    // The filtered collection should only have active projects
+    expect(filtered.models.length).toBe(2);
+    expect(filtered.models[0].name).toBe("active-1");
+    expect(filtered.models[1].name).toBe("active-2");
+
+    server.shutdown();
+  });
+
+  test("schema.where() with async predicate should await the predicate", async () => {
+    // Reproduces Atlas issue where route handlers use schema.where() with async predicates
+    // e.g., schema.projects.where(async (p) => { return await someCheck(p); })
+    
+    let Project = Model.extend({});
+    let server = new Server({
+      environment: "test",
+      models: {
+        project: Project,
+      },
+    });
+
+    // Create projects
+    await server.create("project", { name: "active-1", isActive: true });
+    await server.create("project", { name: "inactive-1", isActive: false });
+    await server.create("project", { name: "active-2", isActive: true });
+
+    // Use schema.where with async predicate (simulating Atlas route handler pattern)
+    let filtered = await server.schema.projects.where(async (project) => {
+      // Simulate async work (e.g., checking permissions)
+      await new Promise(resolve => setTimeout(resolve, 1));
+      return project.isActive === true;
+    });
+
+    // The filtered collection should only have active projects
+    expect(filtered.models.length).toBe(2);
+    expect(filtered.models[0].name).toBe("active-1");
+    expect(filtered.models[1].name).toBe("active-2");
+
+    server.shutdown();
+  });
 });
