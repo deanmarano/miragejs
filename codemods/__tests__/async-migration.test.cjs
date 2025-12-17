@@ -974,4 +974,46 @@ export async function where({ varV2s }) {
   `.trim()
 );
 
+test(
+  'does not make wrapper functions async (only inner handler)',
+  `
+export default function paginateWrapper(route, limit = 5) {
+  return function paginate(schema, request) {
+    let records = route(schema, request);
+    return records;
+  };
+}
+  `.trim(),
+  `
+export default function paginateWrapper(route, limit = 5) {
+  return async function paginate(schema, request) {
+    let records = await route(schema, request);
+    return records;
+  };
+}
+  `.trim()
+);
+
+test(
+  'does not make higher-order destroy route wrapper async',
+  `
+export default function destroyRoute(collection, param = 'id') {
+  return function (schema, request) {
+    let model = schema[collection].find(request.params[param]);
+    model.destroy();
+    return new Response(204);
+  };
+}
+  `.trim(),
+  `
+export default function destroyRoute(collection, param = 'id') {
+  return async function(schema, request) {
+    let model = await schema[collection].find(request.params[param]);
+    await model.destroy();
+    return new Response(204);
+  };
+}
+  `.trim()
+);
+
 console.log('\n✅ All tests completed!');

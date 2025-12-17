@@ -88,6 +88,26 @@ module.exports = function transformer(file, api) {
     j(node).find(j.CallExpression).forEach(callPath => {
       const { callee } = callPath.value;
       
+      // Skip calls that are inside nested functions - wrapper functions
+      // that return handlers should not be made async
+      let currentPath = callPath.parent;
+      let isInNestedFunction = false;
+      while (currentPath && currentPath.value !== node) {
+        if ((currentPath.value.type === 'FunctionExpression' ||
+             currentPath.value.type === 'ArrowFunctionExpression' ||
+             currentPath.value.type === 'FunctionDeclaration') &&
+            currentPath.value !== node) {
+          isInNestedFunction = true;
+          break;
+        }
+        currentPath = currentPath.parent;
+      }
+      
+      // Skip this call if it's in a nested function
+      if (isInNestedFunction) {
+        return;
+      }
+      
       // Check for schema.modelName.method() or schemas.modelName.method() calls
       // Matches any identifier.collection.method() pattern where method is async
       // But excludes .models.method() which is an array, not a Mirage collection
