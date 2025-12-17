@@ -986,6 +986,7 @@ module.exports = function transformer(file, api) {
   function transformRelationshipAccess(funcNode, modelRelationshipMap, factoryModelType = null) {
     // Track variables that hold model instances from find/findBy/server.create
     const modelVariables = new Map(); // variable name -> model type (if known)
+    const arrowParameters = new Set(); // Track arrow function parameters (don't await these)
     
     // Track function parameters for afterCreate, beforeCreate hooks
     // In afterCreate(model, server), the first parameter is the model instance
@@ -1170,10 +1171,7 @@ module.exports = function transformer(file, api) {
               if (arrow.params[paramIndex] && arrow.params[paramIndex].type === 'Identifier') {
                 const paramName = arrow.params[paramIndex].name;
                 modelVariables.set(paramName, collectionType);
-                
-                if (process.env.DEBUG_TRANSFORM) {
-                  console.log('[DEBUG] Tracked arrow param:', paramName, 'as type:', collectionType);
-                }
+                arrowParameters.add(paramName); // Mark as arrow parameter (don't await)
               }
             }
           }
@@ -1186,6 +1184,10 @@ module.exports = function transformer(file, api) {
     function buildAwaitedMemberChain(expr, modelVariables, modelRelationshipMap) {
       // Base case: identifier
       if (expr.type === 'Identifier') {
+        // Don't await arrow function parameters - they're passed directly to callbacks
+        if (arrowParameters.has(expr.name)) {
+          return expr;
+        }
         return expr;
       }
       
@@ -1261,15 +1263,19 @@ module.exports = function transformer(file, api) {
       // Recursively process the object part
       const processedObject = buildAwaitedMemberChain(expr.object, modelVariables, modelRelationshipMap);
       
-      // Build the new member expression
-      const newMember = j.memberExpression(processedObject, expr.property, expr.computed);
-      
       // If this is a relationship access, wrap in await
       if (isRelationship) {
+        const newMember = j.memberExpression(processedObject, expr.property, expr.computed);
         return j.awaitExpression(newMember);
       }
       
-      return newMember;
+      // Not a relationship - only create new node if the object was actually transformed
+      if (processedObject === expr.object) {
+        return expr; // Nothing changed, return original
+      }
+      
+      // Object was transformed (e.g., workspace.organization got awaited), rebuild member expression
+      return j.memberExpression(processedObject, expr.property, expr.computed);
     }
     
     // Now find property accesses on these model variables
@@ -1653,12 +1659,15 @@ module.exports = function transformer(file, api) {
   root.find(j.ArrowFunctionExpression).forEach(path => {
     const func = path.value;
     
+    // Skip if already async (already processed by parent function)
+    if (func.async) {
+      return;
+    }
+    
     // Check if function should be async
     if (shouldBeAsync(func, path)) {
-      if (!func.async) {
-        func.async = true;
-        hasChanges = true;
-      }
+      func.async = true;
+      hasChanges = true;
       
       addAwaitToCallsInFunction(func);
       transformRelationshipAccess(func, modelRelationshipMap);
