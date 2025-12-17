@@ -1304,6 +1304,55 @@ this.get('/api/models/:id', async function({ models }) {
   { expectFailure: false } // This transformation happens, but may cause runtime errors
 );
 
+test(
+  'does not add await before assignment expressions',
+  `
+export async function update(schema, { params }) {
+  let org = await schema.organizations.find(params.id);
+  
+  // Clear out existing relationships
+  org.moduleConsumersIds = [];
+  
+  // Update with new data
+  await org.update({ name: 'New Name' });
+  
+  return await org.moduleConsumers;
+}
+  `.trim(),
+  `
+export async function update(schema, { params }) {
+  let org = await schema.organizations.find(params.id);
+  
+  // Clear out existing relationships
+  org.moduleConsumersIds = [];
+  
+  // Update with new data
+  await org.update({ name: 'New Name' });
+  
+  return await org.moduleConsumers;
+}
+  `.trim()
+);
+
+test(
+  'BUG: incorrectly adds await before assignment to relationship property',
+  `
+export async function update(schema, { params }) {
+  let org = await schema.organizations.find(params.id);
+  org.partnershipsIds = [];
+  return org;
+}
+  `.trim(),
+  `
+export async function update(schema, { params }) {
+  let org = await schema.organizations.find(params.id);
+  await org.partnershipsIds = [];
+  return org;
+}
+  `.trim(),
+  { expectFailure: true } // This is a bug - produces invalid syntax
+);
+
 console.log('\n' + '='.repeat(70));
 console.log('✅ Test run completed!');
 console.log('='.repeat(70));

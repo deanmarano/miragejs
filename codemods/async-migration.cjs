@@ -959,7 +959,11 @@ module.exports = function transformer(file, api) {
             break;
           }
           if (pValue.type === 'AssignmentExpression') {
-            shouldAwait = true;
+            // Only await if this is the right-hand side (value being read),
+            // not the left-hand side (assignment target)
+            if (pValue.right === memberPath.value || j(pValue.right).find(j.MemberExpression).some(p => p.value === memberPath.value)) {
+              shouldAwait = true;
+            }
             break;
           }
           if (pValue.type === 'Property' && parent.parent.value.type === 'ObjectExpression') {
