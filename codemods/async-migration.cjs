@@ -700,6 +700,120 @@ module.exports = function transformer(file, api) {
     });
   }
 
+  // Helper to add await to model relationship property access
+  // Detects property access on variables that came from collection.find/findBy
+  function transformRelationshipAccess(funcNode) {
+    // Track variables that hold model instances from find/findBy
+    const modelVariables = new Set();
+    
+    // Find all variable assignments from collection.find() or findBy()
+    j(funcNode).find(j.VariableDeclarator).forEach(varPath => {
+      const init = varPath.value.init;
+      if (!init) return;
+      
+      // Check if assigned from awaited find/findBy
+      if (init.type === 'AwaitExpression' && init.argument.type === 'CallExpression') {
+        const call = init.argument;
+        if (call.callee.type === 'MemberExpression') {
+          const methodName = call.callee.property.name;
+          if (methodName === 'find' || methodName === 'findBy' || methodName === 'first') {
+            modelVariables.add(varPath.value.id.name);
+          }
+        }
+      }
+    });
+    
+    // Track variables assigned from other model variables
+    j(funcNode).find(j.AssignmentExpression).forEach(assignPath => {
+      const left = assignPath.value.left;
+      const right = assignPath.value.right;
+      
+      if (left.type === 'Identifier' && right.type === 'AwaitExpression') {
+        const arg = right.argument;
+        if (arg.type === 'CallExpression' && arg.callee.type === 'MemberExpression') {
+          const methodName = arg.callee.property.name;
+          if (methodName === 'find' || methodName === 'findBy' || methodName === 'first') {
+            modelVariables.add(left.name);
+          }
+        }
+      }
+    });
+    
+    // Now find property accesses on these model variables
+    j(funcNode).find(j.MemberExpression).forEach(memberPath => {
+      const node = memberPath.value;
+      
+      // Helper to check if a node chain starts with a model variable
+      function startsWithModelVariable(expr) {
+        if (expr.type === 'Identifier') {
+          return modelVariables.has(expr.name);
+        }
+        if (expr.type === 'MemberExpression') {
+          return startsWithModelVariable(expr.object);
+        }
+        return false;
+      }
+      
+      // Check if this expression starts with a model variable
+      if (startsWithModelVariable(node.object)) {
+        const propertyName = node.property.name;
+        
+        // Skip common non-relationship properties
+        const skipProperties = ['id', 'attrs', 'modelName', 'name', 'type', 'length'];
+        if (skipProperties.includes(propertyName)) {
+          return;
+        }
+        
+        // Skip if already awaited
+        if (memberPath.parent.value.type === 'AwaitExpression') {
+          return;
+        }
+        
+        // Check if this is in a conditional or return statement
+        let parent = memberPath.parent;
+        let shouldAwait = false;
+        
+        // Check if used in if condition, return, or assignment
+        while (parent) {
+          const pValue = parent.value;
+          
+          if (pValue.type === 'IfStatement' && pValue.test === node) {
+            shouldAwait = true;
+            break;
+          }
+          if (pValue.type === 'LogicalExpression' && (pValue.left === node || pValue.right === node)) {
+            shouldAwait = true;
+            break;
+          }
+          if (pValue.type === 'ReturnStatement' && pValue.argument === node) {
+            shouldAwait = true;
+            break;
+          }
+          if (pValue.type === 'VariableDeclarator' && pValue.init === node) {
+            shouldAwait = true;
+            break;
+          }
+          if (pValue.type === 'AssignmentExpression' && pValue.right === node) {
+            shouldAwait = true;
+            break;
+          }
+          
+          // Stop at statement boundaries
+          if (pValue.type === 'BlockStatement' || pValue.type === 'Program') {
+            break;
+          }
+          
+          parent = parent.parent;
+        }
+        
+        if (shouldAwait) {
+          j(memberPath).replaceWith(j.awaitExpression(node));
+          hasChanges = true;
+        }
+      }
+    });
+  }
+
   // 1. Update Server configuration to add async: true
   root.find(j.CallExpression, {
     callee: {
@@ -840,6 +954,7 @@ module.exports = function transformer(file, api) {
         
         addAwaitToCallsInFunction(handler);
         transformModelsAccess(handler);
+        transformRelationshipAccess(handler);
         ensureAfterCreateReturnsModel(handler);
       }
     }
@@ -876,6 +991,7 @@ module.exports = function transformer(file, api) {
               
               addAwaitToCallsInFunction(handler);
               transformModelsAccess(handler);
+              transformRelationshipAccess(handler);
               ensureAfterCreateReturnsModel(handler);
             }
           }
@@ -899,6 +1015,7 @@ module.exports = function transformer(file, api) {
         }
         
         addAwaitToCallsInFunction(func);
+        transformRelationshipAccess(func);
       }
     }
   });
@@ -920,6 +1037,7 @@ module.exports = function transformer(file, api) {
       }
       
       addAwaitToCallsInFunction(func);
+      transformRelationshipAccess(func);
     }
   });
 
@@ -935,6 +1053,7 @@ module.exports = function transformer(file, api) {
       }
       
       addAwaitToCallsInFunction(func);
+      transformRelationshipAccess(func);
     }
   });
 
@@ -950,6 +1069,7 @@ module.exports = function transformer(file, api) {
       }
       
       addAwaitToCallsInFunction(func);
+      transformRelationshipAccess(func);
     }
   });
 

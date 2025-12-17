@@ -1179,12 +1179,8 @@ Factory.extend({
   `.trim()
 );
 
-// ============================================================================
-// KNOWN LIMITATIONS - Tests that demonstrate patterns we cannot handle yet
-// ============================================================================
-
 test(
-  'KNOWN LIMITATION: does not await relationship property in conditional',
+  'awaits relationship property in conditional',
   `
 export function show({ sessions }, { params }) {
   let session = sessions.find(params.id);
@@ -1202,12 +1198,11 @@ export async function show({ sessions }, { params }) {
   }
   return notFound();
 }
-  `.trim(),
-  true // expectFailure flag
+  `.trim()
 );
 
 test(
-  'KNOWN LIMITATION: does not await relationship property on model',
+  'awaits relationship property on model',
   `
 this.get('/api/runs/:id/permissions', function({ runs }, request) {
   let run = runs.find(request.params.id);
@@ -1219,12 +1214,11 @@ this.get('/api/runs/:id/permissions', async function({ runs }, request) {
   let run = await runs.find(request.params.id);
   return await run.permissions;
 });
-  `.trim(),
-  true // expectFailure flag
+  `.trim()
 );
 
 test(
-  'KNOWN LIMITATION: does not await nested relationship access',
+  'awaits nested relationship access',
   `
 this.get('/api/workspaces/:id/owner', function({ workspaces }, request) {
   let workspace = workspaces.find(request.params.id);
@@ -1236,8 +1230,7 @@ this.get('/api/workspaces/:id/owner', async function({ workspaces }, request) {
   let workspace = await workspaces.find(request.params.id);
   return await workspace.organization.owner;
 });
-  `.trim(),
-  true // expectFailure flag
+  `.trim()
 );
 
 console.log('\n' + '='.repeat(70));
