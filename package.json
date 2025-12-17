@@ -41,7 +41,7 @@
     "build": "rimraf dist && rollup -c",
     "prepare": "pnpm run build",
     "prepublishOnly": "pnpm run build",
-    "test:run": "node --experimental-vm-modules $(pnpm bin)/jest",
+    "test:run": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:types": "tsd -f 'tests/*.ts' -t index.d.ts types",
     "test": "run-s build test:types test:run",
     "ci": "run-s lint prettier:check test"

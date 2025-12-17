@@ -20,7 +20,7 @@ describe("Integration | Routes", () => {
       },
     });
 
-    server.createList("user", 3);
+    await server.createList("user", 3);
 
     let data = await fetch("/api/users").then((res) => res.json());
 

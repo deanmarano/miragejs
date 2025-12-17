@@ -1233,6 +1233,77 @@ this.get('/api/workspaces/:id/owner', async function({ workspaces }, request) {
   `.trim()
 );
 
+test(
+  'does not await attrs property access',
+  `
+this.get('/api/models/:id/data', function({ models }, request) {
+  let model = models.find(request.params.id);
+  return model.attrs;
+});
+  `.trim(),
+  `
+this.get('/api/models/:id/data', async function({ models }, request) {
+  let model = await models.find(request.params.id);
+  return model.attrs;
+});
+  `.trim()
+);
+
+test(
+  'does not await built-in model properties',
+  `
+this.get('/api/models/:id/info', function({ models }, request) {
+  let model = models.find(request.params.id);
+  return { id: model.id, name: model.modelName };
+});
+  `.trim(),
+  `
+this.get('/api/models/:id/info', async function({ models }, request) {
+  let model = await models.find(request.params.id);
+  return { id: model.id, name: model.modelName };
+});
+  `.trim()
+);
+
+test(
+  'awaits only relationship properties, not all properties',
+  `
+this.post('/api/runs', function({ runs, workspaces }) {
+  let workspace = workspaces.find('ws-123');
+  let run = server.create('run', { workspace });
+  return { id: run.id, status: run.status, workspace: run.workspace };
+});
+  `.trim(),
+  `
+this.post('/api/runs', async function({ runs, workspaces }) {
+  let workspace = await workspaces.find('ws-123');
+  let run = await server.create('run', { workspace });
+  return { id: run.id, status: run.status, workspace: await run.workspace };
+});
+  `.trim()
+);
+
+test(
+  'POTENTIAL BUG: may over-await non-relationship properties',
+  `
+// This documents a limitation: the codemod cannot distinguish
+// between relationship properties and regular properties without
+// schema information. It uses a heuristic based on common property names.
+// Properties like 'customField' might be incorrectly awaited.
+this.get('/api/models/:id', function({ models }) {
+  let model = models.find('1');
+  return { customField: model.customField };
+});
+  `.trim(),
+  `
+this.get('/api/models/:id', async function({ models }) {
+  let model = await models.find('1');
+  return { customField: await model.customField };
+});
+  `.trim(),
+  { expectFailure: false } // This transformation happens, but may cause runtime errors
+);
+
 console.log('\n' + '='.repeat(70));
 console.log('✅ Test run completed!');
 console.log('='.repeat(70));

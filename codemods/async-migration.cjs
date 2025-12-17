@@ -13,6 +13,9 @@
  *   npx jscodeshift -t codemods/async-migration.js --dry --print path/to/your/code
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const asyncDbMethods = new Set([
   'insert',
   'find',
@@ -42,10 +45,113 @@ const asyncModelMethods = new Set([
   'reload'
 ]);
 
+// Cache for model relationships to avoid re-parsing
+const modelRelationshipsCache = new Map();
+
+/**
+ * Parse a Mirage model file to extract relationship definitions
+ * @param {string} modelFilePath - Path to the model file
+ * @param {object} j - jscodeshift instance
+ * @returns {Set<string>} - Set of relationship property names
+ */
+function parseModelRelationships(modelFilePath, j) {
+  if (modelRelationshipsCache.has(modelFilePath)) {
+    return modelRelationshipsCache.get(modelFilePath);
+  }
+  
+  const relationships = new Set();
+  
+  try {
+    if (!fs.existsSync(modelFilePath)) {
+      modelRelationshipsCache.set(modelFilePath, relationships);
+      return relationships;
+    }
+    
+    const content = fs.readFileSync(modelFilePath, 'utf8');
+    const ast = j(content);
+    
+    // Look for belongsTo and hasMany calls in Model.extend({ ... })
+    ast.find(j.ObjectExpression).forEach(objPath => {
+      objPath.value.properties.forEach(prop => {
+        if (prop.type === 'Property' && prop.value.type === 'CallExpression') {
+          const callee = prop.value.callee;
+          if (callee.type === 'Identifier' && 
+              (callee.name === 'belongsTo' || callee.name === 'hasMany')) {
+            // This property is a relationship
+            if (prop.key.type === 'Identifier') {
+              relationships.add(prop.key.name);
+            }
+          }
+        }
+      });
+    });
+    
+    modelRelationshipsCache.set(modelFilePath, relationships);
+  } catch (error) {
+    // If we can't parse the file, return empty set
+    modelRelationshipsCache.set(modelFilePath, relationships);
+  }
+  
+  return relationships;
+}
+
+/**
+ * Discover all model files in the workspace and build a complete relationship map
+ * @param {string} filePath - Current file being transformed
+ * @param {object} j - jscodeshift instance
+ * @returns {Map<string, Set<string>>} - Map of model name to relationship properties
+ */
+function discoverModelRelationships(filePath, j) {
+  const relationshipMap = new Map();
+  
+  // Try to find the mirage/models directory relative to the current file
+  let currentDir = path.dirname(filePath);
+  let modelsDir = null;
+  
+  // Search up the directory tree for mirage/models
+  for (let i = 0; i < 10; i++) {
+    const testPath = path.join(currentDir, 'mirage', 'models');
+    if (fs.existsSync(testPath)) {
+      modelsDir = testPath;
+      break;
+    }
+    const testPath2 = path.join(currentDir, 'app', 'mirage', 'models');
+    if (fs.existsSync(testPath2)) {
+      modelsDir = testPath2;
+      break;
+    }
+    currentDir = path.dirname(currentDir);
+  }
+  
+  if (!modelsDir) {
+    return relationshipMap;
+  }
+  
+  // Read all model files
+  try {
+    const files = fs.readdirSync(modelsDir);
+    files.forEach(file => {
+      if (file.endsWith('.js') || file.endsWith('.ts')) {
+        const modelPath = path.join(modelsDir, file);
+        const modelName = path.basename(file, path.extname(file));
+        const relationships = parseModelRelationships(modelPath, j);
+        relationshipMap.set(modelName, relationships);
+      }
+    });
+  } catch (error) {
+    // If we can't read the directory, return empty map
+  }
+  
+  return relationshipMap;
+}
+
 module.exports = function transformer(file, api) {
   const j = api.jscodeshift;
   const root = j(file.source);
   let hasChanges = false;
+  
+  // Discover all model relationships in the workspace
+  const modelRelationshipMap = discoverModelRelationships(file.path, j);
 
   // Helper to check if a function should be made async
   function shouldBeAsync(node, path) {
@@ -701,29 +807,45 @@ module.exports = function transformer(file, api) {
   }
 
   // Helper to add await to model relationship property access
-  // Detects property access on variables that came from collection.find/findBy
-  function transformRelationshipAccess(funcNode) {
-    // Track variables that hold model instances from find/findBy
-    const modelVariables = new Set();
+  // Detects property access on variables that came from collection.find/findBy or server.create
+  function transformRelationshipAccess(funcNode, modelRelationshipMap) {
+    // Track variables that hold model instances from find/findBy/server.create
+    const modelVariables = new Map(); // variable name -> model type (if known)
     
-    // Find all variable assignments from collection.find() or findBy()
+    // Find all variable assignments from collection.find/findBy or server.create
     j(funcNode).find(j.VariableDeclarator).forEach(varPath => {
       const init = varPath.value.init;
       if (!init) return;
       
-      // Check if assigned from awaited find/findBy
+      // Check if assigned from awaited find/findBy/first
       if (init.type === 'AwaitExpression' && init.argument.type === 'CallExpression') {
         const call = init.argument;
         if (call.callee.type === 'MemberExpression') {
           const methodName = call.callee.property.name;
+          const objectName = call.callee.object.name;
+          
           if (methodName === 'find' || methodName === 'findBy' || methodName === 'first') {
-            modelVariables.add(varPath.value.id.name);
+            // Collection method - the collection name IS the model name
+            modelVariables.set(varPath.value.id.name, objectName);
+          }
+          // Also track server.create() and server.createList()
+          if (methodName === 'create' || methodName === 'createList') {
+            const isServerCall = objectName === 'server' || 
+                (call.callee.object.type === 'MemberExpression' && 
+                 call.callee.object.property.name === 'server');
+            if (isServerCall && call.arguments.length > 0) {
+              // First argument to server.create is the model name
+              const modelNameArg = call.arguments[0];
+              if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
+                modelVariables.set(varPath.value.id.name, modelNameArg.value);
+              }
+            }
           }
         }
       }
     });
     
-    // Track variables assigned from other model variables
+    // Track variables assigned from other model variables or server.create
     j(funcNode).find(j.AssignmentExpression).forEach(assignPath => {
       const left = assignPath.value.left;
       const right = assignPath.value.right;
@@ -732,8 +854,22 @@ module.exports = function transformer(file, api) {
         const arg = right.argument;
         if (arg.type === 'CallExpression' && arg.callee.type === 'MemberExpression') {
           const methodName = arg.callee.property.name;
+          const objectName = arg.callee.object.name;
+          
           if (methodName === 'find' || methodName === 'findBy' || methodName === 'first') {
-            modelVariables.add(left.name);
+            modelVariables.set(left.name, objectName);
+          }
+          // Also track server.create() in assignments
+          if (methodName === 'create' || methodName === 'createList') {
+            const isServerCall = objectName === 'server' || 
+                (arg.callee.object.type === 'MemberExpression' && 
+                 arg.callee.object.property.name === 'server');
+            if (isServerCall && arg.arguments.length > 0) {
+              const modelNameArg = arg.arguments[0];
+              if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
+                modelVariables.set(left.name, modelNameArg.value);
+              }
+            }
           }
         }
       }
@@ -746,20 +882,49 @@ module.exports = function transformer(file, api) {
       // Helper to check if a node chain starts with a model variable
       function startsWithModelVariable(expr) {
         if (expr.type === 'Identifier') {
-          return modelVariables.has(expr.name);
+          return modelVariables.has(expr.name) ? expr.name : null;
         }
         if (expr.type === 'MemberExpression') {
           return startsWithModelVariable(expr.object);
         }
-        return false;
+        return null;
       }
       
       // Check if this expression starts with a model variable
-      if (startsWithModelVariable(node.object)) {
+      const modelVarName = startsWithModelVariable(node.object);
+      if (modelVarName) {
         const propertyName = node.property.name;
+        const modelType = modelVariables.get(modelVarName);
         
-        // Skip common non-relationship properties
-        const skipProperties = ['id', 'attrs', 'modelName', 'name', 'type', 'length'];
+        // Check if we have relationship information for this model type
+        let isRelationship = false;
+        if (modelType && modelRelationshipMap.has(modelType)) {
+          const relationships = modelRelationshipMap.get(modelType);
+          isRelationship = relationships.has(propertyName);
+        } else {
+          // Fallback to heuristic if we don't have model definition
+          // CONSERVATIVE APPROACH: Only await properties that are LIKELY relationships
+          const likelyRelationshipPatterns = [
+            /s$/, // Plural (e.g., 'users', 'workspaces', 'runs')
+            /^(workspace|organization|user|owner|team|project|run|policy|plan|apply)$/i
+          ];
+          
+          isRelationship = likelyRelationshipPatterns.some(pattern => 
+            pattern.test(propertyName)
+          );
+        }
+        
+        if (!isRelationship) {
+          return; // Skip if not a relationship
+        }
+        
+        // Also skip common non-relationship properties (defensive)
+        const skipProperties = [
+          'id', 'attrs', 'modelName', 'name', 'type', 'length',
+          'status', 'state', 'isNew', 'isDeleted', 'isDirty',
+          'createdAt', 'updatedAt', 'description', 'title',
+          'errors', 'changes'
+        ];
         if (skipProperties.includes(propertyName)) {
           return;
         }
@@ -769,31 +934,36 @@ module.exports = function transformer(file, api) {
           return;
         }
         
-        // Check if this is in a conditional or return statement
+        // Check if this is in a conditional, return statement, or object property
         let parent = memberPath.parent;
         let shouldAwait = false;
         
-        // Check if used in if condition, return, or assignment
+        // Check if used in if condition, return, assignment, or object property
         while (parent) {
           const pValue = parent.value;
           
-          if (pValue.type === 'IfStatement' && pValue.test === node) {
+          if (pValue.type === 'IfStatement') {
             shouldAwait = true;
             break;
           }
-          if (pValue.type === 'LogicalExpression' && (pValue.left === node || pValue.right === node)) {
+          if (pValue.type === 'LogicalExpression') {
             shouldAwait = true;
             break;
           }
-          if (pValue.type === 'ReturnStatement' && pValue.argument === node) {
+          if (pValue.type === 'ReturnStatement') {
             shouldAwait = true;
             break;
           }
-          if (pValue.type === 'VariableDeclarator' && pValue.init === node) {
+          if (pValue.type === 'VariableDeclarator') {
             shouldAwait = true;
             break;
           }
-          if (pValue.type === 'AssignmentExpression' && pValue.right === node) {
+          if (pValue.type === 'AssignmentExpression') {
+            shouldAwait = true;
+            break;
+          }
+          if (pValue.type === 'Property' && parent.parent.value.type === 'ObjectExpression') {
+            // Inside an object literal property value
             shouldAwait = true;
             break;
           }
@@ -954,7 +1124,7 @@ module.exports = function transformer(file, api) {
         
         addAwaitToCallsInFunction(handler);
         transformModelsAccess(handler);
-        transformRelationshipAccess(handler);
+        transformRelationshipAccess(handler, modelRelationshipMap);
         ensureAfterCreateReturnsModel(handler);
       }
     }
@@ -991,7 +1161,7 @@ module.exports = function transformer(file, api) {
               
               addAwaitToCallsInFunction(handler);
               transformModelsAccess(handler);
-              transformRelationshipAccess(handler);
+              transformRelationshipAccess(handler, modelRelationshipMap);
               ensureAfterCreateReturnsModel(handler);
             }
           }
@@ -1015,7 +1185,7 @@ module.exports = function transformer(file, api) {
         }
         
         addAwaitToCallsInFunction(func);
-        transformRelationshipAccess(func);
+        transformRelationshipAccess(func, modelRelationshipMap);
       }
     }
   });
@@ -1037,7 +1207,7 @@ module.exports = function transformer(file, api) {
       }
       
       addAwaitToCallsInFunction(func);
-      transformRelationshipAccess(func);
+      transformRelationshipAccess(func, modelRelationshipMap);
     }
   });
 
@@ -1053,7 +1223,7 @@ module.exports = function transformer(file, api) {
       }
       
       addAwaitToCallsInFunction(func);
-      transformRelationshipAccess(func);
+      transformRelationshipAccess(func, modelRelationshipMap);
     }
   });
 
@@ -1069,7 +1239,7 @@ module.exports = function transformer(file, api) {
       }
       
       addAwaitToCallsInFunction(func);
-      transformRelationshipAccess(func);
+      transformRelationshipAccess(func, modelRelationshipMap);
     }
   });
 
