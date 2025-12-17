@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var isPlainObject = require('lodash/isPlainObject.js');
 var isFunction = require('lodash/isFunction.js');
-var mapValues = require('lodash/mapValues.js');
+require('lodash/mapValues.js');
 var uniq = require('lodash/uniq.js');
 var flatten = require('lodash/flatten.js');
 var inflected = require('inflected');
@@ -91,7 +91,7 @@ function referenceSort (edges) {
 }
 
 let Factory = function () {
-  this.build = function (sequence) {
+  this.build = async function (sequence) {
     let object = {};
     let topLevelAttrs = Object.assign({}, this.attrs);
     delete topLevelAttrs.afterCreate;
@@ -101,29 +101,37 @@ let Factory = function () {
       }
     });
     let keys = sortAttrs(topLevelAttrs, sequence);
-    keys.forEach(function (key) {
+    for (let key of keys) {
       let buildAttrs, buildSingleValue;
-      buildAttrs = function (attrs) {
-        return mapValues(attrs, buildSingleValue);
+      buildAttrs = async function (attrs) {
+        let result = {};
+        for (let [k, v] of Object.entries(attrs)) {
+          result[k] = await buildSingleValue(v);
+        }
+        return result;
       };
-      buildSingleValue = value => {
+      buildSingleValue = async value => {
         if (Array.isArray(value)) {
-          return value.map(buildSingleValue);
+          let result = [];
+          for (let item of value) {
+            result.push(await buildSingleValue(item));
+          }
+          return result;
         } else if (isPlainObject(value)) {
-          return buildAttrs(value);
+          return await buildAttrs(value);
         } else if (isFunction(value)) {
-          return value.call(topLevelAttrs, sequence);
+          return await value.call(topLevelAttrs, sequence);
         } else {
           return value;
         }
       };
       let value = topLevelAttrs[key];
       if (isFunction(value)) {
-        object[key] = value.call(object, sequence);
+        object[key] = await value.call(object, sequence);
       } else {
-        object[key] = buildSingleValue(value);
+        object[key] = await buildSingleValue(value);
       }
-    });
+    }
     return object;
   };
 };
@@ -1074,7 +1082,13 @@ class DbCollection {
     @public
    */
   where(query) {
-    return maybeAsync(this._async, this._findRecordsWhere(query).map(duplicate));
+    const records = this._findRecordsWhere(query);
+
+    // Check if _findRecordsWhere returned a Promise (async predicate case)
+    if (records && typeof records.then === 'function') {
+      return records.then(r => maybeAsync(this._async, r.map(duplicate)));
+    }
+    return maybeAsync(this._async, records.map(duplicate));
   }
 
   /**
@@ -1282,6 +1296,15 @@ class DbCollection {
       });
     }
     let queryFunction = typeof query === "object" ? defaultQueryFunction : query;
+
+    // Check if query function is declared as async
+    const isAsync = queryFunction.constructor.name === 'AsyncFunction';
+    if (isAsync) {
+      // Async filter: map all promises and filter based on results
+      return Promise.all(records.map(record => queryFunction(record))).then(results => records.filter((_, i) => results[i]));
+    }
+
+    // Sync filter
     return records.filter(queryFunction);
   }
 
@@ -1714,6 +1737,17 @@ class Collection {
     @public
   */
   filter(f) {
+    // Check if function is declared as async
+    const isAsync = f.constructor.name === 'AsyncFunction';
+    if (isAsync) {
+      // Async filter: map all promises and filter based on results
+      return Promise.all(this.models.map((model, i) => f(model, i, this.models))).then(results => {
+        const filteredModels = this.models.filter((_, i) => results[i]);
+        return new Collection(this.modelName, filteredModels);
+      });
+    }
+
+    // Sync filter
     let filteredModels = this.models.filter(f);
     return new Collection(this.modelName, filteredModels);
   }
@@ -1729,8 +1763,52 @@ class Collection {
      @public
    */
   sort(f) {
+    // Check if function is declared as async
+    const isAsync = f.constructor.name === 'AsyncFunction';
+    if (isAsync) {
+      // Async sort: use a merge sort algorithm that can handle async comparisons
+      return this._asyncSort(f).then(sortedModels => {
+        return new Collection(this.modelName, sortedModels);
+      });
+    }
+
+    // Sync sort
     let sortedModels = this.models.concat().sort(f);
     return new Collection(this.modelName, sortedModels);
+  }
+
+  /**
+   * Async-aware merge sort implementation
+   * @private
+   */
+  async _asyncSort(compareFn) {
+    if (this.models.length <= 1) {
+      return this.models.concat();
+    }
+    const merge = async (left, right) => {
+      const result = [];
+      let i = 0,
+        j = 0;
+      while (i < left.length && j < right.length) {
+        const comparison = await compareFn(left[i], right[j]);
+        if (comparison <= 0) {
+          result.push(left[i++]);
+        } else {
+          result.push(right[j++]);
+        }
+      }
+      return result.concat(left.slice(i)).concat(right.slice(j));
+    };
+    const mergeSort = async arr => {
+      if (arr.length <= 1) {
+        return arr;
+      }
+      const mid = Math.floor(arr.length / 2);
+      const left = await mergeSort(arr.slice(0, mid));
+      const right = await mergeSort(arr.slice(mid));
+      return await merge(left, right);
+    };
+    return mergeSort(this.models.concat());
   }
 
   /**
@@ -2704,6 +2782,11 @@ class RouteHandler {
       if (code === 204 && response !== undefined && response !== "") {
         code = 200;
       }
+      // Return 404 for GET/HEAD requests when response is null or undefined
+      // This handles cases where schema.find() returns null for non-existent models
+      if ((this.verb === "get" || this.verb === "head") && (response === null || response === undefined)) {
+        code = 404;
+      }
     }
     return code;
   }
@@ -2885,6 +2968,31 @@ class Model {
       attrs = key;
     } else {
       (attrs = {})[key] = val;
+    }
+
+    // Check if any of the attribute values are Promises
+    // This can happen when users forget to await server.create() in async afterCreate
+    let hasPromises = Object.keys(attrs).some(attr => attrs[attr] instanceof Promise);
+    if (hasPromises) {
+      // If there are Promises, we need to await them first
+      // Return a Promise that resolves all attrs and then updates
+      return (async () => {
+        // Await all Promise values
+        const resolvedAttrs = {};
+        for (const attr of Object.keys(attrs)) {
+          resolvedAttrs[attr] = await Promise.resolve(attrs[attr]);
+        }
+
+        // Now set the resolved values
+        Object.keys(resolvedAttrs).forEach(function (attr) {
+          if (!this.associationKeys.has(attr) && !this.associationIdKeys.has(attr)) {
+            this._definePlainAttribute(attr);
+          }
+          this[attr] = resolvedAttrs[attr];
+        }, this);
+        this.save();
+        return this;
+      })();
     }
     Object.keys(attrs).forEach(function (attr) {
       if (!this.associationKeys.has(attr) && !this.associationIdKeys.has(attr)) {
@@ -5556,6 +5664,11 @@ class Schema {
   where(type, query) {
     let collection = this.collectionForType(type);
     let records = collection.where(query);
+
+    // Check if records is a Promise (async predicate case)
+    if (records && typeof records.then === 'function') {
+      return records.then(r => this._hydrate(r, dasherize(type)));
+    }
     if (this._isAsync) {
       return records.then(r => this._hydrate(r, dasherize(type)));
     }
@@ -6704,7 +6817,7 @@ class Server {
       return this._factoryMap[camelizedType];
     }
   }
-  build(type, ...traitsAndOverrides) {
+  async build(type, ...traitsAndOverrides) {
     let traits = traitsAndOverrides.filter(arg => arg && typeof arg === "string");
     let overrides = find(traitsAndOverrides, arg => isPlainObject(arg));
     let camelizedType = camelize(type);
@@ -6718,22 +6831,22 @@ class Server {
       let attrs = OriginalFactory.attrs || {};
       this._validateTraits(traits, OriginalFactory, type);
       let mergedExtensions = this._mergeExtensions(attrs, traits, overrides);
-      this._mapAssociationsFromAttributes(type, attrs, overrides);
-      this._mapAssociationsFromAttributes(type, mergedExtensions);
+      await this._mapAssociationsFromAttributes(type, attrs, overrides);
+      await this._mapAssociationsFromAttributes(type, mergedExtensions);
       let Factory = OriginalFactory.extend(mergedExtensions);
       let factory = new Factory();
       let sequence = this.factorySequences[camelizedType];
-      return factory.build(sequence);
+      return await factory.build(sequence);
     } else {
       return overrides;
     }
   }
-  buildList(type, amount, ...traitsAndOverrides) {
+  async buildList(type, amount, ...traitsAndOverrides) {
     assert(isInteger(amount), `second argument has to be an integer, you passed: ${typeof amount}`);
     let list = [];
     const buildArgs = [type, ...traitsAndOverrides];
     for (let i = 0; i < amount; i++) {
-      list.push(this.build.apply(this, buildArgs));
+      list.push(await this.build.apply(this, buildArgs));
     }
     return list;
   }
@@ -6772,7 +6885,7 @@ class Server {
     @param traitsAndOverrides
     @public
   */
-  create(type, ...options) {
+  async create(type, ...options) {
     assert(this._modelOrFactoryExistsForType(type), `You called server.create('${type}') but no model or factory was found. Make sure you're passing in the singularized version of the model or factory name.`);
 
     // When there is a Model defined, we should return an instance
@@ -6780,7 +6893,7 @@ class Server {
     let traits = options.filter(arg => arg && typeof arg === "string");
     let overrides = find(options, arg => isPlainObject(arg));
     let collectionFromCreateList = find(options, arg => arg && Array.isArray(arg));
-    let attrs = this.build(type, ...traits, overrides);
+    let attrs = await this.build(type, ...traits, overrides);
     let modelOrRecord;
     if (this.schema && this.schema[this.schema.toCollectionName(type)]) {
       let modelClass = this.schema[this.schema.toCollectionName(type)];
@@ -6798,11 +6911,16 @@ class Server {
     }
     let OriginalFactory = this.factoryFor(type);
     if (OriginalFactory) {
-      OriginalFactory.extractAfterCreateCallbacks({
+      let afterCreateCallbacks = OriginalFactory.extractAfterCreateCallbacks({
         traits
-      }).forEach(afterCreate => {
-        afterCreate(modelOrRecord, this);
       });
+      for (let afterCreate of afterCreateCallbacks) {
+        let result = await afterCreate(modelOrRecord, this);
+        // If afterCreate returns a model, use that instead
+        if (result) {
+          modelOrRecord = result;
+        }
+      }
     }
     return modelOrRecord;
   }
@@ -6837,7 +6955,7 @@ class Server {
     @param traitsAndOverrides
     @public
   */
-  createList(type, amount, ...traitsAndOverrides) {
+  async createList(type, amount, ...traitsAndOverrides) {
     assert(this._modelOrFactoryExistsForType(type), `You called server.createList('${type}') but no model or factory was found. Make sure you're passing in the singularized version of the model or factory name.`);
     assert(isInteger(amount), `second argument has to be an integer, you passed: ${typeof amount}`);
     let list = [];
@@ -6845,7 +6963,7 @@ class Server {
     let collection = this.db[collectionName];
     const createArguments = [type, ...traitsAndOverrides, collection];
     for (let i = 0; i < amount; i++) {
-      list.push(this.create.apply(this, createArguments));
+      list.push(await this.create.apply(this, createArguments));
     }
     return list;
   }
@@ -7016,10 +7134,12 @@ class Server {
    * @private
    * @hide
    */
-  _mapAssociationsFromAttributes(modelName, attributes, overrides = {}) {
-    Object.keys(attributes || {}).filter(attr => {
+  async _mapAssociationsFromAttributes(modelName, attributes, overrides = {}) {
+    if (!this.schema) return;
+    let associationAttrs = Object.keys(attributes || {}).filter(attr => {
       return isAssociation(attributes[attr]);
-    }).forEach(attr => {
+    });
+    for (let attr of associationAttrs) {
       let modelClass = this.schema.modelClassFor(modelName);
       let association = modelClass.associationFor(attr);
       assert(association && association instanceof BelongsTo, `You're using the \`association\` factory helper on the '${attr}' attribute of your ${modelName} factory, but that attribute is not a \`belongsTo\` association.`);
@@ -7030,10 +7150,11 @@ class Server {
       let factoryAssociation = attributes[attr];
       let foreignKey = `${camelize(attr)}Id`;
       if (!overrides[attr]) {
-        attributes[foreignKey] = this.create(association.modelName, ...factoryAssociation.traitsAndOverrides).id;
+        let created = await this.create(association.modelName, ...factoryAssociation.traitsAndOverrides);
+        attributes[foreignKey] = created.id;
       }
       delete attributes[attr];
-    });
+    }
   }
 }
 

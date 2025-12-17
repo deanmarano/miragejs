@@ -1039,4 +1039,44 @@ export default Model.extend({
   `.trim()
 );
 
+test(
+  'does not make serializer serialize() method async when it only accesses response.models',
+  `
+export default ApplicationSerializer.extend({
+  serialize(response, request) {
+    let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
+    
+    if (response instanceof Collection) {
+      response.models
+        .filter(m => m.vcsRepo)
+        .forEach((model, i) => {
+          json.data[i].attributes['vcs-repo'] = model.vcsRepo.name;
+        });
+      return json;
+    }
+    
+    return json;
+  },
+});
+  `.trim(),
+  `
+export default ApplicationSerializer.extend({
+  serialize(response, request) {
+    let json = ApplicationSerializer.prototype.serialize.apply(this, arguments);
+    
+    if (response instanceof Collection) {
+      response.models
+        .filter(m => m.vcsRepo)
+        .forEach((model, i) => {
+          json.data[i].attributes['vcs-repo'] = model.vcsRepo.name;
+        });
+      return json;
+    }
+    
+    return json;
+  },
+});
+  `.trim()
+);
+
 console.log('\n✅ All tests completed!');

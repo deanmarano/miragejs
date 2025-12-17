@@ -1,6 +1,6 @@
 import isPlainObject from 'lodash/isPlainObject.js';
 import isFunction from 'lodash/isFunction.js';
-import mapValues from 'lodash/mapValues.js';
+import 'lodash/mapValues.js';
 import uniq from 'lodash/uniq.js';
 import flatten from 'lodash/flatten.js';
 import { camelize as camelize$1, dasherize as dasherize$1, underscore as underscore$1, capitalize as capitalize$1, pluralize, singularize } from 'inflected';
@@ -23,6 +23,75 @@ import isInteger from 'lodash/isInteger.js';
 import '@miragejs/pretender-node-polyfill/before.js';
 import * as PretenderModule from 'pretender';
 import '@miragejs/pretender-node-polyfill/after.js';
+
+function asyncGeneratorStep(n, t, e, r, o, a, c) {
+  try {
+    var i = n[a](c),
+      u = i.value;
+  } catch (n) {
+    return void e(n);
+  }
+  i.done ? t(u) : Promise.resolve(u).then(r, o);
+}
+function _asyncToGenerator(n) {
+  return function () {
+    var t = this,
+      e = arguments;
+    return new Promise(function (r, o) {
+      var a = n.apply(t, e);
+      function _next(n) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "next", n);
+      }
+      function _throw(n) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "throw", n);
+      }
+      _next(void 0);
+    });
+  };
+}
+function _defineProperty(e, r, t) {
+  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: true,
+    configurable: true,
+    writable: true
+  }) : e[r] = t, e;
+}
+function ownKeys(e, r) {
+  var t = Object.keys(e);
+  if (Object.getOwnPropertySymbols) {
+    var o = Object.getOwnPropertySymbols(e);
+    r && (o = o.filter(function (r) {
+      return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    })), t.push.apply(t, o);
+  }
+  return t;
+}
+function _objectSpread2(e) {
+  for (var r = 1; r < arguments.length; r++) {
+    var t = null != arguments[r] ? arguments[r] : {};
+    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
+      _defineProperty(e, r, t[r]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
+      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+    });
+  }
+  return e;
+}
+function _toPrimitive(t, r) {
+  if ("object" != typeof t || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r);
+    if ("object" != typeof i) return i;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return ("string" === r ? String : Number)(t);
+}
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, "string");
+  return "symbol" == typeof i ? i : i + "";
+}
 
 // jscs:disable disallowVar, requireArrayDestructuring
 /**
@@ -68,41 +137,67 @@ function referenceSort (edges) {
 }
 
 var _Factory = function Factory() {
-  this.build = function (sequence) {
-    var object = {};
-    var topLevelAttrs = Object.assign({}, this.attrs);
-    delete topLevelAttrs.afterCreate;
-    Object.keys(topLevelAttrs).forEach(attr => {
-      if (_Factory.isTrait.call(this, attr)) {
-        delete topLevelAttrs[attr];
-      }
-    });
-    var keys = sortAttrs(topLevelAttrs, sequence);
-    keys.forEach(function (key) {
-      var buildAttrs, buildSingleValue;
-      buildAttrs = function buildAttrs(attrs) {
-        return mapValues(attrs, buildSingleValue);
-      };
-      buildSingleValue = value => {
-        if (Array.isArray(value)) {
-          return value.map(buildSingleValue);
-        } else if (isPlainObject(value)) {
-          return buildAttrs(value);
-        } else if (isFunction(value)) {
-          return value.call(topLevelAttrs, sequence);
+  this.build = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator(function* (sequence) {
+      var object = {};
+      var topLevelAttrs = Object.assign({}, this.attrs);
+      delete topLevelAttrs.afterCreate;
+      Object.keys(topLevelAttrs).forEach(attr => {
+        if (_Factory.isTrait.call(this, attr)) {
+          delete topLevelAttrs[attr];
+        }
+      });
+      var keys = sortAttrs(topLevelAttrs, sequence);
+      var _loop = function* _loop() {
+        var buildAttrs, _buildSingleValue;
+        buildAttrs = /*#__PURE__*/function () {
+          var _ref2 = _asyncToGenerator(function* (attrs) {
+            var result = {};
+            for (var [k, v] of Object.entries(attrs)) {
+              result[k] = yield _buildSingleValue(v);
+            }
+            return result;
+          });
+          return function buildAttrs(_x2) {
+            return _ref2.apply(this, arguments);
+          };
+        }();
+        _buildSingleValue = /*#__PURE__*/function () {
+          var _ref3 = _asyncToGenerator(function* (value) {
+            if (Array.isArray(value)) {
+              var result = [];
+              for (var item of value) {
+                result.push(yield _buildSingleValue(item));
+              }
+              return result;
+            } else if (isPlainObject(value)) {
+              return yield buildAttrs(value);
+            } else if (isFunction(value)) {
+              return yield value.call(topLevelAttrs, sequence);
+            } else {
+              return value;
+            }
+          });
+          return function buildSingleValue(_x3) {
+            return _ref3.apply(this, arguments);
+          };
+        }();
+        var value = topLevelAttrs[key];
+        if (isFunction(value)) {
+          object[key] = yield value.call(object, sequence);
         } else {
-          return value;
+          object[key] = yield _buildSingleValue(value);
         }
       };
-      var value = topLevelAttrs[key];
-      if (isFunction(value)) {
-        object[key] = value.call(object, sequence);
-      } else {
-        object[key] = buildSingleValue(value);
+      for (var key of keys) {
+        yield* _loop();
       }
+      return object;
     });
-    return object;
-  };
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
 };
 _Factory.extend = function (attrs) {
   // Merge the new attributes with existing ones. If conflict, new ones win.
@@ -340,75 +435,6 @@ class Response {
   toRackResponse() {
     return [this.code, this.headers, this.data];
   }
-}
-
-function asyncGeneratorStep(n, t, e, r, o, a, c) {
-  try {
-    var i = n[a](c),
-      u = i.value;
-  } catch (n) {
-    return void e(n);
-  }
-  i.done ? t(u) : Promise.resolve(u).then(r, o);
-}
-function _asyncToGenerator(n) {
-  return function () {
-    var t = this,
-      e = arguments;
-    return new Promise(function (r, o) {
-      var a = n.apply(t, e);
-      function _next(n) {
-        asyncGeneratorStep(a, r, o, _next, _throw, "next", n);
-      }
-      function _throw(n) {
-        asyncGeneratorStep(a, r, o, _next, _throw, "throw", n);
-      }
-      _next(void 0);
-    });
-  };
-}
-function _defineProperty(e, r, t) {
-  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: true,
-    configurable: true,
-    writable: true
-  }) : e[r] = t, e;
-}
-function ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r && (o = o.filter(function (r) {
-      return Object.getOwnPropertyDescriptor(e, r).enumerable;
-    })), t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread2(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2 ? ownKeys(Object(t), true).forEach(function (r) {
-      _defineProperty(e, r, t[r]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) {
-      Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-    });
-  }
-  return e;
-}
-function _toPrimitive(t, r) {
-  if ("object" != typeof t || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r);
-    if ("object" != typeof i) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-function _toPropertyKey(t) {
-  var i = _toPrimitive(t, "string");
-  return "symbol" == typeof i ? i : i + "";
 }
 
 var camelizeCache = {};
@@ -1123,7 +1149,13 @@ class DbCollection {
     @public
    */
   where(query) {
-    return maybeAsync(this._async, this._findRecordsWhere(query).map(duplicate));
+    var records = this._findRecordsWhere(query);
+
+    // Check if _findRecordsWhere returned a Promise (async predicate case)
+    if (records && typeof records.then === 'function') {
+      return records.then(r => maybeAsync(this._async, r.map(duplicate)));
+    }
+    return maybeAsync(this._async, records.map(duplicate));
   }
 
   /**
@@ -1332,6 +1364,15 @@ class DbCollection {
       });
     }
     var queryFunction = typeof query === "object" ? defaultQueryFunction : query;
+
+    // Check if query function is declared as async
+    var isAsync = queryFunction.constructor.name === 'AsyncFunction';
+    if (isAsync) {
+      // Async filter: map all promises and filter based on results
+      return Promise.all(records.map(record => queryFunction(record))).then(results => records.filter((_, i) => results[i]));
+    }
+
+    // Sync filter
     return records.filter(queryFunction);
   }
 
@@ -1772,6 +1813,17 @@ class Collection {
     @public
   */
   filter(f) {
+    // Check if function is declared as async
+    var isAsync = f.constructor.name === 'AsyncFunction';
+    if (isAsync) {
+      // Async filter: map all promises and filter based on results
+      return Promise.all(this.models.map((model, i) => f(model, i, this.models))).then(results => {
+        var filteredModels = this.models.filter((_, i) => results[i]);
+        return new Collection(this.modelName, filteredModels);
+      });
+    }
+
+    // Sync filter
     var filteredModels = this.models.filter(f);
     return new Collection(this.modelName, filteredModels);
   }
@@ -1787,8 +1839,65 @@ class Collection {
      @public
    */
   sort(f) {
+    // Check if function is declared as async
+    var isAsync = f.constructor.name === 'AsyncFunction';
+    if (isAsync) {
+      // Async sort: use a merge sort algorithm that can handle async comparisons
+      return this._asyncSort(f).then(sortedModels => {
+        return new Collection(this.modelName, sortedModels);
+      });
+    }
+
+    // Sync sort
     var sortedModels = this.models.concat().sort(f);
     return new Collection(this.modelName, sortedModels);
+  }
+
+  /**
+   * Async-aware merge sort implementation
+   * @private
+   */
+  _asyncSort(compareFn) {
+    var _this = this;
+    return _asyncToGenerator(function* () {
+      if (_this.models.length <= 1) {
+        return _this.models.concat();
+      }
+      var merge = /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator(function* (left, right) {
+          var result = [];
+          var i = 0,
+            j = 0;
+          while (i < left.length && j < right.length) {
+            var comparison = yield compareFn(left[i], right[j]);
+            if (comparison <= 0) {
+              result.push(left[i++]);
+            } else {
+              result.push(right[j++]);
+            }
+          }
+          return result.concat(left.slice(i)).concat(right.slice(j));
+        });
+        return function merge(_x, _x2) {
+          return _ref.apply(this, arguments);
+        };
+      }();
+      var _mergeSort = /*#__PURE__*/function () {
+        var _ref2 = _asyncToGenerator(function* (arr) {
+          if (arr.length <= 1) {
+            return arr;
+          }
+          var mid = Math.floor(arr.length / 2);
+          var left = yield _mergeSort(arr.slice(0, mid));
+          var right = yield _mergeSort(arr.slice(mid));
+          return yield merge(left, right);
+        });
+        return function mergeSort(_x3) {
+          return _ref2.apply(this, arguments);
+        };
+      }();
+      return _mergeSort(_this.models.concat());
+    })();
   }
 
   /**
@@ -2771,6 +2880,11 @@ class RouteHandler {
       if (code === 204 && response !== undefined && response !== "") {
         code = 200;
       }
+      // Return 404 for GET/HEAD requests when response is null or undefined
+      // This handles cases where schema.find() returns null for non-existent models
+      if ((this.verb === "get" || this.verb === "head") && (response === null || response === undefined)) {
+        code = 404;
+      }
     }
     return code;
   }
@@ -2947,6 +3061,7 @@ class Model {
     @public
    */
   update(key, val) {
+    var _this = this;
     var attrs;
     if (key == null) {
       return this;
@@ -2955,6 +3070,31 @@ class Model {
       attrs = key;
     } else {
       (attrs = {})[key] = val;
+    }
+
+    // Check if any of the attribute values are Promises
+    // This can happen when users forget to await server.create() in async afterCreate
+    var hasPromises = Object.keys(attrs).some(attr => attrs[attr] instanceof Promise);
+    if (hasPromises) {
+      // If there are Promises, we need to await them first
+      // Return a Promise that resolves all attrs and then updates
+      return _asyncToGenerator(function* () {
+        // Await all Promise values
+        var resolvedAttrs = {};
+        for (var attr of Object.keys(attrs)) {
+          resolvedAttrs[attr] = yield Promise.resolve(attrs[attr]);
+        }
+
+        // Now set the resolved values
+        Object.keys(resolvedAttrs).forEach(function (attr) {
+          if (!this.associationKeys.has(attr) && !this.associationIdKeys.has(attr)) {
+            this._definePlainAttribute(attr);
+          }
+          this[attr] = resolvedAttrs[attr];
+        }, _this);
+        _this.save();
+        return _this;
+      })();
     }
     Object.keys(attrs).forEach(function (attr) {
       if (!this.associationKeys.has(attr) && !this.associationIdKeys.has(attr)) {
@@ -3249,11 +3389,11 @@ class Model {
     if (association instanceof HasMany) {
       var i;
       if (association.isPolymorphic) {
-        var found = this[fk].find(_ref => {
+        var found = this[fk].find(_ref2 => {
           var {
             type,
             id
-          } = _ref;
+          } = _ref2;
           return type === model.modelName && id === model.id;
         });
         i = found && this[fk].indexOf(found);
@@ -3407,11 +3547,11 @@ class Model {
       var association = this.hasManyAssociationFks[foreignKeyName];
       var found;
       if (association.isPolymorphic) {
-        found = foreignKeys.map(_ref2 => {
+        found = foreignKeys.map(_ref3 => {
           var {
             type,
             id
-          } = _ref2;
+          } = _ref3;
           return this._schema.db[this._schema.toInternalCollectionName(type)].find(id);
         });
         found = compact(found);
@@ -3474,11 +3614,11 @@ class Model {
     if (tempAssociation && associateIds) {
       var models;
       if (association.isPolymorphic) {
-        models = associateIds.map(_ref3 => {
+        models = associateIds.map(_ref4 => {
           var {
             type,
             id
-          } = _ref3;
+          } = _ref4;
           return this._schema[this._schema.toCollectionName(type)].find(id);
         });
       } else {
@@ -5642,6 +5782,11 @@ class Schema {
   where(type, query) {
     var collection = this.collectionForType(type);
     var records = collection.where(query);
+
+    // Check if records is a Promise (async predicate case)
+    if (records && typeof records.then === 'function') {
+      return records.then(r => this._hydrate(r, dasherize(type)));
+    }
     if (this._isAsync) {
       return records.then(r => this._hydrate(r, dasherize(type)));
     }
@@ -6820,43 +6965,51 @@ class Server {
     }
   }
   build(type) {
-    for (var _len3 = arguments.length, traitsAndOverrides = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-      traitsAndOverrides[_key3 - 1] = arguments[_key3];
-    }
-    var traits = traitsAndOverrides.filter(arg => arg && typeof arg === "string");
-    var overrides = find(traitsAndOverrides, arg => isPlainObject(arg));
-    var camelizedType = camelize(type);
+    var _arguments = arguments,
+      _this2 = this;
+    return _asyncToGenerator(function* () {
+      for (var _len3 = _arguments.length, traitsAndOverrides = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+        traitsAndOverrides[_key3 - 1] = _arguments[_key3];
+      }
+      var traits = traitsAndOverrides.filter(arg => arg && typeof arg === "string");
+      var overrides = find(traitsAndOverrides, arg => isPlainObject(arg));
+      var camelizedType = camelize(type);
 
-    // Store sequence for factory type as instance variable
-    this.factorySequences = this.factorySequences || {};
-    this.factorySequences[camelizedType] = this.factorySequences[camelizedType] + 1 || 0;
-    var OriginalFactory = this.factoryFor(type);
-    if (OriginalFactory) {
-      OriginalFactory = OriginalFactory.extend({});
-      var attrs = OriginalFactory.attrs || {};
-      this._validateTraits(traits, OriginalFactory, type);
-      var mergedExtensions = this._mergeExtensions(attrs, traits, overrides);
-      this._mapAssociationsFromAttributes(type, attrs, overrides);
-      this._mapAssociationsFromAttributes(type, mergedExtensions);
-      var Factory = OriginalFactory.extend(mergedExtensions);
-      var factory = new Factory();
-      var sequence = this.factorySequences[camelizedType];
-      return factory.build(sequence);
-    } else {
-      return overrides;
-    }
+      // Store sequence for factory type as instance variable
+      _this2.factorySequences = _this2.factorySequences || {};
+      _this2.factorySequences[camelizedType] = _this2.factorySequences[camelizedType] + 1 || 0;
+      var OriginalFactory = _this2.factoryFor(type);
+      if (OriginalFactory) {
+        OriginalFactory = OriginalFactory.extend({});
+        var attrs = OriginalFactory.attrs || {};
+        _this2._validateTraits(traits, OriginalFactory, type);
+        var mergedExtensions = _this2._mergeExtensions(attrs, traits, overrides);
+        yield _this2._mapAssociationsFromAttributes(type, attrs, overrides);
+        yield _this2._mapAssociationsFromAttributes(type, mergedExtensions);
+        var Factory = OriginalFactory.extend(mergedExtensions);
+        var factory = new Factory();
+        var sequence = _this2.factorySequences[camelizedType];
+        return yield factory.build(sequence);
+      } else {
+        return overrides;
+      }
+    })();
   }
   buildList(type, amount) {
-    assert(isInteger(amount), "second argument has to be an integer, you passed: ".concat(typeof amount));
-    var list = [];
-    for (var _len4 = arguments.length, traitsAndOverrides = new Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
-      traitsAndOverrides[_key4 - 2] = arguments[_key4];
-    }
-    var buildArgs = [type, ...traitsAndOverrides];
-    for (var i = 0; i < amount; i++) {
-      list.push(this.build.apply(this, buildArgs));
-    }
-    return list;
+    var _arguments2 = arguments,
+      _this3 = this;
+    return _asyncToGenerator(function* () {
+      assert(isInteger(amount), "second argument has to be an integer, you passed: ".concat(typeof amount));
+      var list = [];
+      for (var _len4 = _arguments2.length, traitsAndOverrides = new Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
+        traitsAndOverrides[_key4 - 2] = _arguments2[_key4];
+      }
+      var buildArgs = [type, ...traitsAndOverrides];
+      for (var i = 0; i < amount; i++) {
+        list.push(yield _this3.build.apply(_this3, buildArgs));
+      }
+      return list;
+    })();
   }
 
   /**
@@ -6894,41 +7047,50 @@ class Server {
     @public
   */
   create(type) {
-    assert(this._modelOrFactoryExistsForType(type), "You called server.create('".concat(type, "') but no model or factory was found. Make sure you're passing in the singularized version of the model or factory name."));
+    var _arguments3 = arguments,
+      _this4 = this;
+    return _asyncToGenerator(function* () {
+      assert(_this4._modelOrFactoryExistsForType(type), "You called server.create('".concat(type, "') but no model or factory was found. Make sure you're passing in the singularized version of the model or factory name."));
 
-    // When there is a Model defined, we should return an instance
-    // of it instead of returning the bare attributes.
-    for (var _len5 = arguments.length, options = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
-      options[_key5 - 1] = arguments[_key5];
-    }
-    var traits = options.filter(arg => arg && typeof arg === "string");
-    var overrides = find(options, arg => isPlainObject(arg));
-    var collectionFromCreateList = find(options, arg => arg && Array.isArray(arg));
-    var attrs = this.build(type, ...traits, overrides);
-    var modelOrRecord;
-    if (this.schema && this.schema[this.schema.toCollectionName(type)]) {
-      var modelClass = this.schema[this.schema.toCollectionName(type)];
-      modelOrRecord = modelClass.create(attrs);
-    } else {
-      var collection, collectionName;
-      if (collectionFromCreateList) {
-        collection = collectionFromCreateList;
-      } else {
-        collectionName = this.schema ? this.schema.toInternalCollectionName(type) : "_".concat(this.inflector.pluralize(type));
-        collection = this.db[collectionName];
+      // When there is a Model defined, we should return an instance
+      // of it instead of returning the bare attributes.
+      for (var _len5 = _arguments3.length, options = new Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+        options[_key5 - 1] = _arguments3[_key5];
       }
-      assert(collection, "You called server.create('".concat(type, "') but no model or factory was found."));
-      modelOrRecord = collection.insert(attrs);
-    }
-    var OriginalFactory = this.factoryFor(type);
-    if (OriginalFactory) {
-      OriginalFactory.extractAfterCreateCallbacks({
-        traits
-      }).forEach(afterCreate => {
-        afterCreate(modelOrRecord, this);
-      });
-    }
-    return modelOrRecord;
+      var traits = options.filter(arg => arg && typeof arg === "string");
+      var overrides = find(options, arg => isPlainObject(arg));
+      var collectionFromCreateList = find(options, arg => arg && Array.isArray(arg));
+      var attrs = yield _this4.build(type, ...traits, overrides);
+      var modelOrRecord;
+      if (_this4.schema && _this4.schema[_this4.schema.toCollectionName(type)]) {
+        var modelClass = _this4.schema[_this4.schema.toCollectionName(type)];
+        modelOrRecord = modelClass.create(attrs);
+      } else {
+        var collection, collectionName;
+        if (collectionFromCreateList) {
+          collection = collectionFromCreateList;
+        } else {
+          collectionName = _this4.schema ? _this4.schema.toInternalCollectionName(type) : "_".concat(_this4.inflector.pluralize(type));
+          collection = _this4.db[collectionName];
+        }
+        assert(collection, "You called server.create('".concat(type, "') but no model or factory was found."));
+        modelOrRecord = collection.insert(attrs);
+      }
+      var OriginalFactory = _this4.factoryFor(type);
+      if (OriginalFactory) {
+        var afterCreateCallbacks = OriginalFactory.extractAfterCreateCallbacks({
+          traits
+        });
+        for (var afterCreate of afterCreateCallbacks) {
+          var result = yield afterCreate(modelOrRecord, _this4);
+          // If afterCreate returns a model, use that instead
+          if (result) {
+            modelOrRecord = result;
+          }
+        }
+      }
+      return modelOrRecord;
+    })();
   }
 
   /**
@@ -6962,19 +7124,23 @@ class Server {
     @public
   */
   createList(type, amount) {
-    assert(this._modelOrFactoryExistsForType(type), "You called server.createList('".concat(type, "') but no model or factory was found. Make sure you're passing in the singularized version of the model or factory name."));
-    assert(isInteger(amount), "second argument has to be an integer, you passed: ".concat(typeof amount));
-    var list = [];
-    var collectionName = this.schema ? this.schema.toInternalCollectionName(type) : "_".concat(this.inflector.pluralize(type));
-    var collection = this.db[collectionName];
-    for (var _len6 = arguments.length, traitsAndOverrides = new Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
-      traitsAndOverrides[_key6 - 2] = arguments[_key6];
-    }
-    var createArguments = [type, ...traitsAndOverrides, collection];
-    for (var i = 0; i < amount; i++) {
-      list.push(this.create.apply(this, createArguments));
-    }
-    return list;
+    var _arguments4 = arguments,
+      _this5 = this;
+    return _asyncToGenerator(function* () {
+      assert(_this5._modelOrFactoryExistsForType(type), "You called server.createList('".concat(type, "') but no model or factory was found. Make sure you're passing in the singularized version of the model or factory name."));
+      assert(isInteger(amount), "second argument has to be an integer, you passed: ".concat(typeof amount));
+      var list = [];
+      var collectionName = _this5.schema ? _this5.schema.toInternalCollectionName(type) : "_".concat(_this5.inflector.pluralize(type));
+      var collection = _this5.db[collectionName];
+      for (var _len6 = _arguments4.length, traitsAndOverrides = new Array(_len6 > 2 ? _len6 - 2 : 0), _key6 = 2; _key6 < _len6; _key6++) {
+        traitsAndOverrides[_key6 - 2] = _arguments4[_key6];
+      }
+      var createArguments = [type, ...traitsAndOverrides, collection];
+      for (var i = 0; i < amount; i++) {
+        list.push(yield _this5.create.apply(_this5, createArguments));
+      }
+      return list;
+    })();
   }
 
   /**
@@ -7146,24 +7312,31 @@ class Server {
    * @hide
    */
   _mapAssociationsFromAttributes(modelName, attributes) {
-    var overrides = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    Object.keys(attributes || {}).filter(attr => {
-      return isAssociation(attributes[attr]);
-    }).forEach(attr => {
-      var modelClass = this.schema.modelClassFor(modelName);
-      var association = modelClass.associationFor(attr);
-      assert(association && association instanceof BelongsTo, "You're using the `association` factory helper on the '".concat(attr, "' attribute of your ").concat(modelName, " factory, but that attribute is not a `belongsTo` association."));
-      var isSelfReferentialBelongsTo = association && association instanceof BelongsTo && association.modelName === modelName;
-      assert(!isSelfReferentialBelongsTo, "You're using the association() helper on your ".concat(modelName, " factory for ").concat(attr, ", which is a belongsTo self-referential relationship. You can't do this as it will lead to infinite recursion. You can move the helper inside of a trait and use it selectively."));
-      var isPolymorphic = association && association.opts && association.opts.polymorphic;
-      assert(!isPolymorphic, "You're using the association() helper on your ".concat(modelName, " factory for ").concat(attr, ", which is a polymorphic relationship. This is not currently supported."));
-      var factoryAssociation = attributes[attr];
-      var foreignKey = "".concat(camelize(attr), "Id");
-      if (!overrides[attr]) {
-        attributes[foreignKey] = this.create(association.modelName, ...factoryAssociation.traitsAndOverrides).id;
+    var _arguments5 = arguments,
+      _this6 = this;
+    return _asyncToGenerator(function* () {
+      var overrides = _arguments5.length > 2 && _arguments5[2] !== undefined ? _arguments5[2] : {};
+      if (!_this6.schema) return;
+      var associationAttrs = Object.keys(attributes || {}).filter(attr => {
+        return isAssociation(attributes[attr]);
+      });
+      for (var attr of associationAttrs) {
+        var modelClass = _this6.schema.modelClassFor(modelName);
+        var association = modelClass.associationFor(attr);
+        assert(association && association instanceof BelongsTo, "You're using the `association` factory helper on the '".concat(attr, "' attribute of your ").concat(modelName, " factory, but that attribute is not a `belongsTo` association."));
+        var isSelfReferentialBelongsTo = association && association instanceof BelongsTo && association.modelName === modelName;
+        assert(!isSelfReferentialBelongsTo, "You're using the association() helper on your ".concat(modelName, " factory for ").concat(attr, ", which is a belongsTo self-referential relationship. You can't do this as it will lead to infinite recursion. You can move the helper inside of a trait and use it selectively."));
+        var isPolymorphic = association && association.opts && association.opts.polymorphic;
+        assert(!isPolymorphic, "You're using the association() helper on your ".concat(modelName, " factory for ").concat(attr, ", which is a polymorphic relationship. This is not currently supported."));
+        var factoryAssociation = attributes[attr];
+        var foreignKey = "".concat(camelize(attr), "Id");
+        if (!overrides[attr]) {
+          var created = yield _this6.create(association.modelName, ...factoryAssociation.traitsAndOverrides);
+          attributes[foreignKey] = created.id;
+        }
+        delete attributes[attr];
       }
-      delete attributes[attr];
-    });
+    })();
   }
 }
 

@@ -262,11 +262,35 @@ const result = await doSomethingWith(model);
 
 ## Recommended Fixes
 
-### Immediate (Critical Path):
-1. ✅ **Update codemod**: Add return statements to async afterCreate
-2. ✅ **Add test case**: Verify return statement insertion
-3. ✅ **Re-run codemod**: Apply fixed transform to Atlas
-4. ✅ **Run CI**: Verify null model errors are resolved
+### ✅ IMPLEMENTED - Immediate (Critical Path):
+1. ✅ **Update codemod**: Add return statements to async afterCreate - **COMPLETED**
+   - Added `ensureAfterCreateReturnsModel()` helper function
+   - Automatically inserts `return model;` at end of async afterCreate
+   - Handles both factory afterCreate and trait afterCreate
+   - Skips if function already has a return statement
+   - Miragejs commit: 231903cd
+   
+2. ✅ **Add test cases**: Verify return statement insertion - **COMPLETED**
+   - Test 36: Adds return statement to async afterCreate without explicit return
+   - Test 37: Does not add return statement when afterCreate already returns
+   - Test 38: Adds return statement to trait afterCreate
+   - All 38 tests passing (100%)
+   
+3. ✅ **Re-run codemod**: Apply fixed transform to Atlas - **COMPLETED**
+   - Applied to 51 factory files
+   - Added 297 return statements
+   - Atlas commit: 73ecd52659 "fix: add return statements to async afterCreate hooks in factories"
+   
+4. ✅ **Update Atlas miragejs dependency** - **COMPLETED (CRITICAL FIX)**
+   - **Root Cause Identified**: Atlas was using OLD miragejs commit (03a37729) without the fix!
+   - Updated pnpm-lock.yaml from 03a37729 → 231903cd
+   - Atlas commit: d079bf243c "chore: update miragejs to include return statement fix"
+   - This was why CI run 20271431102 still showed 2064 failures - it was using the broken version
+   
+5. ⏳ **Run CI**: Verify null model errors are resolved - **IN PROGRESS**
+   - Latest commit d079bf243c pushed successfully
+   - Waiting for new CI run to complete
+   - Expected: ~1800-2000 failures reduced to ~200-300
 
 ### Short-term (High Priority):
 5. ⬜ **Fix varset-v2 factories**: Replace `projects: ""` with `projects: []`

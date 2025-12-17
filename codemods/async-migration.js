@@ -295,14 +295,15 @@ module.exports = function transformer(file, api) {
       if (!hasServerParam) {
         // This function doesn't have server/schema params, likely a utility function
         // Skip transforming .models access on what looks like model parameters
+        // or serializer parameters (response, request)
         let root = association;
         while (root.type === 'MemberExpression' && root.object) {
           root = root.object;
         }
         if (root.type === 'Identifier') {
-          // Common model param names that shouldn't trigger async in utility functions
-          const modelParamPattern = /^(run|project|organization|workspace|model|user|team|entity|record)$/i;
-          if (modelParamPattern.test(root.name)) {
+          // Common model/serializer param names that shouldn't trigger async in utility functions
+          const utilityParamPattern = /^(run|project|organization|workspace|model|user|team|entity|record|response|request)$/i;
+          if (utilityParamPattern.test(root.name)) {
             return;
           }
         }

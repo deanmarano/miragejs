@@ -1,19 +1,153 @@
-# Test TODO for Async Migration Codemod
+# Async Mode Migration - Progress & TODO
 
-This document tracks test cases that should be added for each feature/fix commit in the async migration codemod.
+## 🎯 Summary of Progress
 
-## Test Coverage Status
+### CI Test Results (Atlas)
+- **Baseline** (Run 20277682643): 1,902 failures
+- **After model.update() fix** (Run 20278969483): 1,101 failures  
+- **Improvement**: -801 failures (-42% reduction) ✅
+- **After 404 handling fix** (Run 20280031547): Queued
 
-### ✅ Already Tested
-- Basic route handler transformation (schema.collection.method())
-- DB method calls (schema.db.collection.method())
-- createServer() vs new Server() syntax
-- Non-async handlers (no transformation needed)
-- Duplicate async: true prevention
+### ✅ Completed Fixes
+
+#### 1. Auto-await `Server.create()` (Commit: 3e95b2b)
+- Detects when Server.create() returns a Promise
+- Automatically adds await when assigned to variable or returned
+- Test coverage: Added comprehensive tests
+
+#### 2. Auto-await `Factory.build()` (Commit: 22c4984)
+- Similar to Server.create(), detects async factory builds
+- Properly handles variable assignments and return statements
+- Test coverage: Added comprehensive tests
+
+#### 3. Auto-await `model.update()` (Commit: 8bdea15)
+- Handles model.update(), model.save(), and model.destroy()
+- Detects when models are accessed from server, schema, or this.server
+- **HUGE IMPACT**: Reduced failures by 801 (-42%)
+- Test coverage: Added comprehensive tests
+
+#### 4. Return 404 for null/undefined GET responses (Commit: ffb2f8e)
+- Modified route-handler.js to return 404 for GET/HEAD when response is null/undefined
+- Prevents JSON API serializers from crashing with "Cannot read properties of undefined"
+- Test coverage: Added failing test that now passes
+
+#### 5. Factory afterCreate async/await handling (Commit: 84953f5)
+- **TEST ONLY**: Added test demonstrating that afterCreate without await causes null relationships
+- **CODEMOD ALREADY WORKS**: The async-migration.js codemod correctly transforms afterCreate
+- Issue: Atlas factories haven't been transformed by the codemod yet
+- Root cause of timeouts: afterCreate creates models without await, relationships stay null
+- Test shows bug (null target) and fix (proper async/await)
+- **ACTION NEEDED**: Run codemod on Atlas factory files to fix timeouts
 
 ---
 
-## 🔴 Missing Tests by Commit
+## 🔥 Priority Fixes (Based on CI Failure Analysis)
+
+### TOP PRIORITY - High Impact Issues
+
+#### P1: "Cannot read properties of undefined (reading 'id')" - 623 failures
+**Root Cause**: Multiple scenarios where undefined objects are accessed
+- 567 failures with newline after error
+- 56 failures without newline
+- **Expected Impact**: ~50-100+ fewer failures (some already addressed by 404 fix)
+- **Analysis needed**: Check if 404 fix resolved these, or if more cases exist
+
+**Investigation**:
+```bash
+# Find specific test contexts
+grep -B 5 "Cannot read properties of undefined (reading 'id')" ember-test-logs-20278969483/*.log | head -100
+```
+
+#### P2: "Element not found" - 159 failures
+**Root Cause**: Tests looking for UI elements that haven't rendered yet
+- Likely timing issues with async model loading
+- May need waitUntil or settled() calls in tests
+- **Expected Impact**: 100-150 fewer failures
+
+**Common patterns**:
+- `[data-test-run-summary] [data-test-run-status]` - 24 failures
+- `[data-test-button="type-vcs"]` - 19 failures  
+- `[data-test-button="setup-auto-destroy"]` - 14 failures
+- `[data-test-button="edit-auto-destroy"]` - 10 failures
+
+**Potential Fix**: Add auto-await for assertions/queries that happen after model operations
+
+#### P3: "adapter's response did not have any data" - 270 failures
+**Root Cause**: findRecord requests returning null/undefined
+- workspace-v2: 167 failures (140 + 27)
+- policy-set-v2: 64 failures (32 + 32)
+- hyok-configuration-v2: 22 failures
+- oauth-token-v2: 17 failures
+- policy-v2: 11 failures
+
+**Status**: Partially addressed by 404 fix (ffb2f8e)
+**Expected Impact**: 50-150 fewer failures (await new CI results)
+
+#### P4: "model.hasInverseFor is not a function" - 54 failures
+**Root Cause**: Accessing model methods on undefined/null models
+**Expected Impact**: 50+ fewer failures
+**Investigation needed**: Identify which model operations need null checks
+
+#### P5: "Response must be normalized to a valid JSON API document" - 56 failures
+**Root Cause**: Route handlers returning invalid JSON API structures
+**Expected Impact**: 50+ fewer failures
+**Potential Fix**: Ensure route handlers return proper structures or null (triggering 404)
+
+#### P6: "@totalItems must be defined as an integer" - 40 failures
+**Root Cause**: Pagination component receiving undefined totalItems
+**Expected Impact**: 40 fewer failures
+**Likely Fix**: Ensure collection queries are awaited before rendering pagination
+
+#### P7: "Cannot read properties of undefined (reading 'models')" - 22 failures
+**Root Cause**: Accessing .models on undefined associations
+**Expected Impact**: 20+ fewer failures
+**Potential Fix**: Similar to previous .models access pattern fixes
+
+#### P8: "waitUntil timed out" - 17 failures
+**Root Cause**: Timeouts waiting for async operations to complete
+**Expected Impact**: 10-15 fewer failures
+**Investigation**: May be symptoms of other unfixed async issues
+
+---
+
+## 📋 Next Actions (Prioritized)
+
+### Immediate (Expected to fix 200-400 failures)
+1. **Wait for CI run 20280031547** to complete (404 fix deployed)
+   - Analyze impact on "adapter's response" errors
+   - Check if "undefined.id" errors reduced
+
+2. **Investigate "Element not found" failures** (159 failures)
+   - Determine if tests need `await settled()` after model operations
+   - Check if elements depend on async-loaded data
+   - Consider auto-inserting settled() after route handlers
+
+3. **Fix remaining "undefined.id" issues** (if still present after 404 fix)
+   - Analyze logs to find other scenarios beyond GET route handlers
+   - May need null checks in serializers or other locations
+
+### High Priority (Expected to fix 100-200 failures)
+4. **"model.hasInverseFor is not a function"** (54 failures)
+   - Add null checks or ensure models are loaded before accessing methods
+
+5. **"Response must be normalized to a valid JSON API document"** (56 failures)
+   - Audit route handlers returning invalid structures
+   - Ensure all handlers return proper JSON API format or null
+
+6. **Pagination "@totalItems" errors** (40 failures)
+   - Ensure collection counts are available before pagination renders
+   - May need to await query results
+
+### Medium Priority (Expected to fix 20-50 failures)
+7. **"Cannot read properties of undefined (reading 'models')"** (22 failures)
+   - Extend .models access fixes to additional patterns
+
+8. **"waitUntil timed out"** (17 failures)
+   - Investigate root causes (may be side effects of other issues)
+
+---
+
+## 🔴 Codemod Missing Tests by Commit
 
 ### Commit b870cd7: Support this.server patterns in test hooks
 **Feature**: Transform test hooks (beforeEach/afterEach) that use `this.server`
