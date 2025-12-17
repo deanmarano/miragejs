@@ -9,11 +9,32 @@ const path = require('path');
 const jscodeshift = require('jscodeshift');
 const transform = require('../async-migration.cjs');
 
+// Mock model relationship map for tests
+const mockModelRelationships = new Map([
+  ['user', new Set(['organization', 'teams', 'workspaces'])],
+  ['users', new Set(['organization', 'teams', 'workspaces'])],
+  ['run', new Set(['workspace', 'plan', 'apply', 'createdBy', 'permissions'])],
+  ['runs', new Set(['workspace', 'plan', 'apply', 'createdBy', 'permissions'])],
+  ['workspace', new Set(['organization', 'runs', 'currentRun'])],
+  ['workspaces', new Set(['organization', 'runs', 'currentRun', 'owner'])],
+  ['organization', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner'])],
+  ['organizations', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner'])],
+  ['model', new Set(['workspace', 'user'])],
+  ['models', new Set(['workspace', 'user'])],
+  ['session', new Set(['user'])],
+  ['sessions', new Set(['user'])],
+]);
+
 function applyTransform(source) {
   const api = {
     jscodeshift: jscodeshift.withParser('babel'),
   };
-  return transform({ path: 'test.js', source }, api) || source;
+  // Pass mock relationships through file object
+  return transform({ 
+    path: 'test.js', 
+    source,
+    _mockModelRelationships: mockModelRelationships 
+  }, api) || source;
 }
 
 function test(name, input, expected, expectFailure = false) {
@@ -1351,6 +1372,206 @@ export async function update(schema, { params }) {
 }
   `.trim(),
   { expectFailure: true } // This is a bug - produces invalid syntax
+);
+
+test(
+  'makes arrow functions async when they contain await',
+  `
+this.get('/runs', function(schema) {
+  let previousRuns = schema.runs.all();
+  let mfaWaitingRuns = previousRuns
+    .filter(r => r.status === 'planning')
+    .filter(run => run.plan.status === 'mfa_waiting');
+  return mfaWaitingRuns;
+});
+  `.trim(),
+  `
+this.get('/runs', async function(schema) {
+  let previousRuns = await schema.runs.all();
+  let mfaWaitingRuns = previousRuns
+    .filter(r => r.status === 'planning')
+    .filter(async run => (await run.plan).status === 'mfa_waiting');
+  return mfaWaitingRuns;
+});
+  `.trim()
+);
+
+test(
+  'BUG: adds await in arrow function without making it async',
+  `
+this.get('/runs', function(schema) {
+  let previousRuns = schema.runs.all();
+  let mfaWaitingRuns = previousRuns
+    .filter(r => r.status === 'planning')
+    .filter(run => run.plan.status === 'mfa_waiting');
+  return mfaWaitingRuns;
+});
+  `.trim(),
+  `
+this.get('/runs', async function(schema) {
+  let previousRuns = await schema.runs.all();
+  let mfaWaitingRuns = previousRuns
+    .filter(r => r.status === 'planning')
+    .filter(run => (await run.plan).status === 'mfa_waiting');
+  return mfaWaitingRuns;
+});
+  `.trim(),
+  { expectFailure: true } // Bug: arrow function needs to be async
+);
+
+// Test collection methods: findBy, findWhere
+test(
+  'tracks variables from findBy and findWhere',
+  `
+this.get('/users/:id', function({ users }, request) {
+  let user = users.findBy({ email: request.params.email });
+  return user.organization;
+});
+  `.trim(),
+  `
+this.get('/users/:id', async function({ users }, request) {
+  let user = await users.findBy({ email: request.params.email });
+  return await user.organization;
+});
+  `.trim()
+);
+
+test(
+  'tracks variables from findWhere',
+  `
+this.get('/users/active', function({ users }) {
+  let activeUser = users.findWhere((u) => u.isActive);
+  return activeUser.teams;
+});
+  `.trim(),
+  `
+this.get('/users/active', async function({ users }) {
+  let activeUser = await users.findWhere((u) => u.isActive);
+  return await activeUser.teams;
+});
+  `.trim()
+);
+
+// Test arrow function callbacks: map, forEach, some, every, reduce
+test(
+  'makes map arrow function async when accessing relationships',
+  `
+this.get('/runs', async function({ runs }) {
+  let allRuns = await runs.all();
+  let plans = allRuns.map(run => run.plan);
+  return plans;
+});
+  `.trim(),
+  `
+this.get('/runs', async function({ runs }) {
+  let allRuns = await runs.all();
+  let plans = allRuns.map(async run => await run.plan);
+  return plans;
+});
+  `.trim()
+);
+
+test(
+  'makes forEach arrow function async when accessing relationships',
+  `
+this.get('/runs', async function({ runs }) {
+  let allRuns = await runs.all();
+  allRuns.models.forEach(run => {
+    console.log(run.plan.status);
+  });
+});
+  `.trim(),
+  `
+this.get('/runs', async function({ runs }) {
+  let allRuns = await runs.all();
+  allRuns.models.forEach(run => {
+    console.log(run.plan.status);
+  });
+});
+  `.trim()
+);
+
+test(
+  'makes some arrow function async when accessing relationships',
+  `
+this.get('/runs/check', async function({ runs }) {
+  let allRuns = await runs.all();
+  let hasPending = allRuns.some(run => run.plan.status === 'pending');
+  return { hasPending };
+});
+  `.trim(),
+  `
+this.get('/runs/check', async function({ runs }) {
+  let allRuns = await runs.all();
+  let hasPending = allRuns.some(async run => (await run.plan).status === 'pending');
+  return { hasPending };
+});
+  `.trim()
+);
+
+test(
+  'makes every arrow function async when accessing relationships',
+  `
+this.get('/runs/check', async function({ runs }) {
+  let allRuns = await runs.all();
+  let allCompleted = allRuns.every(run => run.plan.completed);
+  return { allCompleted };
+});
+  `.trim(),
+  `
+this.get('/runs/check', async function({ runs }) {
+  let allRuns = await runs.all();
+  let allCompleted = allRuns.every(async run => (await run.plan).completed);
+  return { allCompleted };
+});
+  `.trim()
+);
+
+test(
+  'makes reduce arrow function async when accessing relationships',
+  `
+this.get('/runs/count', async function({ runs }) {
+  let allRuns = await runs.all();
+  let count = allRuns.reduce((acc, run) => {
+    return acc + (run.plan.status === 'completed' ? 1 : 0);
+  }, 0);
+  return { count };
+});
+  `.trim(),
+  `
+this.get('/runs/count', async function({ runs }) {
+  let allRuns = await runs.all();
+  let count = allRuns.reduce(async (acc, run) => {
+    return acc + ((await run.plan).status === 'completed' ? 1 : 0);
+  }, 0);
+  return { count };
+});
+  `.trim()
+);
+
+// Test that .models.forEach() is NOT transformed (it's on a plain array, not a collection)
+test(
+  'does not make models.forEach arrow function async',
+  `
+this.get('/projects/:id', async function({ projects }, request) {
+  let project = await projects.find(request.params.id);
+  let runs = await project.runs;
+  runs.models.forEach(run => {
+    console.log(run.workspace.name);
+  });
+  return project;
+});
+  `.trim(),
+  `
+this.get('/projects/:id', async function({ projects }, request) {
+  let project = await projects.find(request.params.id);
+  let runs = await project.runs;
+  runs.models.forEach(run => {
+    console.log(run.workspace.name);
+  });
+  return project;
+});
+  `.trim()
 );
 
 console.log('\n' + '='.repeat(70));

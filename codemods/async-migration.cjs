@@ -151,7 +151,8 @@ module.exports = function transformer(file, api) {
   let hasChanges = false;
   
   // Discover all model relationships in the workspace
-  const modelRelationshipMap = discoverModelRelationships(file.path, j);
+  // Use mock if provided (for testing), otherwise discover from filesystem
+  const modelRelationshipMap = file._mockModelRelationships || discoverModelRelationships(file.path, j);
 
   // Helper to check if a function should be made async
   function shouldBeAsync(node, path) {
@@ -812,54 +813,95 @@ module.exports = function transformer(file, api) {
     // Track variables that hold model instances from find/findBy/server.create
     const modelVariables = new Map(); // variable name -> model type (if known)
     
-    // Find all variable assignments from collection.find/findBy or server.create
+    // Find all variable assignments from collection methods or server.create
     j(funcNode).find(j.VariableDeclarator).forEach(varPath => {
       const init = varPath.value.init;
       if (!init) return;
       
-      // Check if assigned from awaited find/findBy/first
+      let call = null;
+      
+      // Check if assigned from awaited collection method call
       if (init.type === 'AwaitExpression' && init.argument.type === 'CallExpression') {
-        const call = init.argument;
-        if (call.callee.type === 'MemberExpression') {
-          const methodName = call.callee.property.name;
-          const objectName = call.callee.object.name;
-          
-          if (methodName === 'find' || methodName === 'findBy' || methodName === 'first') {
-            // Collection method - the collection name IS the model name
-            modelVariables.set(varPath.value.id.name, objectName);
-          }
-          // Also track server.create() and server.createList()
-          if (methodName === 'create' || methodName === 'createList') {
-            const isServerCall = objectName === 'server' || 
-                (call.callee.object.type === 'MemberExpression' && 
-                 call.callee.object.property.name === 'server');
-            if (isServerCall && call.arguments.length > 0) {
-              // First argument to server.create is the model name
-              const modelNameArg = call.arguments[0];
-              if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
-                modelVariables.set(varPath.value.id.name, modelNameArg.value);
-              }
+        call = init.argument;
+      }
+      // Also track non-awaited calls (they will be transformed later)
+      else if (init.type === 'CallExpression') {
+        call = init;
+      }
+      
+      if (call && call.callee.type === 'MemberExpression') {
+        const methodName = call.callee.property.name;
+        let objectName = call.callee.object.name;
+        
+        // Handle schema.collection.method() pattern - need to get collection name from nested member expression
+        // e.g., schema.runs.all(), schema.users.find(), schema.workspaces.where()
+        if (call.callee.object.type === 'MemberExpression') {
+          objectName = call.callee.object.property.name; // Extract 'runs' from 'schema.runs'
+        }
+        
+        // Collection methods that return single models
+        if (methodName === 'find' || methodName === 'findBy' || methodName === 'first' || methodName === 'findWhere') {
+          modelVariables.set(varPath.value.id.name, objectName);
+        }
+        
+        // Collection methods that return collections (still track as the collection type)
+        if (methodName === 'all' || methodName === 'where' || methodName === 'filter' || methodName === 'sort') {
+          modelVariables.set(varPath.value.id.name, objectName);
+        }
+        
+        // Track server.create() and server.createList()
+        if (methodName === 'create' || methodName === 'createList') {
+          const isServerCall = objectName === 'server' || 
+              (call.callee.object.type === 'MemberExpression' && 
+               call.callee.object.property.name === 'server');
+          if (isServerCall && call.arguments.length > 0) {
+            // First argument to server.create is the model name
+            const modelNameArg = call.arguments[0];
+            if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
+              modelVariables.set(varPath.value.id.name, modelNameArg.value);
             }
           }
         }
       }
     });
     
-    // Track variables assigned from other model variables or server.create
+    // Track variables assigned from collection methods or server.create in assignment expressions
     j(funcNode).find(j.AssignmentExpression).forEach(assignPath => {
       const left = assignPath.value.left;
       const right = assignPath.value.right;
       
-      if (left.type === 'Identifier' && right.type === 'AwaitExpression') {
-        const arg = right.argument;
-        if (arg.type === 'CallExpression' && arg.callee.type === 'MemberExpression') {
+      if (left.type === 'Identifier') {
+        let arg = null;
+        
+        // Check awaited assignments
+        if (right.type === 'AwaitExpression' && right.argument.type === 'CallExpression') {
+          arg = right.argument;
+        }
+        // Also track non-awaited assignments (they will be transformed later)
+        else if (right.type === 'CallExpression') {
+          arg = right;
+        }
+        
+        if (arg && arg.callee.type === 'MemberExpression') {
           const methodName = arg.callee.property.name;
-          const objectName = arg.callee.object.name;
+          let objectName = arg.callee.object.name;
           
-          if (methodName === 'find' || methodName === 'findBy' || methodName === 'first') {
+          // Handle schema.collection.method() pattern
+          if (arg.callee.object.type === 'MemberExpression') {
+            objectName = arg.callee.object.property.name;
+          }
+          
+          // Collection methods that return single models
+          if (methodName === 'find' || methodName === 'findBy' || methodName === 'first' || methodName === 'findWhere') {
             modelVariables.set(left.name, objectName);
           }
-          // Also track server.create() in assignments
+          
+          // Collection methods that return collections
+          if (methodName === 'all' || methodName === 'where' || methodName === 'filter' || methodName === 'sort') {
+            modelVariables.set(left.name, objectName);
+          }
+          
+          // Track server.create() and server.createList() in assignments
           if (methodName === 'create' || methodName === 'createList') {
             const isServerCall = objectName === 'server' || 
                 (arg.callee.object.type === 'MemberExpression' && 
@@ -868,6 +910,62 @@ module.exports = function transformer(file, api) {
               const modelNameArg = arg.arguments[0];
               if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
                 modelVariables.set(left.name, modelNameArg.value);
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    // Track arrow function parameters when they're callbacks on collection methods
+    // e.g., `previousRuns.filter(run => ...)` - the `run` parameter should be type 'runs'
+    // Find all arrow functions and check if they're used as callbacks
+    j(funcNode).find(j.ArrowFunctionExpression).forEach(arrowPath => {
+      const arrow = arrowPath.value;
+      if (arrow.params.length === 0) return;
+      
+      // Check if this arrow function is an argument to a method call
+      const parent = arrowPath.parent;
+      if (parent && parent.value.type === 'CallExpression') {
+        const call = parent.value;
+        if (call.callee.type === 'MemberExpression') {
+          const methodName = call.callee.property.name;
+          const collectionMethods = ['filter', 'find', 'map', 'forEach', 'some', 'every', 'reduce', 'sort'];
+          
+          if (collectionMethods.includes(methodName)) {
+            // Get the object the method is called on
+            const obj = call.callee.object;
+            let collectionType = null;
+            
+            // Direct variable reference: previousRuns.filter(...)
+            if (obj.type === 'Identifier' && modelVariables.has(obj.name)) {
+              collectionType = modelVariables.get(obj.name);
+            }
+            // Chained call: something.filter(...).map(...)
+            // The result of filter/map/etc is still the same collection type
+            else if (obj.type === 'CallExpression' && obj.callee.type === 'MemberExpression') {
+              // Walk back through the chain to find the base collection
+              let baseObj = obj;
+              while (baseObj.type === 'CallExpression' && baseObj.callee.type === 'MemberExpression') {
+                baseObj = baseObj.callee.object;
+              }
+              if (baseObj.type === 'Identifier' && modelVariables.has(baseObj.name)) {
+                collectionType = modelVariables.get(baseObj.name);
+              }
+            }
+            
+            // If we found the collection type, track the arrow function parameter
+            if (collectionType) {
+              // For reduce, the second parameter is the item, first is accumulator
+              let paramIndex = methodName === 'reduce' && arrow.params.length >= 2 ? 1 : 0;
+              
+              if (arrow.params[paramIndex] && arrow.params[paramIndex].type === 'Identifier') {
+                const paramName = arrow.params[paramIndex].name;
+                modelVariables.set(paramName, collectionType);
+                
+                if (process.env.DEBUG_TRANSFORM) {
+                  console.log('[DEBUG] Tracked arrow param:', paramName, 'as type:', collectionType);
+                }
               }
             }
           }
@@ -896,22 +994,25 @@ module.exports = function transformer(file, api) {
         const propertyName = node.property.name;
         const modelType = modelVariables.get(modelVarName);
         
+        // DEBUG: Log what we're checking
+        if (process.env.DEBUG_TRANSFORM) {
+          console.log('[DEBUG] Variable:', modelVarName, 'Type:', modelType, 'Property:', propertyName);
+          console.log('[DEBUG] Has model?', modelRelationshipMap.has(modelType));
+          if (modelType && modelRelationshipMap.has(modelType)) {
+            console.log('[DEBUG] Relationships:', Array.from(modelRelationshipMap.get(modelType)));
+            console.log('[DEBUG] Has relationship?', modelRelationshipMap.get(modelType).has(propertyName));
+          }
+        }
+        
         // Check if we have relationship information for this model type
         let isRelationship = false;
         if (modelType && modelRelationshipMap.has(modelType)) {
           const relationships = modelRelationshipMap.get(modelType);
           isRelationship = relationships.has(propertyName);
         } else {
-          // Fallback to heuristic if we don't have model definition
-          // CONSERVATIVE APPROACH: Only await properties that are LIKELY relationships
-          const likelyRelationshipPatterns = [
-            /s$/, // Plural (e.g., 'users', 'workspaces', 'runs')
-            /^(workspace|organization|user|owner|team|project|run|policy|plan|apply)$/i
-          ];
-          
-          isRelationship = likelyRelationshipPatterns.some(pattern => 
-            pattern.test(propertyName)
-          );
+          // If we don't have the model definition, skip it
+          // We should not guess based on heuristics
+          return;
         }
         
         if (!isRelationship) {
@@ -983,6 +1084,24 @@ module.exports = function transformer(file, api) {
         if (shouldAwait) {
           j(memberPath).replaceWith(j.awaitExpression(node));
           hasChanges = true;
+          
+          // Make the containing arrow function async if it isn't already
+          let funcParent = memberPath.parent;
+          while (funcParent) {
+            if (funcParent.value.type === 'ArrowFunctionExpression' || 
+                funcParent.value.type === 'FunctionExpression') {
+              if (!funcParent.value.async) {
+                funcParent.value.async = true;
+              }
+              break;
+            }
+            // Stop at function declaration or program
+            if (funcParent.value.type === 'FunctionDeclaration' || 
+                funcParent.value.type === 'Program') {
+              break;
+            }
+            funcParent = funcParent.parent;
+          }
         }
       }
     });
