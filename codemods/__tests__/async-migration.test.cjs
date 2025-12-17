@@ -1079,4 +1079,132 @@ export default ApplicationSerializer.extend({
   `.trim()
 );
 
+test(
+  'awaits model.destroy() in route handlers',
+  `
+this.delete('/api/users/:id', function({ users }, request) {
+  let user = users.find(request.params.id);
+  user.destroy();
+  return new Response(204);
+});
+  `.trim(),
+  `
+this.delete('/api/users/:id', async function({ users }, request) {
+  let user = await users.find(request.params.id);
+  await user.destroy();
+  return new Response(204);
+});
+  `.trim()
+);
+
+test(
+  'awaits chained model operations - find then destroy',
+  `
+export function deleteUser({ users }, { params }) {
+  let user = users.find(params.id);
+  if (user) {
+    user.destroy();
+  }
+  return new Response(204);
+}
+  `.trim(),
+  `
+export async function deleteUser({ users }, { params }) {
+  let user = await users.find(params.id);
+  if (user) {
+    await user.destroy();
+  }
+  return new Response(204);
+}
+  `.trim()
+);
+
+test(
+  'awaits model.update() in route handlers',
+  `
+this.patch('/api/users/:id', function({ users }, request) {
+  let user = users.find(request.params.id);
+  let attrs = JSON.parse(request.requestBody);
+  user.update(attrs);
+  return user;
+});
+  `.trim(),
+  `
+this.patch('/api/users/:id', async function({ users }, request) {
+  let user = await users.find(request.params.id);
+  let attrs = JSON.parse(request.requestBody);
+  await user.update(attrs);
+  return user;
+});
+  `.trim()
+);
+
+test(
+  'awaits double-awaited association.models pattern in afterCreate',
+  `
+Factory.extend({
+  async afterCreate(varset) {
+    varset.attrs.projectCount = (await (await varset.projects).models).length;
+    varset.attrs.workspaceCount = (await (await varset.workspaces).models).length;
+    
+    if (varset.parent === null) {
+      await varset.update({ parent: varset.organization });
+    }
+    return varset;
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(varset) {
+    varset.attrs.projectCount = (await (await varset.projects).models).length;
+    varset.attrs.workspaceCount = (await (await varset.workspaces).models).length;
+    
+    if (varset.parent === null) {
+      await varset.update({ parent: varset.organization });
+    }
+    return varset;
+  }
+});
+  `.trim()
+);
+
+test(
+  'awaits model property access in conditional',
+  `
+export function show({ sessions }, { params }) {
+  let session = sessions.find(params.id);
+  if (session && session.user) {
+    return session.user;
+  }
+  return notFound();
+}
+  `.trim(),
+  `
+export async function show({ sessions }, { params }) {
+  let session = await sessions.find(params.id);
+  if (session && (await session.user)) {
+    return await session.user;
+  }
+  return notFound();
+}
+  `.trim()
+);
+
+test(
+  'awaits relationship property on model',
+  `
+this.get('/api/runs/:id/permissions', function({ runs }, request) {
+  let run = runs.find(request.params.id);
+  return run.permissions;
+});
+  `.trim(),
+  `
+this.get('/api/runs/:id/permissions', async function({ runs }, request) {
+  let run = await runs.find(request.params.id);
+  return await run.permissions;
+});
+  `.trim()
+);
+
 console.log('\n✅ All tests completed!');
