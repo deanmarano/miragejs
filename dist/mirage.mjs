@@ -3048,7 +3048,9 @@ class Model {
   _saveAsync(collection) {
     var _this = this;
     return _asyncToGenerator(function* () {
-      if (_this.isNew()) {
+      // Check if this is a new record by checking if it exists in the DB
+      var isNewRecord = yield _this._isNewAsync();
+      if (isNewRecord) {
         // Update the attrs with the db response
         _this.attrs = yield _this._schema.db[collection].insert(_this.attrs);
 
@@ -3061,6 +3063,21 @@ class Model {
       _this._saveAssociations();
       _this._schema.isSaving[_this.toString()] = false;
       return _this;
+    })();
+  }
+  _isNewAsync() {
+    var _this2 = this;
+    return _asyncToGenerator(function* () {
+      var hasDbRecord = false;
+      var hasId = _this2.attrs.id !== undefined && _this2.attrs.id !== null;
+      if (hasId) {
+        var collectionName = _this2._schema.toInternalCollectionName(_this2.modelName);
+        var record = yield _this2._schema.db[collectionName].find(_this2.attrs.id);
+        if (record) {
+          hasDbRecord = true;
+        }
+      }
+      return !hasDbRecord;
     })();
   }
 
@@ -3085,7 +3102,7 @@ class Model {
     @public
    */
   update(key, val) {
-    var _this2 = this;
+    var _this3 = this;
     var attrs;
     if (key == null) {
       return this;
@@ -3115,9 +3132,9 @@ class Model {
             this._definePlainAttribute(attr);
           }
           this[attr] = resolvedAttrs[attr];
-        }, _this2);
-        _this2.save();
-        return _this2;
+        }, _this3);
+        _this3.save();
+        return _this3;
       })();
     }
     Object.keys(attrs).forEach(function (attr) {

@@ -15061,26 +15061,31 @@
       key: "_saveAsync",
       value: function () {
         var _saveAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(collection) {
+          var isNewRecord;
           return _regenerator().w(function (_context) {
             while (1) switch (_context.n) {
               case 0:
-                if (!this.isNew()) {
-                  _context.n = 2;
+                _context.n = 1;
+                return this._isNewAsync();
+              case 1:
+                isNewRecord = _context.v;
+                if (!isNewRecord) {
+                  _context.n = 3;
                   break;
                 }
-                _context.n = 1;
+                _context.n = 2;
                 return this._schema.db[collection].insert(this.attrs);
-              case 1:
+              case 2:
                 this.attrs = _context.v;
                 // Ensure the id getter/setter is set
                 this._definePlainAttribute("id");
-                _context.n = 3;
+                _context.n = 4;
                 break;
-              case 2:
-                this._schema.isSaving[this.toString()] = true;
-                _context.n = 3;
-                return this._schema.db[collection].update(this.attrs.id, this.attrs);
               case 3:
+                this._schema.isSaving[this.toString()] = true;
+                _context.n = 4;
+                return this._schema.db[collection].update(this.attrs.id, this.attrs);
+              case 4:
                 this._saveAssociations();
                 this._schema.isSaving[this.toString()] = false;
                 return _context.a(2, this);
@@ -15091,6 +15096,38 @@
           return _saveAsync2.apply(this, arguments);
         }
         return _saveAsync;
+      }()
+    }, {
+      key: "_isNewAsync",
+      value: function () {
+        var _isNewAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+          var hasDbRecord, hasId, collectionName, record;
+          return _regenerator().w(function (_context2) {
+            while (1) switch (_context2.n) {
+              case 0:
+                hasDbRecord = false;
+                hasId = this.attrs.id !== undefined && this.attrs.id !== null;
+                if (!hasId) {
+                  _context2.n = 2;
+                  break;
+                }
+                collectionName = this._schema.toInternalCollectionName(this.modelName);
+                _context2.n = 1;
+                return this._schema.db[collectionName].find(this.attrs.id);
+              case 1:
+                record = _context2.v;
+                if (record) {
+                  hasDbRecord = true;
+                }
+              case 2:
+                return _context2.a(2, !hasDbRecord);
+            }
+          }, _callee2, this);
+        }));
+        function _isNewAsync() {
+          return _isNewAsync2.apply(this, arguments);
+        }
+        return _isNewAsync;
       }()
       /**
         Updates the record in the db.
@@ -15134,27 +15171,27 @@
         if (hasPromises) {
           // If there are Promises, we need to await them first
           // Return a Promise that resolves all attrs and then updates
-          return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+          return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
             var resolvedAttrs, _i, _Object$keys, attr;
-            return _regenerator().w(function (_context2) {
-              while (1) switch (_context2.n) {
+            return _regenerator().w(function (_context3) {
+              while (1) switch (_context3.n) {
                 case 0:
                   // Await all Promise values
                   resolvedAttrs = {};
                   _i = 0, _Object$keys = Object.keys(attrs);
                 case 1:
                   if (!(_i < _Object$keys.length)) {
-                    _context2.n = 4;
+                    _context3.n = 4;
                     break;
                   }
                   attr = _Object$keys[_i];
-                  _context2.n = 2;
+                  _context3.n = 2;
                   return Promise.resolve(attrs[attr]);
                 case 2:
-                  resolvedAttrs[attr] = _context2.v;
+                  resolvedAttrs[attr] = _context3.v;
                 case 3:
                   _i++;
-                  _context2.n = 1;
+                  _context3.n = 1;
                   break;
                 case 4:
                   // Now set the resolved values
@@ -15165,9 +15202,9 @@
                     this[attr] = resolvedAttrs[attr];
                   }, _this2);
                   _this2.save();
-                  return _context2.a(2, _this2);
+                  return _context3.a(2, _this2);
               }
-            }, _callee2);
+            }, _callee3);
           }))();
         }
         Object.keys(attrs).forEach(function (attr) {
