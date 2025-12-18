@@ -1656,6 +1656,182 @@ this.post('/workspaces', async function(schema) {
   'factories/workspace.js' // Pass factory filename as context
 );
 
+// Test: Factory afterCreate with server.create passed to model.update (Atlas error pattern)
+test(
+  'transforms afterCreate with unawaited server.create passed to model.update',
+  `
+Factory.extend({
+  afterCreate(policy, server) {
+    const workspace = server.create('workspace', { name: 'target' });
+    policy.update({ target: workspace });
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(policy, server) {
+    const workspace = await server.create('workspace', { name: 'target' });
+    await policy.update({ target: workspace });
+    return policy;
+  }
+});
+  `.trim()
+);
+
+// Test: Factory afterCreate with multiple creates and updates (complex Atlas pattern)
+test(
+  'transforms complex afterCreate with multiple unawaited operations',
+  `
+Factory.extend({
+  afterCreate(membership, server) {
+    const user = server.create('user');
+    const org = server.create('organization');
+    membership.update({ user: user, organization: org });
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(membership, server) {
+    const user = await server.create('user');
+    const org = await server.create('organization');
+    await membership.update({ user: user, organization: org });
+    return membership;
+  }
+});
+  `.trim()
+);
+
+// Test: Factory afterCreate with server.create result directly in update (inline pattern)
+test(
+  'transforms afterCreate with server.create directly in update call',
+  `
+Factory.extend({
+  afterCreate(policy, server) {
+    policy.update({ 
+      target: server.create('workspace'),
+      owner: server.create('user')
+    });
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(policy, server) {
+    await policy.update({ 
+      target: await server.create('workspace'),
+      owner: await server.create('user')
+    });
+    return policy;
+  }
+});
+  `.trim()
+);
+
+// Test: Trait afterCreate with unawaited server.create passed to model.update
+test(
+  'transforms trait afterCreate with unawaited creates',
+  `
+Factory.extend({
+  withTarget: trait({
+    afterCreate(policy, server) {
+      const workspace = server.create('workspace');
+      policy.update({ target: workspace });
+    }
+  })
+});
+  `.trim(),
+  `
+Factory.extend({
+  withTarget: trait({
+    async afterCreate(policy, server) {
+      const workspace = await server.create('workspace');
+      await policy.update({ target: workspace });
+      return policy;
+    }
+  })
+});
+  `.trim()
+);
+
+// Test: Factory afterCreate creating HasMany relationship records
+test(
+  'transforms afterCreate creating records for HasMany relationships',
+  `
+Factory.extend({
+  afterCreate(org, server) {
+    const client1 = server.create('oauth-client', { organization: org });
+    const client2 = server.create('oauth-client', { organization: org });
+    org.update({ oauthClientIds: [client1.id, client2.id] });
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(org, server) {
+    const client1 = await server.create('oauth-client', { organization: org });
+    const client2 = await server.create('oauth-client', { organization: org });
+    await org.update({ oauthClientIds: [client1.id, client2.id] });
+    return org;
+  }
+});
+  `.trim()
+);
+
+// Test case: Add async: true when createServer is called with a variable
+test(
+  'adds async: true to config object when createServer is called with a variable',
+  `
+import { createServer } from 'miragejs';
+
+export default function (config) {
+  let finalConfig = {
+    ...config,
+    factories,
+    models,
+    routes,
+  };
+
+  return createServer(finalConfig);
+}
+  `.trim(),
+  `
+import { createServer } from 'miragejs';
+
+export default function (config) {
+  let finalConfig = {
+    async: true,
+    ...config,
+    factories,
+    models,
+    routes
+  };
+
+  return createServer(finalConfig);
+}
+  `.trim()
+);
+
+// Test case: Nested server.create in afterCreate during relationship mapping
+test(
+  'transforms nested server.create in afterCreate that assigns to relationship property',
+  `
+Factory.extend({
+  afterCreate(workspace, server) {
+    workspace.currentRun = server.create('run', { workspace });
+  }
+});
+  `.trim(),
+  `
+Factory.extend({
+  async afterCreate(workspace, server) {
+    workspace.currentRun = await server.create('run', { workspace });
+    return workspace;
+  }
+});
+  `.trim()
+);
+
 console.log('\n' + '='.repeat(70));
 console.log('✅ Test run completed!');
 console.log('='.repeat(70));

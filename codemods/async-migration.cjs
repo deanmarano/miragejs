@@ -522,12 +522,15 @@ module.exports = function transformer(file, api) {
         return;
       }
       // Stop checking after we leave the expression context
+      // Property nodes (object literal properties) are expression contexts
+      // so we should stop there to avoid incorrectly detecting awaits on parent calls
       if (checkPath.parent.value.type === 'ExpressionStatement' ||
           checkPath.parent.value.type === 'VariableDeclarator' ||
           checkPath.parent.value.type === 'AssignmentExpression' ||
           checkPath.parent.value.type === 'ReturnStatement' ||
           checkPath.parent.value.type === 'IfStatement' ||
-          checkPath.parent.value.type === 'BlockStatement') {
+          checkPath.parent.value.type === 'BlockStatement' ||
+          checkPath.parent.value.type === 'Property') {
         break;
       }
       checkPath = checkPath.parent;
@@ -1400,23 +1403,53 @@ module.exports = function transformer(file, api) {
     }
   }).forEach(path => {
     const args = path.value.arguments;
-    if (args.length > 0 && args[0].type === 'ObjectExpression') {
-      const config = args[0];
-      
-      // Check if async property already exists
-      const hasAsync = config.properties.some(
-        prop => prop.key && prop.key.name === 'async'
-      );
-      
-      if (!hasAsync) {
-        config.properties.unshift(
-          j.property(
-            'init',
-            j.identifier('async'),
-            j.literal(true)
-          )
+    if (args.length > 0) {
+      if (args[0].type === 'ObjectExpression') {
+        // Case 1: createServer({ ... })
+        const config = args[0];
+        
+        // Check if async property already exists
+        const hasAsync = config.properties.some(
+          prop => prop.key && prop.key.name === 'async'
         );
-        hasChanges = true;
+        
+        if (!hasAsync) {
+          config.properties.unshift(
+            j.property(
+              'init',
+              j.identifier('async'),
+              j.literal(true)
+            )
+          );
+          hasChanges = true;
+        }
+      } else if (args[0].type === 'Identifier') {
+        // Case 2: createServer(variableName)
+        const varName = args[0].name;
+        
+        // Find the variable declaration
+        root.find(j.VariableDeclarator, {
+          id: { name: varName }
+        }).forEach(declaratorPath => {
+          const init = declaratorPath.value.init;
+          if (init && init.type === 'ObjectExpression') {
+            // Check if async property already exists
+            const hasAsync = init.properties.some(
+              prop => prop.key && prop.key.name === 'async'
+            );
+            
+            if (!hasAsync) {
+              init.properties.unshift(
+                j.property(
+                  'init',
+                  j.identifier('async'),
+                  j.literal(true)
+                )
+              );
+              hasChanges = true;
+            }
+          }
+        });
       }
     }
   });
@@ -1428,22 +1461,51 @@ module.exports = function transformer(file, api) {
     }
   }).forEach(path => {
     const args = path.value.arguments;
-    if (args.length > 0 && args[0].type === 'ObjectExpression') {
-      const config = args[0];
-      
-      const hasAsync = config.properties.some(
-        prop => prop.key && prop.key.name === 'async'
-      );
-      
-      if (!hasAsync) {
-        config.properties.unshift(
-          j.property(
-            'init',
-            j.identifier('async'),
-            j.literal(true)
-          )
+    if (args.length > 0) {
+      if (args[0].type === 'ObjectExpression') {
+        // Case 1: new Server({ ... })
+        const config = args[0];
+        
+        const hasAsync = config.properties.some(
+          prop => prop.key && prop.key.name === 'async'
         );
-        hasChanges = true;
+        
+        if (!hasAsync) {
+          config.properties.unshift(
+            j.property(
+              'init',
+              j.identifier('async'),
+              j.literal(true)
+            )
+          );
+          hasChanges = true;
+        }
+      } else if (args[0].type === 'Identifier') {
+        // Case 2: new Server(variableName)
+        const varName = args[0].name;
+        
+        // Find the variable declaration
+        root.find(j.VariableDeclarator, {
+          id: { name: varName }
+        }).forEach(declaratorPath => {
+          const init = declaratorPath.value.init;
+          if (init && init.type === 'ObjectExpression') {
+            const hasAsync = init.properties.some(
+              prop => prop.key && prop.key.name === 'async'
+            );
+            
+            if (!hasAsync) {
+              init.properties.unshift(
+                j.property(
+                  'init',
+                  j.identifier('async'),
+                  j.literal(true)
+                )
+              );
+              hasChanges = true;
+            }
+          }
+        });
       }
     }
   });
