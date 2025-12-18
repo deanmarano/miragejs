@@ -3133,7 +3133,7 @@ class Model {
           }
           this[attr] = resolvedAttrs[attr];
         }, _this3);
-        _this3.save();
+        yield _this3.save();
         return _this3;
       })();
     }
@@ -3143,7 +3143,13 @@ class Model {
       }
       this[attr] = attrs[attr];
     }, this);
-    this.save();
+    var result = this.save();
+
+    // In async mode, save() returns a Promise, so we need to return it
+    // and map it back to return 'this' instead of the save result
+    if (result instanceof Promise) {
+      return result.then(() => this);
+    }
     return this;
   }
 

@@ -15201,7 +15201,9 @@
                     }
                     this[attr] = resolvedAttrs[attr];
                   }, _this2);
-                  _this2.save();
+                  _context3.n = 5;
+                  return _this2.save();
+                case 5:
                   return _context3.a(2, _this2);
               }
             }, _callee3);
@@ -15213,7 +15215,15 @@
           }
           this[attr] = attrs[attr];
         }, this);
-        this.save();
+        var result = this.save();
+
+        // In async mode, save() returns a Promise, so we need to return it
+        // and map it back to return 'this' instead of the save result
+        if (result instanceof Promise) {
+          return result.then(function () {
+            return _this2;
+          });
+        }
         return this;
       }
 

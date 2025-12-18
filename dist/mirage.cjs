@@ -3025,7 +3025,7 @@ class Model {
           }
           this[attr] = resolvedAttrs[attr];
         }, this);
-        this.save();
+        await this.save();
         return this;
       })();
     }
@@ -3035,7 +3035,13 @@ class Model {
       }
       this[attr] = attrs[attr];
     }, this);
-    this.save();
+    let result = this.save();
+
+    // In async mode, save() returns a Promise, so we need to return it
+    // and map it back to return 'this' instead of the save result
+    if (result instanceof Promise) {
+      return result.then(() => this);
+    }
     return this;
   }
 
