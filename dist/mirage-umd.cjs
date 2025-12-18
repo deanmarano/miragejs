@@ -15086,7 +15086,9 @@
                 _context.n = 4;
                 return this._schema.db[collection].update(this.attrs.id, this.attrs);
               case 4:
-                this._saveAssociations();
+                _context.n = 5;
+                return this._saveAssociationsAsync();
+              case 5:
                 this._schema.isSaving[this.toString()] = false;
                 return _context.a(2, this);
             }
@@ -15756,6 +15758,28 @@
         this._saveHasManyAssociations();
       }
     }, {
+      key: "_saveAssociationsAsync",
+      value: function () {
+        var _saveAssociationsAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+          return _regenerator().w(function (_context4) {
+            while (1) switch (_context4.n) {
+              case 0:
+                _context4.n = 1;
+                return this._saveBelongsToAssociationsAsync();
+              case 1:
+                _context4.n = 2;
+                return this._saveHasManyAssociationsAsync();
+              case 2:
+                return _context4.a(2);
+            }
+          }, _callee4, this);
+        }));
+        function _saveAssociationsAsync() {
+          return _saveAssociationsAsync2.apply(this, arguments);
+        }
+        return _saveAssociationsAsync;
+      }()
+    }, {
       key: "_saveBelongsToAssociations",
       value: function _saveBelongsToAssociations() {
         var _this5 = this;
@@ -15765,6 +15789,55 @@
           _this5._associateWithNewInverses(association);
         });
       }
+    }, {
+      key: "_saveBelongsToAssociationsAsync",
+      value: function () {
+        var _saveBelongsToAssociationsAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+          var _iterator, _step, association, _t;
+          return _regenerator().w(function (_context5) {
+            while (1) switch (_context5.p = _context5.n) {
+              case 0:
+                _iterator = _createForOfIteratorHelper(values$1(this.belongsToAssociations));
+                _context5.p = 1;
+                _iterator.s();
+              case 2:
+                if ((_step = _iterator.n()).done) {
+                  _context5.n = 6;
+                  break;
+                }
+                association = _step.value;
+                _context5.n = 3;
+                return this._disassociateFromOldInversesAsync(association);
+              case 3:
+                _context5.n = 4;
+                return this._saveNewAssociatesAsync(association);
+              case 4:
+                _context5.n = 5;
+                return this._associateWithNewInversesAsync(association);
+              case 5:
+                _context5.n = 2;
+                break;
+              case 6:
+                _context5.n = 8;
+                break;
+              case 7:
+                _context5.p = 7;
+                _t = _context5.v;
+                _iterator.e(_t);
+              case 8:
+                _context5.p = 8;
+                _iterator.f();
+                return _context5.f(8);
+              case 9:
+                return _context5.a(2);
+            }
+          }, _callee5, this, [[1, 7, 8, 9]]);
+        }));
+        function _saveBelongsToAssociationsAsync() {
+          return _saveBelongsToAssociationsAsync2.apply(this, arguments);
+        }
+        return _saveBelongsToAssociationsAsync;
+      }()
     }, {
       key: "_saveHasManyAssociations",
       value: function _saveHasManyAssociations() {
@@ -15776,6 +15849,55 @@
         });
       }
     }, {
+      key: "_saveHasManyAssociationsAsync",
+      value: function () {
+        var _saveHasManyAssociationsAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+          var _iterator2, _step2, association, _t2;
+          return _regenerator().w(function (_context6) {
+            while (1) switch (_context6.p = _context6.n) {
+              case 0:
+                _iterator2 = _createForOfIteratorHelper(values$1(this.hasManyAssociations));
+                _context6.p = 1;
+                _iterator2.s();
+              case 2:
+                if ((_step2 = _iterator2.n()).done) {
+                  _context6.n = 6;
+                  break;
+                }
+                association = _step2.value;
+                _context6.n = 3;
+                return this._disassociateFromOldInversesAsync(association);
+              case 3:
+                _context6.n = 4;
+                return this._saveNewAssociatesAsync(association);
+              case 4:
+                _context6.n = 5;
+                return this._associateWithNewInversesAsync(association);
+              case 5:
+                _context6.n = 2;
+                break;
+              case 6:
+                _context6.n = 8;
+                break;
+              case 7:
+                _context6.p = 7;
+                _t2 = _context6.v;
+                _iterator2.e(_t2);
+              case 8:
+                _context6.p = 8;
+                _iterator2.f();
+                return _context6.f(8);
+              case 9:
+                return _context6.a(2);
+            }
+          }, _callee6, this, [[1, 7, 8, 9]]);
+        }));
+        function _saveHasManyAssociationsAsync() {
+          return _saveHasManyAssociationsAsync2.apply(this, arguments);
+        }
+        return _saveHasManyAssociationsAsync;
+      }()
+    }, {
       key: "_disassociateFromOldInverses",
       value: function _disassociateFromOldInverses(association) {
         if (association instanceof HasMany) {
@@ -15784,8 +15906,39 @@
           this._disassociateFromBelongsToInverse(association);
         }
       }
-
-      // Disassociate currently persisted models that are no longer associated
+    }, {
+      key: "_disassociateFromOldInversesAsync",
+      value: function () {
+        var _disassociateFromOldInversesAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(association) {
+          return _regenerator().w(function (_context7) {
+            while (1) switch (_context7.n) {
+              case 0:
+                if (!(association instanceof HasMany)) {
+                  _context7.n = 2;
+                  break;
+                }
+                _context7.n = 1;
+                return this._disassociateFromHasManyInversesAsync(association);
+              case 1:
+                _context7.n = 3;
+                break;
+              case 2:
+                if (!(association instanceof BelongsTo)) {
+                  _context7.n = 3;
+                  break;
+                }
+                _context7.n = 3;
+                return this._disassociateFromBelongsToInverseAsync(association);
+              case 3:
+                return _context7.a(2);
+            }
+          }, _callee7, this);
+        }));
+        function _disassociateFromOldInversesAsync(_x2) {
+          return _disassociateFromOldInversesAsync2.apply(this, arguments);
+        }
+        return _disassociateFromOldInversesAsync;
+      }() // Disassociate currently persisted models that are no longer associated
     }, {
       key: "_disassociateFromHasManyInverses",
       value: function _disassociateFromHasManyInverses(association) {
@@ -15819,7 +15972,101 @@
           });
         }
       }
-
+    }, {
+      key: "_disassociateFromHasManyInversesAsync",
+      value: function () {
+        var _disassociateFromHasManyInversesAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(association) {
+          var _this8 = this;
+          var fk, tempAssociation, associateIds, models, collection, filteredModels, _iterator3, _step3, associate, inverse, _t3;
+          return _regenerator().w(function (_context9) {
+            while (1) switch (_context9.p = _context9.n) {
+              case 0:
+                fk = association.getForeignKey();
+                tempAssociation = this._tempAssociations && this._tempAssociations[association.name];
+                associateIds = this.attrs[fk];
+                if (!(tempAssociation && associateIds)) {
+                  _context9.n = 11;
+                  break;
+                }
+                if (!association.isPolymorphic) {
+                  _context9.n = 2;
+                  break;
+                }
+                _context9.n = 1;
+                return Promise.all(associateIds.map(/*#__PURE__*/function () {
+                  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(_ref5) {
+                    var type, id;
+                    return _regenerator().w(function (_context8) {
+                      while (1) switch (_context8.n) {
+                        case 0:
+                          type = _ref5.type, id = _ref5.id;
+                          _context8.n = 1;
+                          return _this8._schema[_this8._schema.toCollectionName(type)].find(id);
+                        case 1:
+                          return _context8.a(2, _context8.v);
+                      }
+                    }, _callee8);
+                  }));
+                  return function (_x4) {
+                    return _ref6.apply(this, arguments);
+                  };
+                }()));
+              case 1:
+                models = _context9.v;
+                _context9.n = 4;
+                break;
+              case 2:
+                _context9.n = 3;
+                return this._schema[this._schema.toCollectionName(association.modelName)].find(associateIds || []);
+              case 3:
+                collection = _context9.v;
+                models = collection.models;
+              case 4:
+                filteredModels = models.filter(function (associate) {
+                  return (
+                    // filter out models that are already being saved
+                    !associate.isSaving &&
+                    // filter out models that will still be associated
+                    !tempAssociation.includes(associate) && associate.hasInverseFor(association)
+                  );
+                });
+                _iterator3 = _createForOfIteratorHelper(filteredModels);
+                _context9.p = 5;
+                _iterator3.s();
+              case 6:
+                if ((_step3 = _iterator3.n()).done) {
+                  _context9.n = 8;
+                  break;
+                }
+                associate = _step3.value;
+                inverse = associate.inverseFor(association);
+                associate.disassociate(this, inverse);
+                _context9.n = 7;
+                return associate.save();
+              case 7:
+                _context9.n = 6;
+                break;
+              case 8:
+                _context9.n = 10;
+                break;
+              case 9:
+                _context9.p = 9;
+                _t3 = _context9.v;
+                _iterator3.e(_t3);
+              case 10:
+                _context9.p = 10;
+                _iterator3.f();
+                return _context9.f(10);
+              case 11:
+                return _context9.a(2);
+            }
+          }, _callee9, this, [[5, 9, 10, 11]]);
+        }));
+        function _disassociateFromHasManyInversesAsync(_x3) {
+          return _disassociateFromHasManyInversesAsync2.apply(this, arguments);
+        }
+        return _disassociateFromHasManyInversesAsync;
+      }()
       /*
         Disassociate currently persisted models that are no longer associated.
          Example:
@@ -15853,14 +16100,61 @@
           }
         }
       }
-
-      // Find all other models that depend on me and update their foreign keys
+    }, {
+      key: "_disassociateFromBelongsToInverseAsync",
+      value: function () {
+        var _disassociateFromBelongsToInverseAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(association) {
+          var fk, tempAssociation, associateId, associate, inverse;
+          return _regenerator().w(function (_context0) {
+            while (1) switch (_context0.n) {
+              case 0:
+                fk = association.getForeignKey();
+                tempAssociation = this._tempAssociations && this._tempAssociations[association.name];
+                associateId = this.attrs[fk];
+                if (!(tempAssociation !== undefined && associateId)) {
+                  _context0.n = 5;
+                  break;
+                }
+                if (!association.isPolymorphic) {
+                  _context0.n = 2;
+                  break;
+                }
+                _context0.n = 1;
+                return this._schema[this._schema.toCollectionName(associateId.type)].find(associateId.id);
+              case 1:
+                associate = _context0.v;
+                _context0.n = 4;
+                break;
+              case 2:
+                _context0.n = 3;
+                return this._schema[this._schema.toCollectionName(association.modelName)].find(associateId);
+              case 3:
+                associate = _context0.v;
+              case 4:
+                if (!associate.hasInverseFor(association)) {
+                  _context0.n = 5;
+                  break;
+                }
+                inverse = associate.inverseFor(association);
+                associate.disassociate(this, inverse);
+                _context0.n = 5;
+                return associate._updateInDbAsync(associate.attrs);
+              case 5:
+                return _context0.a(2);
+            }
+          }, _callee0, this);
+        }));
+        function _disassociateFromBelongsToInverseAsync(_x5) {
+          return _disassociateFromBelongsToInverseAsync2.apply(this, arguments);
+        }
+        return _disassociateFromBelongsToInverseAsync;
+      }() // Find all other models that depend on me and update their foreign keys
     }, {
       key: "_disassociateFromDependents",
       value: function _disassociateFromDependents() {
-        var _this8 = this;
+        var _this9 = this;
         this._schema.dependentAssociationsFor(this.modelName).forEach(function (association) {
-          association.disassociateAllDependentsFromTarget(_this8);
+          association.disassociateAllDependentsFromTarget(_this9);
         });
       }
     }, {
@@ -15921,7 +16215,157 @@
           this.__isSavingNewChildren = false;
         }
       }
-
+    }, {
+      key: "_saveNewAssociatesAsync",
+      value: function () {
+        var _saveNewAssociatesAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(association) {
+          var fk, tempAssociate, modelsToSave, _iterator4, _step4, child, _modelsToSave, _iterator5, _step5, _child, fkValue, _t4, _t5;
+          return _regenerator().w(function (_context1) {
+            while (1) switch (_context1.p = _context1.n) {
+              case 0:
+                fk = association.getForeignKey();
+                tempAssociate = this._tempAssociations && this._tempAssociations[association.name];
+                if (!(tempAssociate !== undefined)) {
+                  _context1.n = 25;
+                  break;
+                }
+                this.__isSavingNewChildren = true;
+                delete this._tempAssociations[association.name];
+                if (!(tempAssociate instanceof Collection)) {
+                  _context1.n = 9;
+                  break;
+                }
+                modelsToSave = tempAssociate.models.filter(function (model) {
+                  return !model.isSaving;
+                });
+                _iterator4 = _createForOfIteratorHelper(modelsToSave);
+                _context1.p = 1;
+                _iterator4.s();
+              case 2:
+                if ((_step4 = _iterator4.n()).done) {
+                  _context1.n = 4;
+                  break;
+                }
+                child = _step4.value;
+                _context1.n = 3;
+                return child.save();
+              case 3:
+                _context1.n = 2;
+                break;
+              case 4:
+                _context1.n = 6;
+                break;
+              case 5:
+                _context1.p = 5;
+                _t4 = _context1.v;
+                _iterator4.e(_t4);
+              case 6:
+                _context1.p = 6;
+                _iterator4.f();
+                return _context1.f(6);
+              case 7:
+                _context1.n = 8;
+                return this._updateInDbAsync(_defineProperty$1({}, fk, tempAssociate.models.map(function (child) {
+                  return child.id;
+                })));
+              case 8:
+                _context1.n = 24;
+                break;
+              case 9:
+                if (!(tempAssociate instanceof PolymorphicCollection)) {
+                  _context1.n = 18;
+                  break;
+                }
+                _modelsToSave = tempAssociate.models.filter(function (model) {
+                  return !model.isSaving;
+                });
+                _iterator5 = _createForOfIteratorHelper(_modelsToSave);
+                _context1.p = 10;
+                _iterator5.s();
+              case 11:
+                if ((_step5 = _iterator5.n()).done) {
+                  _context1.n = 13;
+                  break;
+                }
+                _child = _step5.value;
+                _context1.n = 12;
+                return _child.save();
+              case 12:
+                _context1.n = 11;
+                break;
+              case 13:
+                _context1.n = 15;
+                break;
+              case 14:
+                _context1.p = 14;
+                _t5 = _context1.v;
+                _iterator5.e(_t5);
+              case 15:
+                _context1.p = 15;
+                _iterator5.f();
+                return _context1.f(15);
+              case 16:
+                _context1.n = 17;
+                return this._updateInDbAsync(_defineProperty$1({}, fk, tempAssociate.models.map(function (child) {
+                  return {
+                    type: child.modelName,
+                    id: child.id
+                  };
+                })));
+              case 17:
+                _context1.n = 24;
+                break;
+              case 18:
+                if (!(tempAssociate === null)) {
+                  _context1.n = 20;
+                  break;
+                }
+                _context1.n = 19;
+                return this._updateInDbAsync(_defineProperty$1({}, fk, null));
+              case 19:
+                _context1.n = 24;
+                break;
+              case 20:
+                if (!this.equals(tempAssociate)) {
+                  _context1.n = 22;
+                  break;
+                }
+                _context1.n = 21;
+                return this._updateInDbAsync(_defineProperty$1({}, fk, this.id));
+              case 21:
+                _context1.n = 24;
+                break;
+              case 22:
+                if (tempAssociate.isSaving) {
+                  _context1.n = 24;
+                  break;
+                }
+                _context1.n = 23;
+                return tempAssociate.save();
+              case 23:
+                this._syncTempAssociations(tempAssociate);
+                if (association.isPolymorphic) {
+                  fkValue = {
+                    id: tempAssociate.id,
+                    type: tempAssociate.modelName
+                  };
+                } else {
+                  fkValue = tempAssociate.id;
+                }
+                _context1.n = 24;
+                return this._updateInDbAsync(_defineProperty$1({}, fk, fkValue));
+              case 24:
+                this.__isSavingNewChildren = false;
+              case 25:
+                return _context1.a(2);
+            }
+          }, _callee1, this, [[10, 14, 15, 16], [1, 5, 6, 7]]);
+        }));
+        function _saveNewAssociatesAsync(_x6) {
+          return _saveNewAssociatesAsync2.apply(this, arguments);
+        }
+        return _saveNewAssociatesAsync;
+      }()
       /*
         Step 3 in saving associations.
          Example:
@@ -15936,23 +16380,90 @@
     }, {
       key: "_associateWithNewInverses",
       value: function _associateWithNewInverses(association) {
-        var _this9 = this;
+        var _this0 = this;
         if (!this.__isSavingNewChildren) {
           var modelOrCollection = this[association.name];
           if (modelOrCollection instanceof Model) {
             this._associateModelWithInverse(modelOrCollection, association);
           } else if (modelOrCollection instanceof Collection || modelOrCollection instanceof PolymorphicCollection) {
             modelOrCollection.models.forEach(function (model) {
-              _this9._associateModelWithInverse(model, association);
+              _this0._associateModelWithInverse(model, association);
             });
           }
           delete this._tempAssociations[association.name];
         }
       }
     }, {
+      key: "_associateWithNewInversesAsync",
+      value: function () {
+        var _associateWithNewInversesAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(association) {
+          var modelOrCollection, _iterator6, _step6, model, _t6;
+          return _regenerator().w(function (_context10) {
+            while (1) switch (_context10.p = _context10.n) {
+              case 0:
+                if (this.__isSavingNewChildren) {
+                  _context10.n = 11;
+                  break;
+                }
+                _context10.n = 1;
+                return this[association.name];
+              case 1:
+                modelOrCollection = _context10.v;
+                if (!(modelOrCollection instanceof Model)) {
+                  _context10.n = 3;
+                  break;
+                }
+                _context10.n = 2;
+                return this._associateModelWithInverseAsync(modelOrCollection, association);
+              case 2:
+                _context10.n = 10;
+                break;
+              case 3:
+                if (!(modelOrCollection instanceof Collection || modelOrCollection instanceof PolymorphicCollection)) {
+                  _context10.n = 10;
+                  break;
+                }
+                _iterator6 = _createForOfIteratorHelper(modelOrCollection.models);
+                _context10.p = 4;
+                _iterator6.s();
+              case 5:
+                if ((_step6 = _iterator6.n()).done) {
+                  _context10.n = 7;
+                  break;
+                }
+                model = _step6.value;
+                _context10.n = 6;
+                return this._associateModelWithInverseAsync(model, association);
+              case 6:
+                _context10.n = 5;
+                break;
+              case 7:
+                _context10.n = 9;
+                break;
+              case 8:
+                _context10.p = 8;
+                _t6 = _context10.v;
+                _iterator6.e(_t6);
+              case 9:
+                _context10.p = 9;
+                _iterator6.f();
+                return _context10.f(9);
+              case 10:
+                delete this._tempAssociations[association.name];
+              case 11:
+                return _context10.a(2);
+            }
+          }, _callee10, this, [[4, 8, 9, 10]]);
+        }));
+        function _associateWithNewInversesAsync(_x7) {
+          return _associateWithNewInversesAsync2.apply(this, arguments);
+        }
+        return _associateWithNewInversesAsync;
+      }()
+    }, {
       key: "_associateModelWithInverse",
       value: function _associateModelWithInverse(model, association) {
-        var _this0 = this;
+        var _this1 = this;
         if (model.hasInverseFor(association)) {
           var inverse = model.inverseFor(association);
           var inverseFk = inverse.getForeignKey();
@@ -15979,7 +16490,7 @@
                 id: ownerId
               };
               alreadyAssociatedWith = newIdsForInverse.some(function (key) {
-                return key.type == _this0.modelName && key.id == ownerId;
+                return key.type == _this1.modelName && key.id == ownerId;
               });
             } else {
               _newId = ownerId;
@@ -15992,15 +16503,101 @@
           }
         }
       }
-
-      // Used to update data directly, since #save and #update can retrigger saves,
+    }, {
+      key: "_associateModelWithInverseAsync",
+      value: function () {
+        var _associateModelWithInverseAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(model, association) {
+          var _this10 = this;
+          var inverse, inverseFk, ownerId, newId, inverseCollection, record, currentIdsForInverse, newIdsForInverse, _newId2, alreadyAssociatedWith;
+          return _regenerator().w(function (_context11) {
+            while (1) switch (_context11.n) {
+              case 0:
+                if (!model.hasInverseFor(association)) {
+                  _context11.n = 4;
+                  break;
+                }
+                inverse = model.inverseFor(association);
+                inverseFk = inverse.getForeignKey();
+                ownerId = this.id;
+                if (!(inverse instanceof BelongsTo)) {
+                  _context11.n = 2;
+                  break;
+                }
+                if (inverse.isPolymorphic) {
+                  newId = {
+                    type: this.modelName,
+                    id: ownerId
+                  };
+                } else {
+                  newId = ownerId;
+                }
+                _context11.n = 1;
+                return this._schema.db[this._schema.toInternalCollectionName(model.modelName)].update(model.id, _defineProperty$1({}, inverseFk, newId));
+              case 1:
+                _context11.n = 4;
+                break;
+              case 2:
+                inverseCollection = this._schema.db[this._schema.toInternalCollectionName(model.modelName)];
+                _context11.n = 3;
+                return inverseCollection.find(model.id);
+              case 3:
+                record = _context11.v;
+                currentIdsForInverse = record[inverse.getForeignKey()] || [];
+                newIdsForInverse = Object.assign([], currentIdsForInverse);
+                if (inverse.isPolymorphic) {
+                  _newId2 = {
+                    type: this.modelName,
+                    id: ownerId
+                  };
+                  alreadyAssociatedWith = newIdsForInverse.some(function (key) {
+                    return key.type == _this10.modelName && key.id == ownerId;
+                  });
+                } else {
+                  _newId2 = ownerId;
+                  alreadyAssociatedWith = newIdsForInverse.includes(ownerId);
+                }
+                if (!alreadyAssociatedWith) {
+                  newIdsForInverse.push(_newId2);
+                }
+                _context11.n = 4;
+                return inverseCollection.update(model.id, _defineProperty$1({}, inverseFk, newIdsForInverse));
+              case 4:
+                return _context11.a(2);
+            }
+          }, _callee11, this);
+        }));
+        function _associateModelWithInverseAsync(_x8, _x9) {
+          return _associateModelWithInverseAsync2.apply(this, arguments);
+        }
+        return _associateModelWithInverseAsync;
+      }() // Used to update data directly, since #save and #update can retrigger saves,
       // which can cause cycles with associations.
     }, {
       key: "_updateInDb",
       value: function _updateInDb(attrs) {
         this.attrs = this._schema.db[this._schema.toInternalCollectionName(this.modelName)].update(this.attrs.id, attrs);
       }
-
+    }, {
+      key: "_updateInDbAsync",
+      value: function () {
+        var _updateInDbAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(attrs) {
+          return _regenerator().w(function (_context12) {
+            while (1) switch (_context12.n) {
+              case 0:
+                _context12.n = 1;
+                return this._schema.db[this._schema.toInternalCollectionName(this.modelName)].update(this.attrs.id, attrs);
+              case 1:
+                this.attrs = _context12.v;
+              case 2:
+                return _context12.a(2);
+            }
+          }, _callee12, this);
+        }));
+        function _updateInDbAsync(_x0) {
+          return _updateInDbAsync2.apply(this, arguments);
+        }
+        return _updateInDbAsync;
+      }()
       /*
       Super gnarly: after we save this tempAssociate, we we need to through
       all other tempAssociates for a reference to this same model, and
@@ -16012,10 +16609,10 @@
     }, {
       key: "_syncTempAssociations",
       value: function _syncTempAssociations(tempAssociate) {
-        var _this1 = this;
+        var _this11 = this;
         Object.keys(this._tempAssociations).forEach(function (key) {
-          if (_this1._tempAssociations[key] && _this1._tempAssociations[key].toString() === tempAssociate.toString()) {
-            _this1._tempAssociations[key] = tempAssociate;
+          if (_this11._tempAssociations[key] && _this11._tempAssociations[key].toString() === tempAssociate.toString()) {
+            _this11._tempAssociations[key] = tempAssociate;
           }
         });
       }

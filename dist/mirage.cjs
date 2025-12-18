@@ -2957,7 +2957,7 @@ class Model {
       this._schema.isSaving[this.toString()] = true;
       await this._schema.db[collection].update(this.attrs.id, this.attrs);
     }
-    this._saveAssociations();
+    await this._saveAssociationsAsync();
     this._schema.isSaving[this.toString()] = false;
     return this;
   }
@@ -3521,12 +3521,23 @@ class Model {
     this._saveBelongsToAssociations();
     this._saveHasManyAssociations();
   }
+  async _saveAssociationsAsync() {
+    await this._saveBelongsToAssociationsAsync();
+    await this._saveHasManyAssociationsAsync();
+  }
   _saveBelongsToAssociations() {
     values(this.belongsToAssociations).forEach(association => {
       this._disassociateFromOldInverses(association);
       this._saveNewAssociates(association);
       this._associateWithNewInverses(association);
     });
+  }
+  async _saveBelongsToAssociationsAsync() {
+    for (const association of values(this.belongsToAssociations)) {
+      await this._disassociateFromOldInversesAsync(association);
+      await this._saveNewAssociatesAsync(association);
+      await this._associateWithNewInversesAsync(association);
+    }
   }
   _saveHasManyAssociations() {
     values(this.hasManyAssociations).forEach(association => {
@@ -3535,11 +3546,25 @@ class Model {
       this._associateWithNewInverses(association);
     });
   }
+  async _saveHasManyAssociationsAsync() {
+    for (const association of values(this.hasManyAssociations)) {
+      await this._disassociateFromOldInversesAsync(association);
+      await this._saveNewAssociatesAsync(association);
+      await this._associateWithNewInversesAsync(association);
+    }
+  }
   _disassociateFromOldInverses(association) {
     if (association instanceof HasMany) {
       this._disassociateFromHasManyInverses(association);
     } else if (association instanceof BelongsTo) {
       this._disassociateFromBelongsToInverse(association);
+    }
+  }
+  async _disassociateFromOldInversesAsync(association) {
+    if (association instanceof HasMany) {
+      await this._disassociateFromHasManyInversesAsync(association);
+    } else if (association instanceof BelongsTo) {
+      await this._disassociateFromBelongsToInverseAsync(association);
     }
   }
 
@@ -3572,6 +3597,36 @@ class Model {
       });
     }
   }
+  async _disassociateFromHasManyInversesAsync(association) {
+    let fk = association.getForeignKey();
+    let tempAssociation = this._tempAssociations && this._tempAssociations[association.name];
+    let associateIds = this.attrs[fk];
+    if (tempAssociation && associateIds) {
+      let models;
+      if (association.isPolymorphic) {
+        models = await Promise.all(associateIds.map(async ({
+          type,
+          id
+        }) => {
+          return await this._schema[this._schema.toCollectionName(type)].find(id);
+        }));
+      } else {
+        // TODO: prob should initialize hasMany fks with []
+        let collection = await this._schema[this._schema.toCollectionName(association.modelName)].find(associateIds || []);
+        models = collection.models;
+      }
+      let filteredModels = models.filter(associate =>
+      // filter out models that are already being saved
+      !associate.isSaving &&
+      // filter out models that will still be associated
+      !tempAssociation.includes(associate) && associate.hasInverseFor(association));
+      for (const associate of filteredModels) {
+        let inverse = associate.inverseFor(association);
+        associate.disassociate(this, inverse);
+        await associate.save();
+      }
+    }
+  }
 
   /*
     Disassociate currently persisted models that are no longer associated.
@@ -3601,6 +3656,24 @@ class Model {
         let inverse = associate.inverseFor(association);
         associate.disassociate(this, inverse);
         associate._updateInDb(associate.attrs);
+      }
+    }
+  }
+  async _disassociateFromBelongsToInverseAsync(association) {
+    let fk = association.getForeignKey();
+    let tempAssociation = this._tempAssociations && this._tempAssociations[association.name];
+    let associateId = this.attrs[fk];
+    if (tempAssociation !== undefined && associateId) {
+      let associate;
+      if (association.isPolymorphic) {
+        associate = await this._schema[this._schema.toCollectionName(associateId.type)].find(associateId.id);
+      } else {
+        associate = await this._schema[this._schema.toCollectionName(association.modelName)].find(associateId);
+      }
+      if (associate.hasInverseFor(association)) {
+        let inverse = associate.inverseFor(association);
+        associate.disassociate(this, inverse);
+        await associate._updateInDbAsync(associate.attrs);
       }
     }
   }
@@ -3671,6 +3744,68 @@ class Model {
       this.__isSavingNewChildren = false;
     }
   }
+  async _saveNewAssociatesAsync(association) {
+    let fk = association.getForeignKey();
+    let tempAssociate = this._tempAssociations && this._tempAssociations[association.name];
+    if (tempAssociate !== undefined) {
+      this.__isSavingNewChildren = true;
+      delete this._tempAssociations[association.name];
+      if (tempAssociate instanceof Collection) {
+        let modelsToSave = tempAssociate.models.filter(model => !model.isSaving);
+        for (const child of modelsToSave) {
+          await child.save();
+        }
+        await this._updateInDbAsync({
+          [fk]: tempAssociate.models.map(child => child.id)
+        });
+      } else if (tempAssociate instanceof PolymorphicCollection) {
+        let modelsToSave = tempAssociate.models.filter(model => !model.isSaving);
+        for (const child of modelsToSave) {
+          await child.save();
+        }
+        await this._updateInDbAsync({
+          [fk]: tempAssociate.models.map(child => {
+            return {
+              type: child.modelName,
+              id: child.id
+            };
+          })
+        });
+      } else {
+        // Clearing the association
+        if (tempAssociate === null) {
+          await this._updateInDbAsync({
+            [fk]: null
+          });
+
+          // Self-referential
+        } else if (this.equals(tempAssociate)) {
+          await this._updateInDbAsync({
+            [fk]: this.id
+          });
+
+          // Non-self-referential
+        } else if (!tempAssociate.isSaving) {
+          // Save the tempAssociate and update the local reference
+          await tempAssociate.save();
+          this._syncTempAssociations(tempAssociate);
+          let fkValue;
+          if (association.isPolymorphic) {
+            fkValue = {
+              id: tempAssociate.id,
+              type: tempAssociate.modelName
+            };
+          } else {
+            fkValue = tempAssociate.id;
+          }
+          await this._updateInDbAsync({
+            [fk]: fkValue
+          });
+        }
+      }
+      this.__isSavingNewChildren = false;
+    }
+  }
 
   /*
     Step 3 in saving associations.
@@ -3692,6 +3827,19 @@ class Model {
         modelOrCollection.models.forEach(model => {
           this._associateModelWithInverse(model, association);
         });
+      }
+      delete this._tempAssociations[association.name];
+    }
+  }
+  async _associateWithNewInversesAsync(association) {
+    if (!this.__isSavingNewChildren) {
+      let modelOrCollection = await this[association.name];
+      if (modelOrCollection instanceof Model) {
+        await this._associateModelWithInverseAsync(modelOrCollection, association);
+      } else if (modelOrCollection instanceof Collection || modelOrCollection instanceof PolymorphicCollection) {
+        for (const model of modelOrCollection.models) {
+          await this._associateModelWithInverseAsync(model, association);
+        }
       }
       delete this._tempAssociations[association.name];
     }
@@ -3738,11 +3886,57 @@ class Model {
       }
     }
   }
+  async _associateModelWithInverseAsync(model, association) {
+    if (model.hasInverseFor(association)) {
+      let inverse = model.inverseFor(association);
+      let inverseFk = inverse.getForeignKey();
+      let ownerId = this.id;
+      if (inverse instanceof BelongsTo) {
+        let newId;
+        if (inverse.isPolymorphic) {
+          newId = {
+            type: this.modelName,
+            id: ownerId
+          };
+        } else {
+          newId = ownerId;
+        }
+        await this._schema.db[this._schema.toInternalCollectionName(model.modelName)].update(model.id, {
+          [inverseFk]: newId
+        });
+      } else {
+        let inverseCollection = this._schema.db[this._schema.toInternalCollectionName(model.modelName)];
+        let record = await inverseCollection.find(model.id);
+        let currentIdsForInverse = record[inverse.getForeignKey()] || [];
+        let newIdsForInverse = Object.assign([], currentIdsForInverse);
+        let newId, alreadyAssociatedWith;
+        if (inverse.isPolymorphic) {
+          newId = {
+            type: this.modelName,
+            id: ownerId
+          };
+          alreadyAssociatedWith = newIdsForInverse.some(key => key.type == this.modelName && key.id == ownerId);
+        } else {
+          newId = ownerId;
+          alreadyAssociatedWith = newIdsForInverse.includes(ownerId);
+        }
+        if (!alreadyAssociatedWith) {
+          newIdsForInverse.push(newId);
+        }
+        await inverseCollection.update(model.id, {
+          [inverseFk]: newIdsForInverse
+        });
+      }
+    }
+  }
 
   // Used to update data directly, since #save and #update can retrigger saves,
   // which can cause cycles with associations.
   _updateInDb(attrs) {
     this.attrs = this._schema.db[this._schema.toInternalCollectionName(this.modelName)].update(this.attrs.id, attrs);
+  }
+  async _updateInDbAsync(attrs) {
+    this.attrs = await this._schema.db[this._schema.toInternalCollectionName(this.modelName)].update(this.attrs.id, attrs);
   }
 
   /*
