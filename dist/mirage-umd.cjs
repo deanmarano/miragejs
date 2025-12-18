@@ -15037,6 +15037,12 @@
       key: "save",
       value: function save() {
         var collection = this._schema.toInternalCollectionName(this.modelName);
+        var isAsync = this._schema._isAsync;
+        if (isAsync) {
+          return this._saveAsync(collection);
+        }
+
+        // Sync mode (original behavior)
         if (this.isNew()) {
           // Update the attrs with the db response
           this.attrs = this._schema.db[collection].insert(this.attrs);
@@ -15051,7 +15057,41 @@
         this._schema.isSaving[this.toString()] = false;
         return this;
       }
-
+    }, {
+      key: "_saveAsync",
+      value: function () {
+        var _saveAsync2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(collection) {
+          return _regenerator().w(function (_context) {
+            while (1) switch (_context.n) {
+              case 0:
+                if (!this.isNew()) {
+                  _context.n = 2;
+                  break;
+                }
+                _context.n = 1;
+                return this._schema.db[collection].insert(this.attrs);
+              case 1:
+                this.attrs = _context.v;
+                // Ensure the id getter/setter is set
+                this._definePlainAttribute("id");
+                _context.n = 3;
+                break;
+              case 2:
+                this._schema.isSaving[this.toString()] = true;
+                _context.n = 3;
+                return this._schema.db[collection].update(this.attrs.id, this.attrs);
+              case 3:
+                this._saveAssociations();
+                this._schema.isSaving[this.toString()] = false;
+                return _context.a(2, this);
+            }
+          }, _callee, this);
+        }));
+        function _saveAsync(_x) {
+          return _saveAsync2.apply(this, arguments);
+        }
+        return _saveAsync;
+      }()
       /**
         Updates the record in the db.
          ```js
@@ -15094,27 +15134,27 @@
         if (hasPromises) {
           // If there are Promises, we need to await them first
           // Return a Promise that resolves all attrs and then updates
-          return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+          return _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
             var resolvedAttrs, _i, _Object$keys, attr;
-            return _regenerator().w(function (_context) {
-              while (1) switch (_context.n) {
+            return _regenerator().w(function (_context2) {
+              while (1) switch (_context2.n) {
                 case 0:
                   // Await all Promise values
                   resolvedAttrs = {};
                   _i = 0, _Object$keys = Object.keys(attrs);
                 case 1:
                   if (!(_i < _Object$keys.length)) {
-                    _context.n = 4;
+                    _context2.n = 4;
                     break;
                   }
                   attr = _Object$keys[_i];
-                  _context.n = 2;
+                  _context2.n = 2;
                   return Promise.resolve(attrs[attr]);
                 case 2:
-                  resolvedAttrs[attr] = _context.v;
+                  resolvedAttrs[attr] = _context2.v;
                 case 3:
                   _i++;
-                  _context.n = 1;
+                  _context2.n = 1;
                   break;
                 case 4:
                   // Now set the resolved values
@@ -15125,9 +15165,9 @@
                     this[attr] = resolvedAttrs[attr];
                   }, _this2);
                   _this2.save();
-                  return _context.a(2, _this2);
+                  return _context2.a(2, _this2);
               }
-            }, _callee);
+            }, _callee2);
           }))();
         }
         Object.keys(attrs).forEach(function (attr) {
@@ -23972,62 +24012,73 @@
                 return this.build.apply(this, [type].concat(_toConsumableArray(traits), [overrides]));
               case 1:
                 attrs = _context4.v;
-                if (this.schema && this.schema[this.schema.toCollectionName(type)]) {
-                  modelClass = this.schema[this.schema.toCollectionName(type)];
-                  modelOrRecord = modelClass.create(attrs);
-                } else {
-                  if (collectionFromCreateList) {
-                    collection = collectionFromCreateList;
-                  } else {
-                    collectionName = this.schema ? this.schema.toInternalCollectionName(type) : "_".concat(this.inflector.pluralize(type));
-                    collection = this.db[collectionName];
-                  }
-                  assert(collection, "You called server.create('".concat(type, "') but no model or factory was found."));
-                  modelOrRecord = collection.insert(attrs);
+                if (!(this.schema && this.schema[this.schema.toCollectionName(type)])) {
+                  _context4.n = 3;
+                  break;
                 }
+                modelClass = this.schema[this.schema.toCollectionName(type)];
+                _context4.n = 2;
+                return modelClass.create(attrs);
+              case 2:
+                modelOrRecord = _context4.v;
+                _context4.n = 5;
+                break;
+              case 3:
+                if (collectionFromCreateList) {
+                  collection = collectionFromCreateList;
+                } else {
+                  collectionName = this.schema ? this.schema.toInternalCollectionName(type) : "_".concat(this.inflector.pluralize(type));
+                  collection = this.db[collectionName];
+                }
+                assert(collection, "You called server.create('".concat(type, "') but no model or factory was found."));
+                _context4.n = 4;
+                return collection.insert(attrs);
+              case 4:
+                modelOrRecord = _context4.v;
+              case 5:
                 OriginalFactory = this.factoryFor(type);
                 if (!OriginalFactory) {
-                  _context4.n = 9;
+                  _context4.n = 13;
                   break;
                 }
                 afterCreateCallbacks = OriginalFactory.extractAfterCreateCallbacks({
                   traits: traits
                 });
                 _iterator = _createForOfIteratorHelper(afterCreateCallbacks);
-                _context4.p = 2;
+                _context4.p = 6;
                 _iterator.s();
-              case 3:
+              case 7:
                 if ((_step = _iterator.n()).done) {
-                  _context4.n = 6;
+                  _context4.n = 10;
                   break;
                 }
                 afterCreate = _step.value;
-                _context4.n = 4;
+                _context4.n = 8;
                 return afterCreate(modelOrRecord, this);
-              case 4:
+              case 8:
                 result = _context4.v;
                 // If afterCreate returns a model, use that instead
                 if (result) {
                   modelOrRecord = result;
                 }
-              case 5:
-                _context4.n = 3;
+              case 9:
+                _context4.n = 7;
                 break;
-              case 6:
-                _context4.n = 8;
+              case 10:
+                _context4.n = 12;
                 break;
-              case 7:
-                _context4.p = 7;
+              case 11:
+                _context4.p = 11;
                 _t2 = _context4.v;
                 _iterator.e(_t2);
-              case 8:
-                _context4.p = 8;
+              case 12:
+                _context4.p = 12;
                 _iterator.f();
-                return _context4.f(8);
-              case 9:
+                return _context4.f(12);
+              case 13:
                 return _context4.a(2, modelOrRecord);
             }
-          }, _callee4, this, [[2, 7, 8, 9]]);
+          }, _callee4, this, [[6, 11, 12, 13]]);
         }));
         function create(_x4) {
           return _create.apply(this, arguments);

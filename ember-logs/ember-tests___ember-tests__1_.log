@@ -1,0 +1,972 @@
+ember-tests / ember-tests (1)	UNKNOWN STEP	﻿2025-12-17T21:00:15.3986418Z Current runner version: '2.329.0'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.3993133Z Runner name: 'ubuntu-x64-m6a.2xlarge-i-0d9b037242eb0d5ae'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.3994045Z Runner group name: 'general'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.3995042Z Machine name: 'ip-10-0-3-160'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4017451Z ##[group]Operating System
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4018038Z Ubuntu 22.04.5 LTS
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4018626Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4019125Z ##[group]Virtual Environment
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4019748Z Image Version: ubuntu-22.04-x86_64-183eb40-19266864384
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4021105Z Image Release Notes: https://github.com/hashicorp/crt-github-runners/releases/tag/ubuntu-22.04-x86_64-183eb40-19266864384
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4022204Z Hardware Specs: https://go.hashi.co/github-runner-images
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4022624Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4022981Z A list of preinstalled software can be found in the image release notes
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4023757Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4024438Z ##[group]HashiCorp Self-Hosted Runner Support
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4025271Z                                                                                 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4025866Z    ██╗  ██╗ █████╗ ███████╗██╗  ██╗██╗ ██████╗ ██████╗ ██████╗ ██████╗ 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4088261Z    ██║  ██║██╔══██╗██╔════╝██║  ██║██║██╔════╝██╔═══██╗██╔══██╗██╔══██╗
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4088972Z    ███████║███████║███████╗███████║██║██║     ██║   ██║██████╔╝██████╔╝
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4089612Z    ██╔══██║██╔══██║╚════██║██╔══██║██║██║     ██║   ██║██╔══██╗██╔═══╝ 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4090160Z    ██║  ██║██║  ██║███████║██║  ██║██║╚██████╗╚██████╔╝██║  ██║██║     
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4091213Z    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                                                                                                                                                                                     
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4091869Z                       Self-hosted GitHub Runners
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4092215Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4092584Z Greetings, Hashicorporeal! The Self-hosted GitHub Actions runner you
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4093441Z are using is maintained by the Engineering Systems team. If you have
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4094214Z questions, encounter issues, or would like to submit a feature request,
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4094994Z please reach out via the #tech-github-runners channel, or email us at
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4095710Z team-productivity-systems-and-services@hashicorp.com
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4096105Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4096331Z You can find more information about the runners at:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4096880Z https://go.hashi.co/github-runners
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4097186Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4097492Z You can find more information about the private vault environment at:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4098116Z https://go.hashi.co/vault-wiki
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4098402Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4098720Z For questions about the Common Release Tooling (CRT) project and any
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4099513Z product release or packaging-related systems, please reach out to the
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4100532Z Release Engineering team at #team-rel-eng
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4100886Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4101190Z More information about the CRT project as a whole can be found at:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4101825Z https://go.hashi.co/crt-meta-rfc
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4102118Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4102381Z General questions about GitHub Actions can be asked in the
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4102972Z #tech-github-actions slack channel
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4103429Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4103792Z ##[group]Debugging
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4104186Z Account: 941909249676
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4104573Z Region: us-west-2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4104955Z Instance ID: i-0d9b037242eb0d5ae
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4105239Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4105802Z Doormat may be used to connect to this instance with the following command (exclude --exact-match if using doormat <4.4.0):
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4107368Z doormat session --account 941909249676 --region us-west-2 --target i-0d9b037242eb0d5ae --exact-match
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4108132Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4108485Z Requirements and additional information on this arrangement and related
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4109296Z security controls is available at: https://go.hashi.co/runner-debug
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4109919Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4110298Z ##[group]Stats
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4110971Z Account: 941909249676
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4111369Z Region: us-west-2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4111759Z Instance ID: i-0d9b037242eb0d5ae
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4112051Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4112447Z The standard linux runner image includes binaries for node exporter, prometheus, and
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4113400Z grafana along with a basic configuration. If you include the label 'stats' in an ondemand
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4114318Z runner request, these binaries will be started as the runner user during startup.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4114841Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4115013Z [self-hosted, ondemand, stats]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4115291Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4115295Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4115674Z You can connect to these services locally in ci or use doormat port forwarding by
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4116369Z including the doormat label.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4116653Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4116980Z [self-hosted, ondemand, stats, doormat=user_or_group@hashicorp.com]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4117438Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4117442Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4117866Z Enter the following to port forward for grafana, then navigate to http://localhost:3000
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4118415Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4118924Z doormat session --account 941909249676 --region us-west-2 --target i-0d9b037242eb0d5ae --port-forward 3000:3000
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4119593Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4119598Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4119815Z You can also run the binaries with your own config
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4120182Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4120768Z /home/runner/bin/prometheus --config.file=./your_prometheus.yml &
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4121369Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4121823Z /home/runner/bin/grafana server --homepath=/home/runner/grafana --config=./your_grafana.ini &
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4122431Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4122436Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4122714Z Render an image using included grafana-image-renderer plugin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4123138Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4123853Z curl "http://localhost:3000/render/d/rYdddlPWk/node-exporter-full?orgId=1&panelId=77&from=now-5m&to=now&width=1024&height=768" > ./example.png
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4124691Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4124695Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4124953Z Upload rendered image as artifact in a github actions job
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4125349Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4125528Z       - uses: actions/upload-artifact@v4
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4125980Z         with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4126306Z           name: example
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4126692Z           path: ./example.png
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4126952Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4126956Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4127223Z More about runner metrics https://go.hashi.co/runner-metrics
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4127629Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4127876Z More about ondemand runners https://go.hashi.co/ondemand
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4128411Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4130951Z ##[group]GITHUB_TOKEN Permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4133651Z Actions: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4134054Z ArtifactMetadata: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4134440Z Attestations: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4134787Z Checks: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4135118Z Contents: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4135463Z Deployments: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4135820Z Discussions: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4136161Z Issues: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4136490Z Metadata: read
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4136831Z Models: read
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4137155Z Packages: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4137497Z Pages: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4137830Z PullRequests: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4138206Z RepositoryProjects: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4138610Z SecurityEvents: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4138966Z Statuses: write
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4139303Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4141580Z Secret source: Actions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4142370Z Prepare workflow directory
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4448370Z Prepare all required actions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.4483496Z Getting action download info
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:15.8998701Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:16.6005683Z Download action repository 'browser-actions/setup-chrome@97349de5c98094d4fc9412f31c524d7697115ad8' (SHA:97349de5c98094d4fc9412f31c524d7697115ad8)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:16.6594713Z Download action repository 'actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.2576523Z Uses: hashicorp/atlas/.github/workflows/ember-tests.yml@refs/heads/deanmarano/mirage-exploration (161a2b5672724975f8ea9590f5a7a5881639f88c)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.2582567Z ##[group] Inputs
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.2583846Z   run-ember-tests: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.2584756Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.2585688Z Complete job name: ember-tests / ember-tests (1)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3809172Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3811067Z with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3811777Z   repository: hashicorp/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3812915Z   token: ***
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3813597Z   ssh-strict: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3814315Z   ssh-user: git
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3815037Z   persist-credentials: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3815857Z   clean: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3843274Z   sparse-checkout-cone-mode: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3844372Z   fetch-depth: 1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3845089Z   fetch-tags: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3845841Z   show-progress: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3846587Z   lfs: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3847260Z   submodules: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3847996Z   set-safe-directory: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:17.3849199Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4300066Z Syncing repository: hashicorp/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4301656Z ##[group]Getting Git version info
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4302186Z Working directory is '/home/runner/actions-runner/_work/atlas/atlas'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4302799Z [command]/usr/bin/git version
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4679995Z git version 2.51.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4704818Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4718670Z Temporarily overriding HOME='/home/runner/actions-runner/_work/_temp/362b9f3b-f1e7-4e80-8229-f32e7d3bf448' before making global git config changes
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4719470Z Adding repository directory to the temporary git global config as a safe directory
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4731751Z [command]/usr/bin/git config --global --add safe.directory /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4770195Z Deleting the contents of '/home/runner/actions-runner/_work/atlas/atlas'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4774216Z ##[group]Initializing the repository
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.4778566Z [command]/usr/bin/git init /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5749478Z hint: Using 'master' as the name for the initial branch. This default branch name
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5750227Z hint: is subject to change. To configure the initial branch name to use in all
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5751168Z hint: of your new repositories, which will suppress this warning, call:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5751633Z hint:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5752009Z hint: 	git config --global init.defaultBranch <name>
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5752398Z hint:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5752752Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5753307Z hint: 'development'. The just-created branch can be renamed via this command:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5753732Z hint:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5753995Z hint: 	git branch -m <name>
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5754274Z hint:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5754651Z hint: Disable this message with "git config set advice.defaultBranchName false"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5755336Z Initialized empty Git repository in /home/runner/actions-runner/_work/atlas/atlas/.git/
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5765035Z [command]/usr/bin/git remote add origin https://github.com/hashicorp/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5811299Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5811842Z ##[group]Disabling automatic garbage collection
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5816665Z [command]/usr/bin/git config --local gc.auto 0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5851077Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5851794Z ##[group]Setting up auth
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5859118Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:24.5895825Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:25.0021945Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:25.0060807Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:25.0353335Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:25.0397457Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:25.0408298Z ##[group]Fetching the repository
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:25.0409469Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +161a2b5672724975f8ea9590f5a7a5881639f88c:refs/remotes/origin/deanmarano/mirage-exploration
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4441442Z From https://github.com/hashicorp/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4442280Z  * [new ref]         161a2b5672724975f8ea9590f5a7a5881639f88c -> origin/deanmarano/mirage-exploration
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4493441Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4494005Z ##[group]Determining the checkout info
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4496929Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4502855Z [command]/usr/bin/git sparse-checkout disable
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4554690Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4587766Z ##[group]Checking out the ref
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:28.4593325Z [command]/usr/bin/git checkout --progress --force -B deanmarano/mirage-exploration refs/remotes/origin/deanmarano/mirage-exploration
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3564879Z Switched to a new branch 'deanmarano/mirage-exploration'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3566401Z branch 'deanmarano/mirage-exploration' set up to track 'origin/deanmarano/mirage-exploration'.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3601058Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3647847Z [command]/usr/bin/git log -1 --format=%H
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3674464Z 161a2b5672724975f8ea9590f5a7a5881639f88c
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3896806Z Prepare all required actions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.3897228Z Getting action download info
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.6128806Z Download action repository 'pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda' (SHA:a7487c7e89a18df4991f7f222e4898a00d66ddda)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:29.8658837Z Download action repository 'actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e' (SHA:cdca7365b2dadb8aad0a33bc7601856ffabcc48e)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2285858Z ##[group]Run ./.github/actions/setup-pnpm
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2286130Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2369344Z ##[group]Run pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2369662Z with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2369820Z   dest: ~/setup-pnpm
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2370007Z   run_install: null
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2370220Z   package_json_file: package.json
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2370657Z   standalone: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2370833Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.2906980Z ##[group]Running self-installer...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.8508014Z Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.8588634Z Packages: +1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:30.8588883Z +
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.2505110Z Progress: resolved 1, reused 0, downloaded 1, added 1, done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.2829438Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.2829790Z dependencies:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.2830071Z + pnpm 10.20.0 (10.26.0 is available)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.2830277Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.2896513Z Done in 832ms
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3080827Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3083743Z Installation Completed!
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3214536Z ##[group]Run actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3214845Z with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3215010Z   node-version-file: .nvmrc
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3215196Z   cache: pnpm
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3215379Z   cache-dependency-path: pnpm-lock.yaml
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3215615Z   always-auth: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3215794Z   check-latest: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3216093Z   token: ***
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3216241Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3216455Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.3216710Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.4834780Z Node version file is not JSON file
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.4835375Z Resolved .nvmrc as 20.19.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:31.4844681Z Attempting to download 20.19.0...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:32.2547750Z Acquiring 20.19.0 - x64 from https://github.com/actions/node-versions/releases/download/20.19.0-13838090974/node-20.19.0-linux-x64.tar.gz
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:32.6896587Z Extracting ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:32.6995157Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/actions-runner/_work/_temp/faf1d255-8abd-4fd7-9aec-5ac5766b1ec4 -f /home/runner/actions-runner/_work/_temp/e4a20eb7-36ee-4ee9-af74-12e9798a2d32
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:33.6212218Z Adding to the cache ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:35.8211045Z ##[group]Environment details
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:36.5505210Z node: v20.19.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:36.5505555Z npm: 10.8.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:36.5505988Z yarn: 1.22.22
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:36.5506691Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:36.5526941Z [command]/home/runner/setup-pnpm/node_modules/.bin/pnpm store path --silent
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:36.8919913Z /home/runner/setup-pnpm/node_modules/.bin/store/v10
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:37.2506637Z Cache hit for: node-cache-Linux-x64-pnpm-3eb77a7fbf302c988fcc26f54527149e6187e123d06434cb5299f86fb12fba4d
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:38.6526090Z Received 0 of 171400822 (0.0%), 0.0 MBs/sec
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:39.6545273Z Received 67108864 of 171400822 (39.2%), 32.0 MBs/sec
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:40.6549571Z Received 155189248 of 171400822 (90.5%), 49.3 MBs/sec
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:40.8610965Z Received 171400822 of 171400822 (100.0%), 51.0 MBs/sec
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:40.8612110Z Cache Size: ~163 MB (171400822 B)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:40.8649118Z [command]/usr/bin/tar -xf /home/runner/actions-runner/_work/_temp/586a54dd-593d-4b8a-a273-ebc2d48e7844/cache.tzst -P -C /home/runner/actions-runner/_work/atlas/atlas --use-compress-program unzstd
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:44.9973901Z Cache restored successfully
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0326901Z Cache restored from key: node-cache-Linux-x64-pnpm-3eb77a7fbf302c988fcc26f54527149e6187e123d06434cb5299f86fb12fba4d
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0487638Z ##[group]Run pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0487931Z with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0488077Z   run_install: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0488231Z   dest: ~/setup-pnpm
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0488406Z   package_json_file: package.json
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0488601Z   standalone: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0488738Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0488938Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.0489178Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:45.1036944Z ##[group]Running self-installer...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:46.9827754Z Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:46.9931602Z Packages: +1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:46.9931907Z +
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.4754749Z Progress: resolved 1, reused 0, downloaded 1, added 1, done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5131993Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5132438Z dependencies:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5132829Z + pnpm 10.20.0 (10.26.0 is available)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5133043Z 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5172010Z Done in 782ms
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5411664Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5415962Z Installation Completed!
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.5426305Z ##[group]Running pnpm recursive install...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:47.9231282Z Scope: all 5 workspace projects
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:48.0277497Z Lockfile is up to date, resolution step is skipped
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:48.1503138Z Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:48.3402179Z .                                        |    +2110 ++++++++++++++++++++++++++++
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:49.1513341Z Progress: resolved 2110, reused 0, downloaded 160, added 159
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:50.1518476Z Progress: resolved 2110, reused 0, downloaded 440, added 439
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:51.1524486Z Progress: resolved 2110, reused 0, downloaded 693, added 695
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:52.1516412Z Progress: resolved 2110, reused 0, downloaded 1081, added 1092
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:53.1516810Z Progress: resolved 2110, reused 0, downloaded 1306, added 1307
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:54.1519235Z Progress: resolved 2110, reused 0, downloaded 1455, added 1459
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:55.1518543Z Progress: resolved 2110, reused 0, downloaded 1553, added 1568
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:55.9947991Z Packages are hard linked from the content-addressable store to the virtual store.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:55.9948977Z   Content-addressable store is at: /home/runner/setup-pnpm/node_modules/.bin/store/v10
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:55.9949721Z   Virtual store is at:             node_modules/.pnpm
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:56.0047141Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install$ pnpm install
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:56.1515839Z Progress: resolved 2110, reused 0, downloaded 1735, added 1751
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:57.1520786Z Progress: resolved 2110, reused 0, downloaded 1833, added 1843
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:58.1514502Z Progress: resolved 2110, reused 0, downloaded 2089, added 2103
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:58.5792058Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Lockfile is up to date, resolution step is skipped
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:58.6334104Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:58.7493033Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Packages: +750
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:58.7494116Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:59.1525468Z Progress: resolved 2110, reused 0, downloaded 2092, added 2109
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:00:59.6332825Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Progress: resolved 750, reused 0, downloaded 284, added 284
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:00.6347073Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Progress: resolved 750, reused 0, downloaded 597, added 597
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:01.6347943Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Progress: resolved 750, reused 0, downloaded 750, added 749
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.0435046Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Progress: resolved 750, reused 0, downloaded 750, added 750, done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.3198427Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: .../core-js@3.47.0/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.3554694Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: .../core-js@3.47.0/node_modules/core-js postinstall: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7621584Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: dependencies:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7622435Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @miragejs/pretender-node-polyfill 0.1.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7623135Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + inflected 2.1.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7624159Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + lodash 4.17.21
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7625041Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + pretender 3.4.7
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7626030Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: devDependencies:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7626930Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @babel/core 7.28.5
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7627728Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @babel/eslint-parser 7.28.5
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7628557Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @babel/preset-env 7.28.5
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7629352Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @rollup/plugin-alias 5.1.1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7630605Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @rollup/plugin-babel 6.1.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7632010Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @rollup/plugin-commonjs 26.0.1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7633043Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + @rollup/plugin-node-resolve 15.3.1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7633959Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + babel-jest 29.7.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7634769Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + core-js 3.47.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7635654Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint 8.57.1
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7636552Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-config-prettier 9.1.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7637557Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-import-resolver-alias 1.1.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7638604Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-import-resolver-node 0.3.9
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7639600Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-plugin-import 2.32.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7640737Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-plugin-jest 28.14.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7641813Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-plugin-node 11.1.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7642805Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + eslint-plugin-prettier 5.5.4
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7643682Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + jest 29.7.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7644760Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + jest-environment-jsdom 29.7.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7645633Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + jest-extended 4.0.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7648519Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + jest-fixed-jsdom 0.0.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7649521Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + jscodeshift 17.3.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7650600Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + npm-run-all 4.1.5
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7651519Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + prettier 3.3.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7652319Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + rimraf 5.0.10
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7653121Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + rollup 4.53.3
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7653880Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + tsd 0.32.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7654937Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: + typescript 5.9.3
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7767701Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: > miragejs@0.2.0-alpha.3 prepare /home/runner/setup-pnpm/node_modules/.bin/store/v10/tmp/_tmp_2924_851ee7d2a6d7b2465cccc3ca38eca06e
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:02.7768590Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: > pnpm run build
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:03.5014160Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: > miragejs@0.2.0-alpha.3 build /home/runner/setup-pnpm/node_modules/.bin/store/v10/tmp/_tmp_2924_851ee7d2a6d7b2465cccc3ca38eca06e
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:03.5015838Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: > rimraf dist && rollup -c
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:03.8348373Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [36m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:03.8354351Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1mlib/index.js[22m → [1mdist/mirage.mjs[22m...[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.1001341Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1m[33m(!) Unused external imports[39m[22m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.1002515Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: default imported from external module "lodash/mapValues.js" but never used in "lib/factory.js".
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.1004078Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [32mcreated [1mdist/mirage.mjs[22m in [1m1.2s[22m[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.1004953Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [36m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.1007662Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1mlib/index.js[22m → [1mdist/mirage.cjs[22m...[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6372693Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1m[33m(!) Unused external imports[39m[22m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6374167Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: default imported from external module "lodash/mapValues.js" but never used in "lib/factory.js".
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6375596Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1m[33m(!) Mixing named and default exports[39m[22m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6376897Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [90mhttps://rollupjs.org/configuration-options/#output-exports[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6378455Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1mThe following entry modules are using named and default exports together:[22m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6379425Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: lib/index.js
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6381124Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Consumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use `output.exports: "named"` to disable this warning.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6382523Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [32mcreated [1mdist/mirage.cjs[22m in [1m536ms[22m[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6383127Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [36m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:05.6383804Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1mlib/index.js[22m → [1mdist/mirage-umd.cjs[22m...[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.3400985Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1m[33m(!) Mixing named and default exports[39m[22m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.3402637Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [90mhttps://rollupjs.org/configuration-options/#output-exports[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.3404176Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [1mThe following entry modules are using named and default exports together:[22m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.3405369Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: lib/index.js
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.3407135Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Consumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use `output.exports: "named"` to disable this warning.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.3409083Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: [32mcreated [1mdist/mirage-umd.cjs[22m in [1m2.7s[22m[39m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.4306962Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Done in 10.2s
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.4942235Z ...2924_851ee7d2a6d7b2465cccc3ca38eca06e pnpm-install: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.9113296Z Progress: resolved 2110, reused 0, downloaded 2093, added 2109
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:08.9150183Z Progress: resolved 2110, reused 0, downloaded 2093, added 2110, done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5070023Z .../core-js@3.38.1/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5076973Z .../core-js@2.6.12/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5087746Z .../node_modules/protobufjs postinstall$ node scripts/postinstall
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5570871Z .../core-js@3.38.1/node_modules/core-js postinstall: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5598197Z .../@playwright/browser-chromium install$ node install.js
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5607776Z .../node_modules/@parcel/watcher install$ node scripts/build-from-source.js
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5938041Z .../core-js@2.6.12/node_modules/core-js postinstall: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.5945390Z .../node_modules/protobufjs postinstall: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.6304686Z .../node_modules/@parcel/watcher install: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:09.8359106Z .../@playwright/browser-chromium install: Downloading Chromium 141.0.7390.37 (playwright build v1194) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1194/chromium-linux.zip
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.0192166Z .../@playwright/browser-chromium install: |                                                                                |   0% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.2198976Z .../@playwright/browser-chromium install: |■■■■■■■■                                                                        |  10% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.3280995Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■                                                                |  20% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.4093145Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.4888440Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.5689299Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.6438061Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.7182311Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.8102959Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.8836292Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:10.9627325Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 173.9 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.4816634Z .../@playwright/browser-chromium install: Chromium 141.0.7390.37 (playwright build v1194) downloaded to /home/runner/.cache/ms-playwright/chromium-1194
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.4818118Z .../@playwright/browser-chromium install: Downloading Chromium Headless Shell 141.0.7390.37 (playwright build v1194) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1194/chromium-headless-shell-linux.zip
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.6763097Z .../@playwright/browser-chromium install: |                                                                                |   0% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.7839583Z .../@playwright/browser-chromium install: |■■■■■■■■                                                                        |  10% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.8524199Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■                                                                |  20% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.9040810Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:14.9607775Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:15.0115257Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:15.0654215Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:15.1097392Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:15.1675754Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:15.2132921Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:15.2571165Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 104.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.1558983Z .../@playwright/browser-chromium install: Chromium Headless Shell 141.0.7390.37 (playwright build v1194) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1194
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.1560876Z .../@playwright/browser-chromium install: Downloading FFMPEG playwright build v1011 from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.3740860Z .../@playwright/browser-chromium install: |                                                                                |   0% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.3876398Z .../@playwright/browser-chromium install: |■■■■■■■■                                                                        |  10% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.3978568Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4016781Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4063979Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4090078Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4112854Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4135972Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4159265Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4181393Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4205020Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4815183Z .../@playwright/browser-chromium install: FFMPEG playwright build v1011 downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.4889813Z .../@playwright/browser-chromium install: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.7824746Z . prepare$ husky
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.8428320Z . prepare: Done
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.8792617Z Done in 30.3s using pnpm v10.20.0
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9295643Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9644369Z ##[group]Run browser-actions/setup-chrome@97349de5c98094d4fc9412f31c524d7697115ad8
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9644750Z with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9644904Z   chrome-version: stable
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9645082Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9645275Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:17.9645566Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:18.0353825Z Setup chromium stable
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:18.0364847Z Attempting to download stable...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:18.0366031Z Acquiring stable from https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:19.4515092Z Installing chromium...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:19.4549064Z [command]/usr/bin/ar x /home/runner/actions-runner/_work/_temp/154ac7be-df19-49a4-84c2-915e7f05c4cd
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:19.7651241Z [command]/usr/bin/tar -xf /tmp/deb-EVLbdq/data.tar.xz --directory /tmp/chrome-RdfzKs --strip-components 4 ./opt/google
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:30.3090901Z Successfully Installed chromium to /home/runner/actions-runner/_work/_tool/chromium/stable/x64
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:30.3099606Z [command]/tmp/chrome-RdfzKs/chrome --version
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.6358346Z [1217/210132.634981:WARNING:chrome/app/chrome_main_linux.cc:82] Read channel stable from /tmp/chrome-RdfzKs/CHROME_VERSION_EXTRA
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.6373599Z Google Chrome 143.0.7499.146 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8091546Z Successfully setup chromium version 143.0.7499.146
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8227863Z ##[group]Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8228262Z with:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8228424Z   path: frontend/atlas/dist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8228628Z   name: atlas-ember-artifact
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8228830Z   merge-multiple: false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8229188Z   repository: hashicorp/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8229388Z   run-id: 20316992961
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8229539Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8229732Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:32.8229976Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.0159964Z Downloading single artifact
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.3221841Z Preparing to download the following artifacts:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.3223185Z - atlas-ember-artifact (ID: 4904291456, Size: 13202982, Expected Digest: sha256:b48573c50d5c44faec8cb0926e4ceab474c11eac29dd4252e805ab51b3c5776c)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.5353646Z Redirecting to blob download url: https://productionresultssa9.blob.core.windows.net/actions-results/b66eeff5-e8d6-4176-8c0a-93766789aa37/workflow-job-run-920a4994-b2da-56ee-a478-193308351124/artifacts/1d6cc226ccbb778ef7b7fd21d0332b2420886b3c43c892f210256cb9d2f892f3.zip
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.5355404Z Starting download of artifact to: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/dist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.8997049Z (node:3203) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:33.8998275Z (Use `node --trace-deprecation ...` to show where the warning was created)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4410599Z SHA256 digest of downloaded artifact is b48573c50d5c44faec8cb0926e4ceab474c11eac29dd4252e805ab51b3c5776c
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4411325Z Artifact download completed successfully.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4411713Z Total of 1 artifact(s) downloaded
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4416911Z Download artifact has finished successfully
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4558936Z ##[group]Run echo "PARALLEL_COUNT=$(node -e 'console.log(require("os").cpus().length - 2)')" >> $GITHUB_ENV
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4559604Z [36;1mecho "PARALLEL_COUNT=$(node -e 'console.log(require("os").cpus().length - 2)')" >> $GITHUB_ENV[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4589444Z shell: /usr/bin/bash -e {0}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4589673Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4589890Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4590152Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4997854Z ##[group]Run set +e
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4998120Z [36;1mset +e[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4998302Z [36;1mnode_modules/.bin/ember exam \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4998542Z [36;1m  --load-balance \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4998742Z [36;1m  --split=8 \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4998938Z [36;1m  --partition=$(expr 1 + 1) \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4999185Z [36;1m  --parallel=$PARALLEL_COUNT \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4999417Z [36;1m  --path dist \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4999605Z [36;1m  --silent \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4999806Z [36;1m  -r xunit \[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.4999999Z [36;1m  --write-module-metadata-file[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5000240Z [36;1mEXIT_CODE=$?[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5000712Z [36;1mset -e[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5000987Z [36;1mMETADATA_FILE=$(ls -t module-metadata-*.json | head -n1)[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5001283Z [36;1mif [ -f "$METADATA_FILE" ]; then[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5001974Z [36;1m  FAILURES=$(jq -r '.modules[] | select(type == "object" and .failed > 0) | . as $m | .failedTests[] | "pnpm ember test --filter=\"\($m.moduleName): \(.)\""' "$METADATA_FILE")[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5002511Z [36;1m  if [ -n "$FAILURES" ]; then[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5002762Z [36;1m    echo "-----------------------------------------"[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5003016Z [36;1m    echo "FAILED TESTS:"[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5003256Z [36;1m    echo "-----------------------------------------"[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5003500Z [36;1m    echo "$FAILURES"[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5003676Z [36;1m  else[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5003880Z [36;1m    echo "Yippee! No failed tests."[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5004102Z [36;1m  fi[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5004253Z [36;1melse[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5004428Z [36;1m  echo "No module metadata file found."[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5004647Z [36;1mfi[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5004796Z [36;1mexit $EXIT_CODE[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5031281Z shell: /usr/bin/bash -e {0}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5031492Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5031706Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5031973Z   PARALLEL_COUNT: 6
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5032143Z   COVERAGE: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5032311Z   EMBER_EXAM_PARALLEL: true
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5032527Z   EMBER_TEST_REPORT: test-results/report.xml
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:35.5032752Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.6526877Z ok 1 Chrome 143.0 - [2 ms] - Exam Partition 2 - Browser Id 6 - ember-qunit: Ember.onerror validation: Ember.onerror is functioning properly
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.6527722Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.6529096Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.6538326Z             {"type":"warn","text":"DEPRECATION: Array prototype extensions are deprecated. Follow the deprecation guide for migration instructions, and set EmberENV.EXTEND_PROTOTYPES to false in your config/environment.js [deprecation id: deprecate-array-prototype-extensions] This will be removed in ember-source 6.0.0. See https://deprecations.emberjs.com/id/deprecate-array-prototype-extensions for more details.\n        at logDeprecationStackTrace (http://localhost:7357/app/assets/vendor.js:723:308)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at raiseOnDeprecation (http://localhost:7357/app/assets/vendor.js:726:210)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at invoke (http://localhost:7357/app/assets/vendor.js:678:501)\n        at deprecate (http://localhost:7357/app/assets/vendor.js:783:442)\n        at deprecate$1 (http://localhost:7357/app/assets/vendor.js:979:335)\n        at deprecateUntil (http://localhost:7357/app/assets/vendor.js:1658:1677)\n        at http://localhost:7357/app/assets/vendor.js:1658:1789"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.6544277Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7155020Z ok 2 Chrome 143.0 - [2 ms] - Exam Partition 2 - Browser Id 3 - ember-qunit: Ember.onerror validation: Ember.onerror is functioning properly
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7155596Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7155766Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7159813Z             {"type":"warn","text":"DEPRECATION: Array prototype extensions are deprecated. Follow the deprecation guide for migration instructions, and set EmberENV.EXTEND_PROTOTYPES to false in your config/environment.js [deprecation id: deprecate-array-prototype-extensions] This will be removed in ember-source 6.0.0. See https://deprecations.emberjs.com/id/deprecate-array-prototype-extensions for more details.\n        at logDeprecationStackTrace (http://localhost:7357/app/assets/vendor.js:723:308)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at raiseOnDeprecation (http://localhost:7357/app/assets/vendor.js:726:210)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at invoke (http://localhost:7357/app/assets/vendor.js:678:501)\n        at deprecate (http://localhost:7357/app/assets/vendor.js:783:442)\n        at deprecate$1 (http://localhost:7357/app/assets/vendor.js:979:335)\n        at deprecateUntil (http://localhost:7357/app/assets/vendor.js:1658:1677)\n        at http://localhost:7357/app/assets/vendor.js:1658:1789"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7163533Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7784589Z ok 3 Chrome 143.0 - [2 ms] - Exam Partition 2 - Browser Id 4 - ember-qunit: Ember.onerror validation: Ember.onerror is functioning properly
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7785481Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7785738Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7792565Z             {"type":"warn","text":"DEPRECATION: Array prototype extensions are deprecated. Follow the deprecation guide for migration instructions, and set EmberENV.EXTEND_PROTOTYPES to false in your config/environment.js [deprecation id: deprecate-array-prototype-extensions] This will be removed in ember-source 6.0.0. See https://deprecations.emberjs.com/id/deprecate-array-prototype-extensions for more details.\n        at logDeprecationStackTrace (http://localhost:7357/app/assets/vendor.js:723:308)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at raiseOnDeprecation (http://localhost:7357/app/assets/vendor.js:726:210)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at invoke (http://localhost:7357/app/assets/vendor.js:678:501)\n        at deprecate (http://localhost:7357/app/assets/vendor.js:783:442)\n        at deprecate$1 (http://localhost:7357/app/assets/vendor.js:979:335)\n        at deprecateUntil (http://localhost:7357/app/assets/vendor.js:1658:1677)\n        at http://localhost:7357/app/assets/vendor.js:1658:1789"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7798813Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7806230Z ok 4 Chrome 143.0 - [1 ms] - Exam Partition 2 - Browser Id 5 - ember-qunit: Ember.onerror validation: Ember.onerror is functioning properly
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7807073Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7807361Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7814075Z             {"type":"warn","text":"DEPRECATION: Array prototype extensions are deprecated. Follow the deprecation guide for migration instructions, and set EmberENV.EXTEND_PROTOTYPES to false in your config/environment.js [deprecation id: deprecate-array-prototype-extensions] This will be removed in ember-source 6.0.0. See https://deprecations.emberjs.com/id/deprecate-array-prototype-extensions for more details.\n        at logDeprecationStackTrace (http://localhost:7357/app/assets/vendor.js:723:308)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at raiseOnDeprecation (http://localhost:7357/app/assets/vendor.js:726:210)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at invoke (http://localhost:7357/app/assets/vendor.js:678:501)\n        at deprecate (http://localhost:7357/app/assets/vendor.js:783:442)\n        at deprecate$1 (http://localhost:7357/app/assets/vendor.js:979:335)\n        at deprecateUntil (http://localhost:7357/app/assets/vendor.js:1658:1677)\n        at http://localhost:7357/app/assets/vendor.js:1658:1789"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7819963Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7838762Z ok 5 Chrome 143.0 - [2 ms] - Exam Partition 2 - Browser Id 2 - ember-qunit: Ember.onerror validation: Ember.onerror is functioning properly
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7839637Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7839907Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7846534Z             {"type":"warn","text":"DEPRECATION: Array prototype extensions are deprecated. Follow the deprecation guide for migration instructions, and set EmberENV.EXTEND_PROTOTYPES to false in your config/environment.js [deprecation id: deprecate-array-prototype-extensions] This will be removed in ember-source 6.0.0. See https://deprecations.emberjs.com/id/deprecate-array-prototype-extensions for more details.\n        at logDeprecationStackTrace (http://localhost:7357/app/assets/vendor.js:723:308)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at raiseOnDeprecation (http://localhost:7357/app/assets/vendor.js:726:210)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at invoke (http://localhost:7357/app/assets/vendor.js:678:501)\n        at deprecate (http://localhost:7357/app/assets/vendor.js:783:442)\n        at deprecate$1 (http://localhost:7357/app/assets/vendor.js:979:335)\n        at deprecateUntil (http://localhost:7357/app/assets/vendor.js:1658:1677)\n        at http://localhost:7357/app/assets/vendor.js:1658:1789"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7852229Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7965845Z ok 6 Chrome 143.0 - [1 ms] - Exam Partition 2 - Browser Id 1 - ember-qunit: Ember.onerror validation: Ember.onerror is functioning properly
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7966865Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7967544Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7974055Z             {"type":"warn","text":"DEPRECATION: Array prototype extensions are deprecated. Follow the deprecation guide for migration instructions, and set EmberENV.EXTEND_PROTOTYPES to false in your config/environment.js [deprecation id: deprecate-array-prototype-extensions] This will be removed in ember-source 6.0.0. See https://deprecations.emberjs.com/id/deprecate-array-prototype-extensions for more details.\n        at logDeprecationStackTrace (http://localhost:7357/app/assets/vendor.js:723:308)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at raiseOnDeprecation (http://localhost:7357/app/assets/vendor.js:726:210)\n        at HANDLERS.<computed> (http://localhost:7357/app/assets/vendor.js:678:339)\n        at invoke (http://localhost:7357/app/assets/vendor.js:678:501)\n        at deprecate (http://localhost:7357/app/assets/vendor.js:783:442)\n        at deprecate$1 (http://localhost:7357/app/assets/vendor.js:979:335)\n        at deprecateUntil (http://localhost:7357/app/assets/vendor.js:1658:1677)\n        at http://localhost:7357/app/assets/vendor.js:1658:1789"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:41.7980571Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:42.5182387Z ok 7 Chrome 143.0 - [219 ms] - Exam Partition 2 - Browser Id 3 - Acceptance | mirage test: mirage factories do not hardcode dates
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:42.5184728Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:42.5185282Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:42.5185930Z             {"type":"error","text":"[object Object]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:42.5186551Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.2868274Z ok 8 Chrome 143.0 - [2450 ms] - Exam Partition 2 - Browser Id 6 - Acceptance | index route: it redirects to v2 organizations route
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.2874264Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.2876232Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.2882336Z             {"type":"error","text":"[object Object]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.2886698Z             {"type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.2890961Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3368774Z ok 9 Chrome 143.0 - [2270 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: passes accessibility audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3381576Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3381871Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3382767Z             {"type":"error","text":"[object Object]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3383845Z             {"type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3384686Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3499736Z ok 10 Chrome 143.0 - [2269 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: passes accessibility audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3506987Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3507265Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3507707Z             {"type":"error","text":"[object Object]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3508682Z             {"type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3509534Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3807733Z ok 11 Chrome 143.0 - [2312 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: passes accessibility audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3809105Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3809812Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3810874Z             {"type":"error","text":"[object Object]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3812275Z             {"type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.3813554Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.4770775Z ok 12 Chrome 143.0 - [2417 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: passes accessibility audit for Enterprise
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.4776257Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.4777321Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.4779254Z             {"type":"error","text":"[object Object]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.4780595Z             {"type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:44.4781522Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.2222966Z ok 13 Chrome 143.0 - [856 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: viewing github app 0 state
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.2499701Z ok 14 Chrome 143.0 - [912 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: without update access
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.8397773Z ok 15 Chrome 143.0 - [1360 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: passes accessibility audit for Cloud
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9205801Z not ok 16 Chrome 143.0 - [3478 ms] - Exam Partition 2 - Browser Id 3 - Acceptance | mirage test: mirage defaultScenario loads with constraints
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9207116Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9207376Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9207808Z             TypeError: model.hasInverseFor is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9209179Z                 at Child.set (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:845:28)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9211555Z                 at Child.eval (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:3001:18)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9212754Z                 at Array.forEach (<anonymous>)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9214094Z                 at Child.update (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:2997:24)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9215580Z                 at afterCreate (http://localhost:7357/app/assets/atlas.js:174281:26)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9217029Z                 at Server.create (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:6918:28)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9218428Z                 at afterCreate (http://localhost:7357/app/assets/atlas.js:177851:9)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9220315Z                 at Server.create (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:6918:22)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9221606Z                 at registryScenario (http://localhost:7357/app/assets/atlas.js:205799:15)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9221934Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9222316Z             global failure: TypeError: model.hasInverseFor is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9222757Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9222928Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9223091Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9223645Z             {"type":"info","text":"%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9224243Z             {"type":"log","text":"defaultScenario models with high counts"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9225009Z             {"type":"log","text":"[{\"name\":\"visibilityProviderVersionV2s\",\"len\":41},{\"name\":\"githubAppRepoV2s\",\"len\":39},{\"name\":\"visibilityWorkspaceV2s\",\"len\":34},{\"name\":\"stackDeploymentRuns\",\"len\":31}]"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:45.9225646Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:46.0864483Z ok 17 Chrome 143.0 - [840 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: viewing settings
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:46.5109080Z ok 18 Chrome 143.0 - [674 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: viewing customization read only
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:46.5278029Z ok 19 Chrome 143.0 - [1306 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: transitions to form step
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:47.1162588Z ok 20 Chrome 143.0 - [2773 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: turn on global module sharing
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:47.1593738Z ok 21 Chrome 143.0 - [644 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: viewing customization in cloud environment
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:47.2120515Z ok 22 Chrome 143.0 - [1126 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: form rendering
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:47.7562881Z ok 23 Chrome 143.0 - [599 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: viewing customization
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:48.0189999Z ok 24 Chrome 143.0 - [1492 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: provider form inputs render when toggled
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:48.3386262Z ok 25 Chrome 143.0 - [1118 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: updating settings: changing host, not password
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:49.0502604Z ok 26 Chrome 143.0 - [1301 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: updating customization
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:49.4611400Z ok 27 Chrome 143.0 - [1129 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: updating settings: changing auth method, username, and password
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:49.8498105Z ok 28 Chrome 143.0 - [2734 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: turn on global provider sharing
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:50.2372633Z ok 29 Chrome 143.0 - [2200 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: form post actions succeeds
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:50.2765159Z ok 30 Chrome 143.0 - [1250 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/admin/customization: updating customization: validation error
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:50.6991478Z ok 31 Chrome 143.0 - [1262 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/admin/smtp: updating settings: validation error
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:51.5802390Z ok 32 Chrome 143.0 - [1344 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: form includes required POST method
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:51.6835448Z ok 33 Chrome 143.0 - [1360 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: passes an a11y audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:52.2049901Z ok 34 Chrome 143.0 - [1466 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: happy path
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:52.4715977Z ok 35 Chrome 143.0 - [803 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: displays correct breadcrumbs
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:53.2687170Z ok 36 Chrome 143.0 - [795 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: displays project header
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:53.2904316Z ok 37 Chrome 143.0 - [1724 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: validation errors prevent form post action
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:53.9062915Z ok 38 Chrome 143.0 - [1698 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: update settings on save
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:54.1033540Z ok 39 Chrome 143.0 - [835 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: hides new project button if user does not have create project permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:54.7709290Z ok 40 Chrome 143.0 - [1502 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/admin/vcs-integrations: validation passes allow form post action
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:55.1080885Z ok 41 Chrome 143.0 - [5252 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: add a module partnership
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:55.3841618Z ok 42 Chrome 143.0 - [1478 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: redirect to read view page from edit page on save
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:55.7486692Z ok 43 Chrome 143.0 - [950 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders fetch configuration button when user has permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:56.1040937Z ok 44 Chrome 143.0 - [1996 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: creates a project
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:56.5765344Z ok 45 Chrome 143.0 - [828 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: hides fetch configuration button when user lacks permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:57.2942432Z ok 46 Chrome 143.0 - [1190 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: character count updates on the create project modal
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:57.4145354Z ok 47 Chrome 143.0 - [836 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: redirects to stacks page when stacks are disabled
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:58.2019289Z ok 48 Chrome 143.0 - [778 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders correct breadcrumbs
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:58.2194527Z ok 49 Chrome 143.0 - [3118 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: add a provider partnership
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:58.9695483Z ok 50 Chrome 143.0 - [773 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders no stack description
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:59.0880711Z ok 51 Chrome 143.0 - [3705 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: update priority settings on save
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:01:59.8787391Z ok 52 Chrome 143.0 - [898 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders a short stack description
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3379929Z ok 53 Chrome 143.0 - [3042 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: creates a project with tag bindings
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3381019Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3381272Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3382558Z             {"type":"log","text":"\n[A11Y - VIOLATION] Acceptance | v2/organization/projects/index: creates a project with tag bindings"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3383374Z             {"type":"log","text":"  heading-order: 1 violation(s)"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3384256Z             {"type":"log","text":"\n[A11Y - VIOLATION] Acceptance | v2/organization/projects/index: creates a project with tag bindings"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3385082Z             {"type":"log","text":"  heading-order: 1 violation(s)"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3385966Z             {"type":"log","text":"\n[A11Y - VIOLATION] Acceptance | v2/organization/projects/index: creates a project with tag bindings"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3386885Z             {"type":"log","text":"  heading-order: 1 violation(s)"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:00.3387304Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:01.3445999Z ok 54 Chrome 143.0 - [1475 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders a long stack description
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:01.3732849Z ok 55 Chrome 143.0 - [2249 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: deleting a variable set
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:01.5295437Z ok 56 Chrome 143.0 - [1194 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: displays projects table
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:02.6939206Z ok 57 Chrome 143.0 - [1339 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders list of stack configurations
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:02.7264545Z ok 58 Chrome 143.0 - [1150 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: hides edit project dropdown option if user has no permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:03.4665436Z ok 59 Chrome 143.0 - [2140 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: deleting a project owned variable set
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:03.5017424Z ok 60 Chrome 143.0 - [821 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: hides pagination when one page of configurations exist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:04.1578631Z ok 61 Chrome 143.0 - [1448 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: hides manage teams dropdown option if user has no permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:04.9972276Z ok 62 Chrome 143.0 - [855 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: hides actions dropdown if user has no permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:05.6155965Z ok 63 Chrome 143.0 - [2109 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: pages through list of configurations
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:05.6918031Z ok 64 Chrome 143.0 - [2216 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: adding a variable
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:06.4065788Z ok 65 Chrome 143.0 - [788 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders diagnostics when no diags exist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:07.1504490Z ok 66 Chrome 143.0 - [8933 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: add both a module and a provider partnership
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:07.1519301Z ok 67 Chrome 143.0 - [732 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders failed diagnostics when diags exist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:07.5708891Z ok 68 Chrome 143.0 - [1883 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: add new variable (which fails backend validation) to existing project owned varset
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:07.9320281Z ok 69 Chrome 143.0 - [797 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders alert when configuration failed but no diagnostics exist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:08.8225020Z ok 70 Chrome 143.0 - [887 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders warning diagnostic
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:09.3850979Z ok 71 Chrome 143.0 - [2232 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: unsharing globally shared modules via submit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:09.4233515Z ok 72 Chrome 143.0 - [1849 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: adding a variable with valid key
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:09.5472849Z ok 73 Chrome 143.0 - [725 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: page loads with page query param
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:11.7960773Z ok 74 Chrome 143.0 - [2410 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: unsharing globally shared providers via submit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:11.8595703Z ok 75 Chrome 143.0 - [2430 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: variable category can be changed
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:12.2062205Z ok 76 Chrome 143.0 - [2651 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: renders selected stack configuration in split pane
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:12.9622415Z ok 77 Chrome 143.0 - [761 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: hides runs table when no runs exist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:13.6839924Z ok 78 Chrome 143.0 - [1828 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: variable empty key shows error
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:14.2449522Z ok 79 Chrome 143.0 - [2446 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: unsharing globally shared registry via stop sharing button
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:14.7386310Z ok 80 Chrome 143.0 - [1756 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: searches runs table by deployment name
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:16.5491277Z ok 81 Chrome 143.0 - [2868 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: duplicate variable key shows error
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:16.7159825Z ok 82 Chrome 143.0 - [2470 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: unsharing globally shared registry via stop sharing button with wrong name
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:18.1267280Z ok 83 Chrome 143.0 - [1580 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: prevent navigating away from unsaved varset changes
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:18.4265420Z ok 84 Chrome 143.0 - [1712 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: happy path: rendering with a preset organization
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:19.4708262Z ok 85 Chrome 143.0 - [1343 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: navigating away from unsaved varset changes
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:19.5331209Z ok 86 Chrome 143.0 - [1103 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: cancel redirects to index
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:20.6185110Z ok 87 Chrome 143.0 - [1138 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: shows varset access when non-global varset and has manage varset permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:21.2949232Z ok 88 Chrome 143.0 - [6575 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: filters runs table by status
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:22.2780540Z ok 89 Chrome 143.0 - [1667 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: shows varset access when global varset has manage varset permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:23.1154497Z ok 90 Chrome 143.0 - [3583 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: changing selected organizations
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:24.0022594Z ok 91 Chrome 143.0 - [1724 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: updates varset to global and has manage varset permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:24.2102732Z ok 92 Chrome 143.0 - [2908 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: filters runs table by status when page loads with status query param
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:25.5078081Z ok 93 Chrome 143.0 - [1305 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: clears filter from empty state
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:26.7540905Z ok 94 Chrome 143.0 - [2738 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: updates varset with workspace and has manage varset permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:27.3632714Z ok 95 Chrome 143.0 - [1825 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: clears filters from filter bar
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:28.1286803Z ok 96 Chrome 143.0 - [794 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: loads page with search term
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:28.2157789Z ok 97 Chrome 143.0 - [5093 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: changing module partnerships and coming back to team
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:28.9011911Z ok 98 Chrome 143.0 - [689 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share: redirects if not enterprise
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:29.3688016Z ok 99 Chrome 143.0 - [1233 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: resets page on search
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:29.4981970Z ok 100 Chrome 143.0 - [2754 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: updates varset with project has manage varset permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:30.1602910Z ok 101 Chrome 143.0 - [791 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: hides pagination when one page of runs exist
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:30.8099472Z ok 102 Chrome 143.0 - [1931 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/admin/registry/share > with large org count: renders with large org count
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:32.2356497Z ok 103 Chrome 143.0 - [1402 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/organization/projects/project/workspaces/index: passes an a11y audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:32.3050813Z ok 104 Chrome 143.0 - [2800 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: updates varset with project and workspace has manage varset permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:32.3497193Z ok 105 Chrome 143.0 - [2179 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: pages through list of runs
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:33.5035175Z ok 106 Chrome 143.0 - [1258 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/organization/projects/project/workspaces/index: renders project overview header
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:33.6355150Z ok 107 Chrome 143.0 - [1336 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: persists global attribute
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:34.2421750Z ok 108 Chrome 143.0 - [1906 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: redirects to deployment run page from runs table
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:34.6052723Z ok 109 Chrome 143.0 - [973 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: shows varset access for user with admin permissions
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:35.2929041Z ok 110 Chrome 143.0 - [687 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: shows global-scoped varset read view when feature flag is on
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:35.9951159Z ok 111 Chrome 143.0 - [1757 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: approves all deployment run plans when reason provided
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:36.0084003Z ok 112 Chrome 143.0 - [734 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/projects/project/settings/varsets/edit: shows project and workspace varset read view when feature flag is on
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:37.1613208Z ok 113 Chrome 143.0 - [1130 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/registry/component-configurations/registry-name/name/version/outputs: it passes an accessibility audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:37.7606744Z ok 114 Chrome 143.0 - [1763 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: approves all deployment run plans when no reason provided
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:37.8512178Z ok 115 Chrome 143.0 - [710 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/registry/component-configurations/registry-name/name/version/outputs: component configuration - outputs tab
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:39.6400691Z ok 116 Chrome 143.0 - [1878 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: throws an error when approving all deployment run plans fails
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:42.0641473Z ok 117 Chrome 143.0 - [2423 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: sorts runs table
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:42.8933406Z ok 118 Chrome 143.0 - [823 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index: empty state for configs
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:51.7374317Z ok 119 Chrome 143.0 - [8853 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index > Loading States: shows loading component during initial page load
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:55.7904226Z ok 120 Chrome 143.0 - [4052 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index > Loading States: shows loading component during configuration switching
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:56.4306342Z ok 121 Chrome 143.0 - [659 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/projects/project/stacks/stack/configurations/configuration/index > Loading States: hides loading component during polling
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:57.4083299Z ok 122 Chrome 143.0 - [951 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/modules/registry-name/name/provider/version/example: it passes an accessibility audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:02:58.7498370Z ok 123 Chrome 143.0 - [1339 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/modules/registry-name/name/provider/version/example: shows examples
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:00.4318839Z ok 124 Chrome 143.0 - [1684 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/modules/registry-name/name/provider/version/example: tabs
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:00.9172282Z ok 125 Chrome 143.0 - [505 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/modules/registry-name/name/provider/version/example: 404
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:00.9173006Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:00.9173205Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:00.9177870Z             {"type":"error","text":"Error while processing route: v2.organization.registry.private-library.modules.registry-name.name.provider.version.example Error 404 Error: Error 404\n    at RegistryModulesProviderExampleRoute.model (http://localhost:7357/app/assets/atlas.js:243963:21)\n    at RegistryModulesProviderExampleRoute.deserialize (http://localhost:7357/app/assets/vendor.js:13414:60)\n    at UnresolvedRouteInfoByParam.getModel (http://localhost:7357/app/assets/vendor.js:10896:36)\n    at http://localhost:7357/app/assets/vendor.js:10872:1372\n    at invokeCallback (http://localhost:7357/app/assets/vendor.js:4661:3550)\n    at publish (http://localhost:7357/app/assets/vendor.js:4661:3291)\n    at http://localhost:7357/app/assets/vendor/ember/ember-testing.js:861:1\n    at invoke (http://localhost:7357/app/assets/vendor.js:3555:268)\n    at Queue.flush (http://localhost:7357/app/assets/vendor.js:3550:1)\n    at DeferredActionQueues.flush (http://localhost:7357/app/assets/vendor.js:3569:363)"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:00.9181358Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:01.9208889Z ok 126 Chrome 143.0 - [977 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/private/providers: listing 5 providers
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:03.0692379Z ok 127 Chrome 143.0 - [1123 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/private/providers: visiting individual provider
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:05.9421166Z ok 128 Chrome 143.0 - [2899 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/private/providers: filters providers by name/namespace using the search bar
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.4985882Z ok 129 Chrome 143.0 - [555 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/private/providers: non-owner user with no providers
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6082717Z not ok 130 Chrome 143.0 - [118 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | v2/organization/registry/private/providers: filters providers by registry name using the filter panel
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6083770Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6084033Z         actual: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6084316Z             null
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6084559Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6084946Z             TypeError: model.hasInverseFor is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6086275Z                 at eval (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:2211:21)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6087394Z                 at Array.forEach (<anonymous>)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6088710Z                 at Child.set (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:2210:16)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6091614Z                 at Child.eval (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:3001:18)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6092773Z                 at Array.forEach (<anonymous>)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6094085Z                 at Child.update (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:2997:24)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6095156Z                 at afterCreate (http://localhost:7357/app/assets/atlas.js:178185:32)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6096025Z                 at Server.create (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:6918:22)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6097743Z                 at Server.createList (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:6966:17)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6099201Z                 at Object.<anonymous> (http://localhost:7357/app/assets/atlas/tests/acceptance/v2/organization/registry/private-library/private/providers-test.js:81:1)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6099823Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6100299Z             Promise rejected during "filters providers by registry name using the filter panel": model.hasInverseFor is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6101029Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6101205Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6101371Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.6101532Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:06.9982765Z ok 131 Chrome 143.0 - [348 ms] - Exam Partition 2 - Browser Id 1 - Acceptance | Public Namespaces Show Assets > Modules: a11y audit - publish
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6681696Z not ok 132 Chrome 143.0 - [undefined ms] - Global error: Uncaught Error: Ember Data Request GET /api/v2/organizations/modern-bank-0/github-app-installations/ghain-123450/repos?page[number]=1 returned a 500
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6682684Z Payload (application/json)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6684139Z [object Object] at webpack://__ember_auto_import__/../../node_modules/.pnpm/ember-concurrency@4.0.2_@babel+core@7.28.5_@glimmer+tracking@1.1.2_@glint+template@1.5._be320cbf5aa264c36fa9a4d7f618025a/node_modules/ember-concurrency/dist/-private/ember-environment.js?, line 14
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6685839Z  While executing test: Acceptance | Public Namespaces Show Assets > Modules: navigating to provider publishing
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6686414Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6686609Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6687314Z             {"type":"log","text":"\n[A11Y - VIOLATION] Acceptance | Public Namespaces Show Assets > Modules: navigating to provider publishing"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6688017Z             {"type":"log","text":"  empty-table-header: 1 violation(s)"}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6691596Z             {"type":"error","text":"Uncaught Error: Ember Data Request GET /api/v2/organizations/modern-bank-0/github-app-installations/ghain-123450/repos?page[number]=1 returned a 500\nPayload (application/json)\n[object Object] at webpack://__ember_auto_import__/../../node_modules/.pnpm/ember-concurrency@4.0.2_@babel+core@7.28.5_@glimmer+tracking@1.1.2_@glint+template@1.5._be320cbf5aa264c36fa9a4d7f618025a/node_modules/ember-concurrency/dist/-private/ember-environment.js?, line 14\n","testContext":{"id":55,"name":"Acceptance | Public Namespaces Show Assets > Modules: navigating to provider publishing","items":[],"state":"executing"}}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:03:07.6693479Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5563365Z not ok 133 Chrome 143.0 - [180642 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/registry/modules/registry-name/index: redirects to the module search route for private modules
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5565061Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5565309Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5565700Z             TypeError: Cannot read properties of undefined (reading '0')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5566230Z                 at FunctionRouteHandler.userFunction (http://localhost:7357/app/assets/atlas.js:197532:111)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5566630Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5566973Z             global failure: TypeError: Cannot read properties of undefined (reading '0')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5567293Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5567445Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5567667Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:38.5567889Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4922020Z not ok 134 Chrome 143.0 - [240131 ms] - Exam Partition 2 - Browser Id 6 - Acceptance | v2/organization/aggregated-commit-status: passes accessibility audit
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4922674Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4924185Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4924555Z             TypeError: needsAttention.filter is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4925105Z                 at FunctionRouteHandler.<anonymous> (http://localhost:7357/app/assets/atlas.js:193028:60)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4925490Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4925798Z             global failure: TypeError: needsAttention.filter is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4926100Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4926332Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4927064Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:44.4927293Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1001493Z not ok 135 Chrome 143.0 - [240154 ms] - Exam Partition 2 - Browser Id 3 - Acceptance | v2/organization/modules/name/provider/index: it redirects
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1002188Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1002382Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1002741Z             TypeError: Cannot read properties of undefined (reading '0')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1003409Z                 at FunctionRouteHandler.userFunction (http://localhost:7357/app/assets/atlas.js:197532:111)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1003927Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1004334Z             global failure: TypeError: Cannot read properties of undefined (reading '0')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1004740Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1004940Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1005132Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:05:46.1005338Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1722745Z not ok 136 Chrome 143.0 - [240148 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: redirects to general settings page when edit projects link clicked
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1723709Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1723895Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1724291Z             TypeError: Cannot read properties of undefined (reading 'organizationScoped')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1724802Z                 at http://localhost:7357/app/assets/atlas.js:190508:58
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1725163Z                 at Array.filter (<anonymous>)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1726194Z                 at Collection.filter (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:1751:38)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1727152Z                 at http://localhost:7357/app/assets/atlas.js:190508:44
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1727656Z                 at FunctionRouteHandler.paginate (http://localhost:7357/app/assets/atlas.js:185322:21)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1728060Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1728480Z             global failure: TypeError: Cannot read properties of undefined (reading 'organizationScoped')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1728886Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1729127Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1729424Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:05.1729612Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6602818Z not ok 137 Chrome 143.0 - [240125 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/organization/projects/project/workspaces/index: redirects to project settings page
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6603510Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6604485Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6605126Z             TypeError: Cannot read properties of undefined (reading 'organizationScoped')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6605862Z                 at http://localhost:7357/app/assets/atlas.js:190508:58
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6606370Z                 at Array.filter (<anonymous>)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6607279Z                 at Collection.filter (webpack://__ember_auto_import__/../../node_modules/.pnpm/miragejs@https+++codeload.github.com+deanmarano+miragejs+tar.gz+7a80538/node_modules/miragejs/dist/mirage.cjs?:1751:38)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6608358Z                 at http://localhost:7357/app/assets/atlas.js:190508:44
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6608950Z                 at FunctionRouteHandler.paginate (http://localhost:7357/app/assets/atlas.js:185322:21)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6609331Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6609731Z             global failure: TypeError: Cannot read properties of undefined (reading 'organizationScoped')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6610125Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6610305Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6610732Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:06:33.6611033Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6873031Z not ok 138 Chrome 143.0 - [240126 ms] - Exam Partition 2 - Browser Id 2 - Acceptance | v2/organization/registry/modules/registry-name/index: redirects to the private module list route, filtered for public modules when permissions allow
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6874510Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6875252Z         actual: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6875656Z             null
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6875913Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6876629Z                 at eval (webpack://__ember_auto_import__/../../node_modules/.pnpm/qunit@2.22.0/node_modules/qunit/qunit/qunit.js?:587:449)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6877410Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6877773Z             Test took longer than 60000ms; test timed out.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6878241Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6878504Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6892203Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6894774Z             {"type":"warn","text":"You created a second Pretender instance while there was already one running. Running two Pretender servers at once will lead to unexpected results and will be removed entirely in a future major version.Please call .shutdown() on your instances when you no longer need them to respond."}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:38.6896899Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6067113Z not ok 139 Chrome 143.0 - [240160 ms] - Exam Partition 2 - Browser Id 6 - Acceptance | v2/organization/aggregated-commit-status: can navigate to an organization commit status page
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6067999Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6068324Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6068753Z             TypeError: needsAttention.filter is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6069577Z                 at FunctionRouteHandler.<anonymous> (http://localhost:7357/app/assets/atlas.js:193028:60)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6070100Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6070687Z             global failure: TypeError: needsAttention.filter is not a function
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6071125Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6071289Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6071453Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6072500Z             {"type":"warn","text":"You created a second Pretender instance while there was already one running. Running two Pretender servers at once will lead to unexpected results and will be removed entirely in a future major version.Please call .shutdown() on your instances when you no longer need them to respond."}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:44.6073493Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2338013Z not ok 140 Chrome 143.0 - [240154 ms] - Exam Partition 2 - Browser Id 3 - Acceptance | v2/organization/modules/name/provider/index: old view route properly redirects directly to latest version
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2339261Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2339525Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2340023Z             TypeError: Cannot read properties of undefined (reading '0')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2341796Z                 at FunctionRouteHandler.userFunction (http://localhost:7357/app/assets/atlas.js:197532:111)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2342502Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2343075Z             global failure: TypeError: Cannot read properties of undefined (reading '0')
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2343649Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2343929Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2344201Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2346052Z             {"type":"warn","text":"You created a second Pretender instance while there was already one running. Running two Pretender servers at once will lead to unexpected results and will be removed entirely in a future major version.Please call .shutdown() on your instances when you no longer need them to respond."}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:09:46.2347793Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3233411Z not ok 141 Chrome 143.0 - [240146 ms] - Exam Partition 2 - Browser Id 4 - Acceptance | v2/organization/projects/index: redirects to teams page when manage teams link clicked
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3234346Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3234582Z         actual: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3234832Z             null
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3235059Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3235774Z                 at eval (webpack://__ember_auto_import__/../../node_modules/.pnpm/qunit@2.22.0/node_modules/qunit/qunit/qunit.js?:587:449)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3236443Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3236783Z             Test took longer than 60000ms; test timed out.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3237606Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3237865Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3238097Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3239739Z             {"type":"warn","text":"You created a second Pretender instance while there was already one running. Running two Pretender servers at once will lead to unexpected results and will be removed entirely in a future major version.Please call .shutdown() on your instances when you no longer need them to respond."}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:05.3241585Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7830273Z not ok 142 Chrome 143.0 - [240140 ms] - Exam Partition 2 - Browser Id 5 - Acceptance | v2/organization/projects/project/workspaces/index: redirects to create a new stacks page
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7831290Z     ---
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7831455Z         actual: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7831624Z             null
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7831785Z         stack: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7832283Z                 at eval (webpack://__ember_auto_import__/../../node_modules/.pnpm/qunit@2.22.0/node_modules/qunit/qunit/qunit.js?:587:449)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7832707Z         message: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7832949Z             Test took longer than 60000ms; test timed out.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7833185Z         negative: >
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7833347Z             false
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7833509Z         browser log: |
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7834546Z             {"type":"warn","text":"You created a second Pretender instance while there was already one running. Running two Pretender servers at once will lead to unexpected results and will be removed entirely in a future major version.Please call .shutdown() on your instances when you no longer need them to respond."}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:10:33.7835490Z     ...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0099605Z ##[error]The action 'Run Ember Tests' has timed out after 10 minutes.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0145053Z ##[group]Run datadog-ci junit upload --service "$GITHUB_REPOSITORY" frontend/atlas/test-results/report.xml
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0145707Z [36;1mdatadog-ci junit upload --service "$GITHUB_REPOSITORY" frontend/atlas/test-results/report.xml[0m
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0172908Z shell: /usr/bin/bash -e {0}
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0173117Z env:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0173332Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0173599Z   PARALLEL_COUNT: 6
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0174061Z   DATADOG_API_KEY: ***
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0174243Z   DD_ENV: ci
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:48.0174396Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.2934646Z Starting upload with concurrency 20. 
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.2935402Z Will upload jUnit XML file frontend/atlas/test-results/report.xml
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.2936301Z service: hashicorp/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.3434698Z ❌ Invalid jUnitXML file [frontend/atlas/test-results/report.xml]: Start tag expected.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.3436463Z ✅ Uploaded 0 files in 0 seconds.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.4159869Z Syncing git metadata...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8731623Z ✅ Synced git metadata in 0.457 seconds.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8733113Z =================================================================================================
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8734051Z * View detailed reports on Datadog (they can take a few minutes to become available)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8734554Z * Commit report:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8735653Z * https://app.datadoghq.com/ci/redirect/tests/https%3A%2F%2Fgithub.com%2Fhashicorp%2Fatlas.git/-/hashicorp%2Fatlas/-/deanmarano%2Fmirage-exploration/-/161a2b5672724975f8ea9590f5a7a5881639f88c?env=ci
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8736524Z * Test runs report:
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8737422Z * https://app.datadoghq.com/ci/test-runs?query=%20%40ci.job.url%3A%22https%3A%2F%2Fgithub.com%2Fhashicorp%2Fatlas%2Fcommit%2F161a2b5672724975f8ea9590f5a7a5881639f88c%2Fchecks%22
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.8738310Z =================================================================================================
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.9006332Z Post job cleanup.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.9032071Z Post job cleanup.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:54.9575957Z ##[group]Running pnpm store prune...
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:55.3356363Z Removed all cached metadata files
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:56.8890580Z Removed 4696 files
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.0949463Z Removed 5 packages
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.1951727Z ##[endgroup]
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.2023188Z Post job cleanup.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.2574188Z Pruning is unnecessary.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.2677803Z Post job cleanup.
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3613261Z [command]/usr/bin/git version
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3654603Z git version 2.51.2
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3689287Z Copying '/home/runner/.gitconfig' to '/home/runner/actions-runner/_work/_temp/05a598ab-c67a-42ce-b074-33266a9b8b7c/.gitconfig'
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3699305Z Temporarily overriding HOME='/home/runner/actions-runner/_work/_temp/05a598ab-c67a-42ce-b074-33266a9b8b7c' before making global git config changes
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3700280Z Adding repository directory to the temporary git global config as a safe directory
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3714049Z [command]/usr/bin/git config --global --add safe.directory /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3754770Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.3793041Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.4118558Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.4145613Z http.https://github.com/.extraheader
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.4158287Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.4196514Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.4617514Z Cleaning up orphan processes
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6795083Z Terminate orphan process: pid (3226) (ember)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6846694Z Terminate orphan process: pid (3272) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6869518Z Terminate orphan process: pid (3277) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6891896Z Terminate orphan process: pid (3280) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6914151Z Terminate orphan process: pid (3288) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6948123Z Terminate orphan process: pid (3289) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6970269Z Terminate orphan process: pid (3292) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.6992411Z Terminate orphan process: pid (3295) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7015147Z Terminate orphan process: pid (3297) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7053521Z Terminate orphan process: pid (3299) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7083373Z Terminate orphan process: pid (3303) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7106628Z Terminate orphan process: pid (3307) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7128546Z Terminate orphan process: pid (3308) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7159507Z Terminate orphan process: pid (3312) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7188548Z Terminate orphan process: pid (3315) (chrome_crashpad_handler)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7211391Z Terminate orphan process: pid (3320) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7244170Z Terminate orphan process: pid (3324) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7266376Z Terminate orphan process: pid (3325) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7298252Z Terminate orphan process: pid (3326) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7327795Z Terminate orphan process: pid (3390) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7353060Z Terminate orphan process: pid (3412) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7388655Z Terminate orphan process: pid (3413) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7422546Z Terminate orphan process: pid (3455) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7467605Z Terminate orphan process: pid (3456) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7514634Z Terminate orphan process: pid (3557) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7561832Z Terminate orphan process: pid (3558) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7612447Z Terminate orphan process: pid (3599) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7667875Z Terminate orphan process: pid (3622) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7706569Z Terminate orphan process: pid (3631) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7750129Z Terminate orphan process: pid (3734) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7791273Z Terminate orphan process: pid (3751) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7832000Z Terminate orphan process: pid (3752) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7884476Z Terminate orphan process: pid (3759) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7909850Z Terminate orphan process: pid (3761) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.7945874Z Terminate orphan process: pid (4284) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.8021217Z Terminate orphan process: pid (4434) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.8168334Z Terminate orphan process: pid (5499) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.8242475Z Terminate orphan process: pid (5884) (chrome)
+ember-tests / ember-tests (1)	UNKNOWN STEP	2025-12-17T21:11:57.8284806Z Terminate orphan process: pid (5981) (chrome)

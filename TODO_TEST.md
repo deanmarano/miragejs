@@ -33,7 +33,7 @@
 
 #### 5. Factory afterCreate async/await handling (Commit: 84953f5)
 - **TEST ONLY**: Added test demonstrating that afterCreate without await causes null relationships
-- **CODEMOD ALREADY WORKS**: The async-migration.js codemod correctly transforms afterCreate
+- **CODEMOD ALREADY WORKS**: The async-migration.cjs codemod correctly transforms afterCreate
 - Issue: Atlas factories haven't been transformed by the codemod yet
 - Root cause of timeouts: afterCreate creates models without await, relationships stay null
 - Test shows bug (null target) and fix (proper async/await)

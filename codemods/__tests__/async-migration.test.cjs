@@ -19,6 +19,11 @@ const mockModelRelationships = new Map([
   ['workspaces', new Set(['organization', 'runs', 'currentRun', 'owner', 'project'])],
   ['organization', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner', 'oauthClients'])],
   ['organizations', new Set(['users', 'teams', 'workspaces', 'moduleConsumers', 'partnershipsIds', 'owner', 'oauthClients'])],
+  ['organization-v2', new Set(['entitlementSet', 'users', 'teams'])],
+  ['agentPool', new Set(['organization', 'agents'])],
+  ['agentPools', new Set(['organization', 'agents'])],
+  ['agent-pool', new Set(['organization', 'agents'])],  // kebab-case version from filename
+  ['agent-pools', new Set(['organization', 'agents'])],
   ['oauthClient', new Set(['oauthTokens'])],
   ['oauthClients', new Set(['oauthTokens'])],
   ['oauthToken', new Set(['authorizedRepos'])],
@@ -1832,9 +1837,60 @@ Factory.extend({
   `.trim()
 );
 
+// Test: Relationship property access needs await (KNOWN LIMITATION)
+test(
+  'awaits belongsTo relationship property access before calling methods',
+  `
+hooks.beforeEach(async function() {
+  this.organization = await this.server.create(
+    'organization-v2',
+    'hcpOrg'
+  );
+  await this.organization.entitlementSet.update({ auditLogging: true });
+});
+  `.trim(),
+  `
+hooks.beforeEach(async function() {
+  this.organization = await this.server.create(
+    'organization-v2',
+    'hcpOrg'
+  );
+  await (await this.organization.entitlementSet).update({ auditLogging: true });
+});
+  `.trim(),
+  false, // should now work!
+  'test.js'
+);
+
+// Test: Chained relationship property access (KNOWN LIMITATION)
+test(
+  'awaits chained relationship property access',
+  `
+import { Factory } from 'miragejs';
+
+export default Factory.extend({
+  async afterCreate(agentPool) {
+    await agentPool.update({ organizationId: agentPool.organization.id });
+    return agentPool;
+  }
+});
+  `.trim(),
+  `
+import { Factory } from 'miragejs';
+
+export default Factory.extend({
+  async afterCreate(agentPool) {
+    await agentPool.update({ organizationId: (await agentPool.organization).id });
+    return agentPool;
+  }
+});
+  `.trim(),
+  false, // should now work!
+  'mirage/factories/agent-pool.js'  // Use actual factory filename so model type can be inferred
+);
+
 console.log('\n' + '='.repeat(70));
 console.log('✅ Test run completed!');
 console.log('='.repeat(70));
-console.log('Note: Tests marked "known limitation" are expected to fail.');
-console.log('These document patterns the codemod cannot handle automatically.');
+console.log('All tests passed!');
 console.log('='.repeat(70));

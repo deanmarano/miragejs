@@ -23,19 +23,19 @@ yarn global add jscodeshift
 ### Run the codemod
 
 ```bash
-npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js path/to/your/code
+npx jscodeshift -t node_modules/miragejs/codemods/async-migration.cjs path/to/your/code
 ```
 
 ### Dry run (preview changes without modifying files)
 
 ```bash
-npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js --dry --print path/to/your/code
+npx jscodeshift -t node_modules/miragejs/codemods/async-migration.cjs --dry --print path/to/your/code
 ```
 
 ### Run on specific files
 
 ```bash
-npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js src/server.js
+npx jscodeshift -t node_modules/miragejs/codemods/async-migration.cjs src/server.js
 ```
 
 ### Run on a directory
@@ -49,7 +49,7 @@ npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js src/
 If your route handlers are imported from separate files (e.g., `app/mirage/routes/`), run the codemod on your entire mirage directory:
 
 ```bash
-npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js app/mirage/
+npx jscodeshift -t node_modules/miragejs/codemods/async-migration.cjs app/mirage/
 ```
 
 This will process both your config file and all imported handler files.
@@ -232,7 +232,7 @@ In these cases, you'll need to add `await` manually.
 ### Custom extensions
 
 You can modify the codemod to fit your specific needs. The file is located at:
-`node_modules/miragejs/codemods/async-migration.js`
+`node_modules/miragejs/codemods/async-migration.cjs`
 
 ### Options
 

@@ -3025,6 +3025,12 @@ class Model {
    */
   save() {
     var collection = this._schema.toInternalCollectionName(this.modelName);
+    var isAsync = this._schema._isAsync;
+    if (isAsync) {
+      return this._saveAsync(collection);
+    }
+
+    // Sync mode (original behavior)
     if (this.isNew()) {
       // Update the attrs with the db response
       this.attrs = this._schema.db[collection].insert(this.attrs);
@@ -3038,6 +3044,24 @@ class Model {
     this._saveAssociations();
     this._schema.isSaving[this.toString()] = false;
     return this;
+  }
+  _saveAsync(collection) {
+    var _this = this;
+    return _asyncToGenerator(function* () {
+      if (_this.isNew()) {
+        // Update the attrs with the db response
+        _this.attrs = yield _this._schema.db[collection].insert(_this.attrs);
+
+        // Ensure the id getter/setter is set
+        _this._definePlainAttribute("id");
+      } else {
+        _this._schema.isSaving[_this.toString()] = true;
+        yield _this._schema.db[collection].update(_this.attrs.id, _this.attrs);
+      }
+      _this._saveAssociations();
+      _this._schema.isSaving[_this.toString()] = false;
+      return _this;
+    })();
   }
 
   /**
@@ -3061,7 +3085,7 @@ class Model {
     @public
    */
   update(key, val) {
-    var _this = this;
+    var _this2 = this;
     var attrs;
     if (key == null) {
       return this;
@@ -3091,9 +3115,9 @@ class Model {
             this._definePlainAttribute(attr);
           }
           this[attr] = resolvedAttrs[attr];
-        }, _this);
-        _this.save();
-        return _this;
+        }, _this2);
+        _this2.save();
+        return _this2;
       })();
     }
     Object.keys(attrs).forEach(function (attr) {
@@ -7064,7 +7088,7 @@ class Server {
       var modelOrRecord;
       if (_this4.schema && _this4.schema[_this4.schema.toCollectionName(type)]) {
         var modelClass = _this4.schema[_this4.schema.toCollectionName(type)];
-        modelOrRecord = modelClass.create(attrs);
+        modelOrRecord = yield modelClass.create(attrs);
       } else {
         var collection, collectionName;
         if (collectionFromCreateList) {
@@ -7074,7 +7098,7 @@ class Server {
           collection = _this4.db[collectionName];
         }
         assert(collection, "You called server.create('".concat(type, "') but no model or factory was found."));
-        modelOrRecord = collection.insert(attrs);
+        modelOrRecord = yield collection.insert(attrs);
       }
       var OriginalFactory = _this4.factoryFor(type);
       if (OriginalFactory) {

@@ -39,7 +39,7 @@ npm install -g jscodeshift
 ### 2. Run the codemod
 
 ```bash
-npx jscodeshift -t node_modules/miragejs/codemods/async-migration.js src/
+npx jscodeshift -t node_modules/miragejs/codemods/async-migration.cjs src/
 ```
 
 ### 3. Review and test

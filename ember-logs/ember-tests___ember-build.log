@@ -1,0 +1,493 @@
+ember-tests / ember-build	UNKNOWN STEP	﻿2025-12-17T20:56:21.4057421Z Current runner version: '2.329.0'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4064644Z Runner name: 'ubuntu-x64-m6a.2xlarge-i-048de83baf061097b'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4065531Z Runner group name: 'general'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4066414Z Machine name: 'ip-10-0-0-143'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4093376Z ##[group]Operating System
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4094070Z Ubuntu 22.04.5 LTS
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4094538Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4095119Z ##[group]Virtual Environment
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4095801Z Image Version: ubuntu-22.04-x86_64-183eb40-19266864384
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4096827Z Image Release Notes: https://github.com/hashicorp/crt-github-runners/releases/tag/ubuntu-22.04-x86_64-183eb40-19266864384
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4098015Z Hardware Specs: https://go.hashi.co/github-runner-images
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4098520Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4099033Z A list of preinstalled software can be found in the image release notes
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4099789Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4100653Z ##[group]HashiCorp Self-Hosted Runner Support
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4101617Z                                                                                 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4102519Z    ██╗  ██╗ █████╗ ███████╗██╗  ██╗██╗ ██████╗ ██████╗ ██████╗ ██████╗ 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4103159Z    ██║  ██║██╔══██╗██╔════╝██║  ██║██║██╔════╝██╔═══██╗██╔══██╗██╔══██╗
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4103876Z    ███████║███████║███████╗███████║██║██║     ██║   ██║██████╔╝██████╔╝
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4104489Z    ██╔══██║██╔══██║╚════██║██╔══██║██║██║     ██║   ██║██╔══██╗██╔═══╝ 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4105159Z    ██║  ██║██║  ██║███████║██║  ██║██║╚██████╗╚██████╔╝██║  ██║██║     
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4106366Z    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                                                                                                                                                                                     
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4107389Z                       Self-hosted GitHub Runners
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4107784Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4108233Z Greetings, Hashicorporeal! The Self-hosted GitHub Actions runner you
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4109093Z are using is maintained by the Engineering Systems team. If you have
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4110103Z questions, encounter issues, or would like to submit a feature request,
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4110987Z please reach out via the #tech-github-runners channel, or email us at
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4112460Z team-productivity-systems-and-services@hashicorp.com
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4113245Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4113711Z You can find more information about the runners at:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4114700Z https://go.hashi.co/github-runners
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4115262Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4115839Z You can find more information about the private vault environment at:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4117037Z https://go.hashi.co/vault-wiki
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4117468Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4117833Z For questions about the Common Release Tooling (CRT) project and any
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4119149Z product release or packaging-related systems, please reach out to the
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4120621Z Release Engineering team at #team-rel-eng
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4121238Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4121646Z More information about the CRT project as a whole can be found at:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4122600Z https://go.hashi.co/crt-meta-rfc
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4123063Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4123385Z General questions about GitHub Actions can be asked in the
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4124071Z #tech-github-actions slack channel
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4124563Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4125075Z ##[group]Debugging
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4125588Z Account: 941909249676
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4126062Z Region: us-west-2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4192306Z Instance ID: i-048de83baf061097b
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4192865Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4193812Z Doormat may be used to connect to this instance with the following command (exclude --exact-match if using doormat <4.4.0):
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4196415Z doormat session --account 941909249676 --region us-west-2 --target i-048de83baf061097b --exact-match
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4197423Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4197774Z Requirements and additional information on this arrangement and related
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4198576Z security controls is available at: https://go.hashi.co/runner-debug
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4199233Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4199589Z ##[group]Stats
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4200018Z Account: 941909249676
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4200415Z Region: us-west-2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4200796Z Instance ID: i-048de83baf061097b
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4201084Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4201467Z The standard linux runner image includes binaries for node exporter, prometheus, and
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4202727Z grafana along with a basic configuration. If you include the label 'stats' in an ondemand
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4203645Z runner request, these binaries will be started as the runner user during startup.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4204152Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4204330Z [self-hosted, ondemand, stats]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4204602Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4204607Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4204982Z You can connect to these services locally in ci or use doormat port forwarding by
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4205658Z including the doormat label.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4205927Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4206231Z [self-hosted, ondemand, stats, doormat=user_or_group@hashicorp.com]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4206668Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4206673Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4207077Z Enter the following to port forward for grafana, then navigate to http://localhost:3000
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4207626Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4208123Z doormat session --account 941909249676 --region us-west-2 --target i-048de83baf061097b --port-forward 3000:3000
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4208764Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4208768Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4208980Z You can also run the binaries with your own config
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4209338Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4209652Z /home/runner/bin/prometheus --config.file=./your_prometheus.yml &
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4210103Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4210552Z /home/runner/bin/grafana server --homepath=/home/runner/grafana --config=./your_grafana.ini &
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4211129Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4211134Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4211417Z Render an image using included grafana-image-renderer plugin
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4212205Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4212946Z curl "http://localhost:3000/render/d/rYdddlPWk/node-exporter-full?orgId=1&panelId=77&from=now-5m&to=now&width=1024&height=768" > ./example.png
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4213784Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4213788Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4214058Z Upload rendered image as artifact in a github actions job
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4214475Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4214665Z       - uses: actions/upload-artifact@v4
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4215125Z         with:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4215455Z           name: example
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4215845Z           path: ./example.png
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4216101Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4216106Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4216365Z More about runner metrics https://go.hashi.co/runner-metrics
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4216771Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4217011Z More about ondemand runners https://go.hashi.co/ondemand
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4217530Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4220081Z ##[group]GITHUB_TOKEN Permissions
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4223392Z Actions: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4223793Z ArtifactMetadata: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4224186Z Attestations: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4224547Z Checks: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4224881Z Contents: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4225219Z Deployments: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4225562Z Discussions: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4225903Z Issues: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4226241Z Metadata: read
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4226585Z Models: read
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4226908Z Packages: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4227252Z Pages: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4227581Z PullRequests: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4227957Z RepositoryProjects: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4228360Z SecurityEvents: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4228730Z Statuses: write
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4229064Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4231171Z Secret source: Actions
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4232722Z Prepare workflow directory
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4558251Z Prepare all required actions
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.4594920Z Getting action download info
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:21.8566105Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:22.5520319Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.0145601Z Uses: hashicorp/atlas/.github/workflows/ember-tests.yml@refs/heads/deanmarano/mirage-exploration (161a2b5672724975f8ea9590f5a7a5881639f88c)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.0150145Z ##[group] Inputs
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.0150994Z   run-ember-tests: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.0151425Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.0151999Z Complete job name: ember-tests / ember-build
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1215390Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1216413Z with:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1216801Z   repository: hashicorp/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1217476Z   token: ***
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1217815Z   ssh-strict: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1218171Z   ssh-user: git
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1218522Z   persist-credentials: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1218933Z   clean: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1219319Z   sparse-checkout-cone-mode: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1219760Z   fetch-depth: 1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1220110Z   fetch-tags: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1220458Z   show-progress: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1220817Z   lfs: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1221136Z   submodules: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1221500Z   set-safe-directory: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:23.1222364Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.7609814Z Syncing repository: hashicorp/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.7611187Z ##[group]Getting Git version info
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.7612024Z Working directory is '/home/runner/actions-runner/_work/atlas/atlas'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.7612658Z [command]/usr/bin/git version
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8043714Z git version 2.51.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8098524Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8104355Z Temporarily overriding HOME='/home/runner/actions-runner/_work/_temp/190c7b0b-8ad8-41a0-a517-7635c6d6b595' before making global git config changes
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8105202Z Adding repository directory to the temporary git global config as a safe directory
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8105902Z [command]/usr/bin/git config --global --add safe.directory /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8142659Z Deleting the contents of '/home/runner/actions-runner/_work/atlas/atlas'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8146554Z ##[group]Initializing the repository
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8151844Z [command]/usr/bin/git init /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8968109Z hint: Using 'master' as the name for the initial branch. This default branch name
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8968976Z hint: is subject to change. To configure the initial branch name to use in all
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8969587Z hint: of your new repositories, which will suppress this warning, call:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8970056Z hint:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8970459Z hint: 	git config --global init.defaultBranch <name>
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8970841Z hint:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8971202Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8972574Z hint: 'development'. The just-created branch can be renamed via this command:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8973046Z hint:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8973330Z hint: 	git branch -m <name>
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8973618Z hint:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8974025Z hint: Disable this message with "git config set advice.defaultBranchName false"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8974732Z Initialized empty Git repository in /home/runner/actions-runner/_work/atlas/atlas/.git/
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.8983632Z [command]/usr/bin/git remote add origin https://github.com/hashicorp/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9030465Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9030949Z ##[group]Disabling automatic garbage collection
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9035948Z [command]/usr/bin/git config --local gc.auto 0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9072799Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9073820Z ##[group]Setting up auth
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9080603Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:24.9117756Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:25.2963571Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:25.3002785Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:25.3285087Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:25.3325484Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:25.3326078Z ##[group]Fetching the repository
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:25.3336006Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +161a2b5672724975f8ea9590f5a7a5881639f88c:refs/remotes/origin/deanmarano/mirage-exploration
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0872632Z From https://github.com/hashicorp/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0873483Z  * [new ref]         161a2b5672724975f8ea9590f5a7a5881639f88c -> origin/deanmarano/mirage-exploration
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0923392Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0923726Z ##[group]Determining the checkout info
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0926521Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0934414Z [command]/usr/bin/git sparse-checkout disable
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.0989938Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.1022045Z ##[group]Checking out the ref
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:29.1028307Z [command]/usr/bin/git checkout --progress --force -B deanmarano/mirage-exploration refs/remotes/origin/deanmarano/mirage-exploration
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0093712Z Switched to a new branch 'deanmarano/mirage-exploration'
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0094511Z branch 'deanmarano/mirage-exploration' set up to track 'origin/deanmarano/mirage-exploration'.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0120479Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0166701Z [command]/usr/bin/git log -1 --format=%H
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0194837Z 161a2b5672724975f8ea9590f5a7a5881639f88c
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0420954Z Prepare all required actions
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.0421380Z Getting action download info
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.2441265Z Download action repository 'pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda' (SHA:a7487c7e89a18df4991f7f222e4898a00d66ddda)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.4852327Z Download action repository 'actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e' (SHA:cdca7365b2dadb8aad0a33bc7601856ffabcc48e)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7459812Z ##[group]Run ./.github/actions/setup-pnpm
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7460071Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7557680Z ##[group]Run pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7558012Z with:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7558173Z   dest: ~/setup-pnpm
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7558376Z   run_install: null
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7558607Z   package_json_file: package.json
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7558807Z   standalone: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.7558976Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:30.8099964Z ##[group]Running self-installer...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.3653421Z Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.3737084Z Packages: +1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.3737556Z +
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.7618168Z Progress: resolved 1, reused 0, downloaded 1, added 1, done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.7948597Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.7949138Z dependencies:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.7949436Z + pnpm 10.20.0 (10.26.0 is available)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.7949640Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8010442Z Done in 824ms
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8200300Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8203606Z Installation Completed!
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8333813Z ##[group]Run actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8334121Z with:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8334278Z   node-version-file: .nvmrc
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8334664Z   cache: pnpm
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8334852Z   cache-dependency-path: pnpm-lock.yaml
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8335085Z   always-auth: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8335260Z   check-latest: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8335601Z   token: ***
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8335755Z env:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8335955Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:31.8336217Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:32.0004619Z Node version file is not JSON file
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:32.0005832Z Resolved .nvmrc as 20.19.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:32.0015354Z Attempting to download 20.19.0...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:32.5747951Z Acquiring 20.19.0 - x64 from https://github.com/actions/node-versions/releases/download/20.19.0-13838090974/node-20.19.0-linux-x64.tar.gz
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:33.1100480Z Extracting ...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:33.1202386Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/actions-runner/_work/_temp/d76b0846-d8f8-4889-9f48-926d20d25417 -f /home/runner/actions-runner/_work/_temp/7f71699d-49a4-4464-a410-87327490252a
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:34.0455739Z Adding to the cache ...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:35.9296443Z ##[group]Environment details
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:36.6230904Z node: v20.19.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:36.6231190Z npm: 10.8.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:36.6231429Z yarn: 1.22.22
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:36.6232510Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:36.6253793Z [command]/home/runner/setup-pnpm/node_modules/.bin/pnpm store path --silent
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:36.9730830Z /home/runner/setup-pnpm/node_modules/.bin/store/v10
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3206692Z pnpm cache is not found
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3351435Z ##[group]Run pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3351961Z with:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3352135Z   run_install: true
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3352299Z   dest: ~/setup-pnpm
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3352484Z   package_json_file: package.json
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3352687Z   standalone: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3352836Z env:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3353028Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3353294Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.3899127Z ##[group]Running self-installer...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.8314156Z Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.8399818Z Packages: +1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:37.8400478Z +
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3190148Z Progress: resolved 1, reused 0, downloaded 1, added 1, done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3489643Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3490233Z dependencies:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3490809Z + pnpm 10.20.0 (10.26.0 is available)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3491132Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3555358Z Done in 767ms
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3735393Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3738777Z Installation Completed!
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.3749201Z ##[group]Running pnpm recursive install...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.7560236Z Scope: all 5 workspace projects
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.8510651Z Lockfile is up to date, resolution step is skipped
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:38.9620093Z Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:39.1623054Z .                                        |    +2110 ++++++++++++++++++++++++++++
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:39.9646204Z Progress: resolved 2110, reused 0, downloaded 159, added 159
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:40.9652647Z Progress: resolved 2110, reused 0, downloaded 538, added 532
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:41.9647798Z Progress: resolved 2110, reused 0, downloaded 928, added 931
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:42.9673326Z Progress: resolved 2110, reused 0, downloaded 1266, added 1281
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:43.9673309Z Progress: resolved 2110, reused 0, downloaded 1472, added 1468
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:44.9684204Z Progress: resolved 2110, reused 0, downloaded 1612, added 1628
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:45.7765243Z Packages are hard linked from the content-addressable store to the virtual store.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:45.7766353Z   Content-addressable store is at: /home/runner/setup-pnpm/node_modules/.bin/store/v10
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:45.7767117Z   Virtual store is at:             node_modules/.pnpm
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:45.8472603Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install$ pnpm install
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:45.9681147Z Progress: resolved 2110, reused 0, downloaded 1770, added 1787
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:46.9685859Z Progress: resolved 2110, reused 0, downloaded 1947, added 1964
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:47.9691974Z Progress: resolved 2110, reused 0, downloaded 2092, added 2109
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:48.2312904Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Lockfile is up to date, resolution step is skipped
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:48.2871387Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Progress: resolved 1, reused 0, downloaded 0, added 0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:48.4014639Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Packages: +750
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:48.4016667Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:49.2876969Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Progress: resolved 750, reused 0, downloaded 249, added 245
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:50.2892229Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Progress: resolved 750, reused 0, downloaded 683, added 679
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:50.7329481Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Progress: resolved 750, reused 0, downloaded 750, added 750, done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.5106537Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: .../core-js@3.47.0/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.5473407Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: .../core-js@3.47.0/node_modules/core-js postinstall: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8231174Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: dependencies:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8232225Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @miragejs/pretender-node-polyfill 0.1.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8232975Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + inflected 2.1.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8234786Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + lodash 4.17.21
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8236447Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + pretender 3.4.7
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8237582Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: devDependencies:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8238485Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @babel/core 7.28.5
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8239956Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @babel/eslint-parser 7.28.5
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8240923Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @babel/preset-env 7.28.5
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8242075Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @rollup/plugin-alias 5.1.1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8243210Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @rollup/plugin-babel 6.1.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8244209Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @rollup/plugin-commonjs 26.0.1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8245274Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + @rollup/plugin-node-resolve 15.3.1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8246370Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + babel-jest 29.7.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8247324Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + core-js 3.47.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8248182Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint 8.57.1
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8249451Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-config-prettier 9.1.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8250616Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-import-resolver-alias 1.1.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8251931Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-import-resolver-node 0.3.9
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8253434Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-plugin-import 2.32.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8254525Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-plugin-jest 28.14.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8311119Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-plugin-node 11.1.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8312525Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + eslint-plugin-prettier 5.5.4
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8313558Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + jest 29.7.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8314208Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + jest-environment-jsdom 29.7.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8314787Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + jest-extended 4.0.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8315320Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + jest-fixed-jsdom 0.0.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8315829Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + jscodeshift 17.3.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8316311Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + npm-run-all 4.1.5
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8316780Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + prettier 3.3.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8317280Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + rimraf 5.0.10
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8317748Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + rollup 4.53.3
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8318194Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + tsd 0.32.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8318668Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: + typescript 5.9.3
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8395989Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: > miragejs@0.2.0-alpha.3 prepare /home/runner/setup-pnpm/node_modules/.bin/store/v10/tmp/_tmp_2959_75b2a3dd8549a2c13aaa04fcc3a4deb2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:51.8397130Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: > pnpm run build
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:52.5828253Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: > miragejs@0.2.0-alpha.3 build /home/runner/setup-pnpm/node_modules/.bin/store/v10/tmp/_tmp_2959_75b2a3dd8549a2c13aaa04fcc3a4deb2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:52.5829950Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: > rimraf dist && rollup -c
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:52.9200410Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [36m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:52.9206635Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1mlib/index.js[22m → [1mdist/mirage.mjs[22m...[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.1420541Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1m[33m(!) Unused external imports[39m[22m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.1422019Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: default imported from external module "lodash/mapValues.js" but never used in "lib/factory.js".
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.1423616Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [32mcreated [1mdist/mirage.mjs[22m in [1m1.2s[22m[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.1424436Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [36m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.1425285Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1mlib/index.js[22m → [1mdist/mirage.cjs[22m...[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6725033Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1m[33m(!) Unused external imports[39m[22m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6726468Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: default imported from external module "lodash/mapValues.js" but never used in "lib/factory.js".
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6727851Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1m[33m(!) Mixing named and default exports[39m[22m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6729270Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [90mhttps://rollupjs.org/configuration-options/#output-exports[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6730624Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1mThe following entry modules are using named and default exports together:[22m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6731386Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: lib/index.js
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6732988Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Consumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use `output.exports: "named"` to disable this warning.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6734253Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [32mcreated [1mdist/mirage.cjs[22m in [1m531ms[22m[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6734860Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [36m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:54.6735872Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1mlib/index.js[22m → [1mdist/mirage-umd.cjs[22m...[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.5441322Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1m[33m(!) Mixing named and default exports[39m[22m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.5444695Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [90mhttps://rollupjs.org/configuration-options/#output-exports[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.5446369Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [1mThe following entry modules are using named and default exports together:[22m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.5447606Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: lib/index.js
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.5450168Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Consumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use `output.exports: "named"` to disable this warning.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.5452498Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: [32mcreated [1mdist/mirage-umd.cjs[22m in [1m2.8s[22m[39m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.6343767Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Done in 9.8s
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:57.6971371Z ...2959_75b2a3dd8549a2c13aaa04fcc3a4deb2 pnpm-install: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.1787945Z Progress: resolved 2110, reused 0, downloaded 2093, added 2109
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.1816140Z Progress: resolved 2110, reused 0, downloaded 2093, added 2110, done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.8579531Z .../core-js@3.38.1/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.8589565Z .../node_modules/protobufjs postinstall$ node scripts/postinstall
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.8598250Z .../core-js@2.6.12/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.9143153Z .../core-js@3.38.1/node_modules/core-js postinstall: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.9175387Z .../node_modules/@parcel/watcher install$ node scripts/build-from-source.js
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.9179340Z .../@playwright/browser-chromium install$ node install.js
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.9562529Z .../node_modules/protobufjs postinstall: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.9589856Z .../core-js@2.6.12/node_modules/core-js postinstall: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:58.9636390Z .../node_modules/@parcel/watcher install: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.2021592Z .../@playwright/browser-chromium install: Downloading Chromium 141.0.7390.37 (playwright build v1194) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1194/chromium-linux.zip
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.4039556Z .../@playwright/browser-chromium install: |                                                                                |   0% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.5496419Z .../@playwright/browser-chromium install: |■■■■■■■■                                                                        |  10% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.6337892Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■                                                                |  20% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.7010960Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.7628325Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.8291575Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:56:59.8953145Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:00.0001533Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:00.0783236Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:00.1503972Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:00.2121567Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 173.9 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:03.8566881Z .../@playwright/browser-chromium install: Chromium 141.0.7390.37 (playwright build v1194) downloaded to /home/runner/.cache/ms-playwright/chromium-1194
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:03.8575703Z .../@playwright/browser-chromium install: Downloading Chromium Headless Shell 141.0.7390.37 (playwright build v1194) from https://cdn.playwright.dev/dbazure/download/playwright/builds/chromium/1194/chromium-headless-shell-linux.zip
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.0503754Z .../@playwright/browser-chromium install: |                                                                                |   0% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.1538123Z .../@playwright/browser-chromium install: |■■■■■■■■                                                                        |  10% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.2098004Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■                                                                |  20% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.2627146Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.3149057Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.3651135Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.4116589Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.4564942Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.4997333Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.5418412Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:04.5818170Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 104.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.4783982Z .../@playwright/browser-chromium install: Chromium Headless Shell 141.0.7390.37 (playwright build v1194) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1194
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.4786771Z .../@playwright/browser-chromium install: Downloading FFMPEG playwright build v1011 from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.6717170Z .../@playwright/browser-chromium install: |                                                                                |   0% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.6908233Z .../@playwright/browser-chromium install: |■■■■■■■■                                                                        |  10% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.6982958Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7034930Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7058645Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7099594Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7120411Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7140832Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7158966Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7179422Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7210757Z .../@playwright/browser-chromium install: |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7845967Z .../@playwright/browser-chromium install: FFMPEG playwright build v1011 downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:06.7922054Z .../@playwright/browser-chromium install: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.0879668Z . prepare$ husky
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.1715288Z . prepare: Done
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2197876Z Done in 28.8s using pnpm v10.20.0
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2634701Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2759525Z ##[group]Run JOBS=1 pnpm build --environment=test --output-path=dist
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2760000Z [36;1mJOBS=1 pnpm build --environment=test --output-path=dist[0m
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2789711Z shell: /usr/bin/bash -e {0}
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2789942Z env:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2790158Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.2790425Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.6727489Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.6728090Z > atlas@0.0.0 build /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.6728699Z > ember build --environment=test --output-path=dist
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:07.6728942Z 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:09.6409265Z Building
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:09.6411184Z Environment: test
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:11.4055296Z building... 
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:13.9762657Z [BABEL] Note: The code generator has deoptimised the styling of /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/ember/ember-template-compiler.js as it exceeds the max of 500KB.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:14.8327646Z [BABEL] Note: The code generator has deoptimised the styling of /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/ember/ember.js as it exceeds the max of 500KB.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:15.3995025Z (node:3226) ExperimentalWarning: WASI is an experimental feature and might change at any time
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:57:15.3996291Z (Use `node --trace-warnings ...` to show where the warning was created)
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:58:41.4545734Z autoprefixer: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/assets/atlas.css:2650:3: start value has mixed support, consider using flex-start instead
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:58:41.4547471Z autoprefixer: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/assets/atlas.css:3958:5: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:58:41.4549061Z autoprefixer: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/assets/atlas.css:4056:3: start value has mixed support, consider using flex-start instead
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:58:41.4550443Z autoprefixer: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/assets/atlas.css:5214:3: end value has mixed support, consider using flex-end instead
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:58:41.4551994Z autoprefixer: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/assets/atlas.css:7374:3: start value has mixed support, consider using flex-start instead
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:58:41.4553290Z autoprefixer: /home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/assets/atlas.css:7375:3: start value has mixed support, consider using flex-start instead
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:57.1071272Z cleaning up
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:57.1074312Z cleaning up...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.7198023Z Built project successfully. Stored in "/home/runner/actions-runner/_work/atlas/atlas/frontend/atlas/dist".
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8839429Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8839779Z with:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8839940Z   path: frontend/atlas/dist
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8840130Z   name: atlas-ember-artifact
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8840328Z   if-no-files-found: warn
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8840511Z   compression-level: 6
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8840680Z   overwrite: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8840850Z   include-hidden-files: false
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8841034Z env:
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8841227Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:58.8841469Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:59.1115364Z With the provided path, there will be 41 files uploaded
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:59.1119302Z Artifact name is valid!
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:59.1120099Z Root directory input is valid!
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T20:59:59.4010757Z Beginning upload of artifact content to blob storage
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:01.5450647Z Uploaded bytes 8388608
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:01.7658535Z Uploaded bytes 13202982
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:01.8575570Z Finished uploading artifact content to blob storage!
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:01.8578858Z SHA256 digest of uploaded artifact zip is b48573c50d5c44faec8cb0926e4ceab474c11eac29dd4252e805ab51b3c5776c
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:01.8581288Z Finalizing artifact upload
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.0367723Z Artifact atlas-ember-artifact.zip successfully finalized. Artifact ID 4904291456
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.0369041Z Artifact atlas-ember-artifact has been successfully uploaded! Final size is 13202982 bytes. Artifact ID is 4904291456
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.0377056Z Artifact download URL: https://github.com/hashicorp/atlas/actions/runs/20316992961/artifacts/4904291456
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.0565973Z Post job cleanup.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.0592062Z Post job cleanup.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.1147573Z ##[group]Running pnpm store prune...
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:02.4893687Z Removed all cached metadata files
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:04.0182425Z Removed 4696 files
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:04.2349312Z Removed 5 packages
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:04.3654101Z ##[endgroup]
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:04.3731119Z Post job cleanup.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:04.5459811Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/actions-runner/_work/atlas/atlas --files-from manifest.txt --use-compress-program zstdmt
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.1486754Z Failed to save: Unable to reserve cache with key node-cache-Linux-x64-pnpm-3eb77a7fbf302c988fcc26f54527149e6187e123d06434cb5299f86fb12fba4d, another job may be creating this cache.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.1978639Z Post job cleanup.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.2561073Z Pruning is unnecessary.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.2659799Z Post job cleanup.
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3624681Z [command]/usr/bin/git version
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3666269Z git version 2.51.2
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3709029Z Temporarily overriding HOME='/home/runner/actions-runner/_work/_temp/86d4a2b4-0677-4981-b4f8-af929ffd51d4' before making global git config changes
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3710318Z Adding repository directory to the temporary git global config as a safe directory
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3721206Z [command]/usr/bin/git config --global --add safe.directory /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3762466Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.3799915Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.4102902Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.4132156Z http.https://github.com/.extraheader
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.4145536Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.4181351Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ember-tests / ember-build	UNKNOWN STEP	2025-12-17T21:00:08.4601869Z Cleaning up orphan processes

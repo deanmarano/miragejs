@@ -1,0 +1,445 @@
+ember-tests / ember-tests-summary	UNKNOWN STEP	﻿2025-12-17T21:12:08.1240001Z Current runner version: '2.329.0'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1246503Z Runner name: 'ubuntu-x64-m6a.large-i-0bd226d9379c9a9d3'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1247276Z Runner group name: 'general'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1248201Z Machine name: 'ip-10-0-11-136'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1268617Z ##[group]Operating System
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1269222Z Ubuntu 22.04.5 LTS
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1269791Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1270449Z ##[group]Virtual Environment
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1271170Z Image Version: ubuntu-22.04-x86_64-183eb40-19266864384
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1272282Z Image Release Notes: https://github.com/hashicorp/crt-github-runners/releases/tag/ubuntu-22.04-x86_64-183eb40-19266864384
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1273363Z Hardware Specs: https://go.hashi.co/github-runner-images
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1273821Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1274163Z A list of preinstalled software can be found in the image release notes
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1274807Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1275545Z ##[group]HashiCorp Self-Hosted Runner Support
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1276394Z                                                                                 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1277062Z    ██╗  ██╗ █████╗ ███████╗██╗  ██╗██╗ ██████╗ ██████╗ ██████╗ ██████╗ 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1277697Z    ██║  ██║██╔══██╗██╔════╝██║  ██║██║██╔════╝██╔═══██╗██╔══██╗██╔══██╗
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1278434Z    ███████║███████║███████╗███████║██║██║     ██║   ██║██████╔╝██████╔╝
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1279040Z    ██╔══██║██╔══██║╚════██║██╔══██║██║██║     ██║   ██║██╔══██╗██╔═══╝ 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1279661Z    ██║  ██║██║  ██║███████║██║  ██║██║╚██████╗╚██████╔╝██║  ██║██║     
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1280569Z    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝                                                                                                                                                                                     
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1281274Z                       Self-hosted GitHub Runners
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1281631Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1282043Z Greetings, Hashicorporeal! The Self-hosted GitHub Actions runner you
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1282948Z are using is maintained by the Engineering Systems team. If you have
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1283806Z questions, encounter issues, or would like to submit a feature request,
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1284653Z please reach out via the #tech-github-runners channel, or email us at
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1285455Z team-productivity-systems-and-services@hashicorp.com
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1285961Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1286248Z You can find more information about the runners at:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1286844Z https://go.hashi.co/github-runners
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1287214Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1331247Z You can find more information about the private vault environment at:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1332478Z https://go.hashi.co/vault-wiki
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1333007Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1333530Z For questions about the Common Release Tooling (CRT) project and any
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1334436Z product release or packaging-related systems, please reach out to the
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1335202Z Release Engineering team at #team-rel-eng
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1335526Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1335826Z More information about the CRT project as a whole can be found at:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1336458Z https://go.hashi.co/crt-meta-rfc
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1336753Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1337015Z General questions about GitHub Actions can be asked in the
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1337595Z #tech-github-actions slack channel
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1338035Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1338383Z ##[group]Debugging
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1338763Z Account: 941909249676
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1339129Z Region: us-west-2
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1339510Z Instance ID: i-0bd226d9379c9a9d3
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1339793Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1340634Z Doormat may be used to connect to this instance with the following command (exclude --exact-match if using doormat <4.4.0):
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1342885Z doormat session --account 941909249676 --region us-west-2 --target i-0bd226d9379c9a9d3 --exact-match
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1344203Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1344828Z Requirements and additional information on this arrangement and related
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1346197Z security controls is available at: https://go.hashi.co/runner-debug
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1347308Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1347910Z ##[group]Stats
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1348547Z Account: 941909249676
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1349269Z Region: us-west-2
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1349923Z Instance ID: i-0bd226d9379c9a9d3
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1350639Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1351305Z The standard linux runner image includes binaries for node exporter, prometheus, and
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1352933Z grafana along with a basic configuration. If you include the label 'stats' in an ondemand
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1354534Z runner request, these binaries will be started as the runner user during startup.
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1355442Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1355729Z [self-hosted, ondemand, stats]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1356201Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1356208Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1356786Z You can connect to these services locally in ci or use doormat port forwarding by
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1357889Z including the doormat label.
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1358369Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1358889Z [self-hosted, ondemand, stats, doormat=user_or_group@hashicorp.com]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1359677Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1359686Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1362647Z Enter the following to port forward for grafana, then navigate to http://localhost:3000
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1363700Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1364662Z doormat session --account 941909249676 --region us-west-2 --target i-0bd226d9379c9a9d3 --port-forward 3000:3000
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1365799Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1365808Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1366288Z You can also run the binaries with your own config
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1366942Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1367485Z /home/runner/bin/prometheus --config.file=./your_prometheus.yml &
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1368367Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1369234Z /home/runner/bin/grafana server --homepath=/home/runner/grafana --config=./your_grafana.ini &
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1370513Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1370522Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1370963Z Render an image using included grafana-image-renderer plugin
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1371702Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1372913Z curl "http://localhost:3000/render/d/rYdddlPWk/node-exporter-full?orgId=1&panelId=77&from=now-5m&to=now&width=1024&height=768" > ./example.png
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1374453Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1374462Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1374922Z Upload rendered image as artifact in a github actions job
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1375670Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1375966Z       - uses: actions/upload-artifact@v4
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1376782Z         with:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1377348Z           name: example
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1377981Z           path: ./example.png
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1378398Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1378405Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1378826Z More about runner metrics https://go.hashi.co/runner-metrics
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1379542Z 
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1379976Z More about ondemand runners https://go.hashi.co/ondemand
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1381102Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1384860Z ##[group]GITHUB_TOKEN Permissions
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1387473Z Actions: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1388114Z ArtifactMetadata: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1388784Z Attestations: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1389362Z Checks: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1389942Z Contents: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1390827Z Deployments: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1391468Z Discussions: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1392071Z Issues: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1392644Z Metadata: read
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1393197Z Models: read
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1393746Z Packages: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1394329Z Pages: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1394919Z PullRequests: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1395589Z RepositoryProjects: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1396279Z SecurityEvents: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1396923Z Statuses: write
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1397508Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1399764Z Secret source: Actions
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1401086Z Prepare workflow directory
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1738522Z Prepare all required actions
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.1774466Z Getting action download info
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:08.5623453Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.4322760Z Uses: hashicorp/atlas/.github/workflows/ember-tests.yml@refs/heads/deanmarano/mirage-exploration (161a2b5672724975f8ea9590f5a7a5881639f88c)
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.4327210Z ##[group] Inputs
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.4328066Z   run-ember-tests: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.4328510Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.4328972Z Complete job name: ember-tests / ember-tests-summary
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5425891Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5426932Z with:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5427337Z   repository: hashicorp/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5427970Z   token: ***
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5428340Z   ssh-strict: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5428735Z   ssh-user: git
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5429136Z   persist-credentials: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5429594Z   clean: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5429996Z   sparse-checkout-cone-mode: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5430653Z   fetch-depth: 1
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5431053Z   fetch-tags: false
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5431457Z   show-progress: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5451960Z   lfs: false
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5452545Z   submodules: false
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5452954Z   set-safe-directory: true
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:09.5453786Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6534299Z Syncing repository: hashicorp/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6536432Z ##[group]Getting Git version info
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6538384Z Working directory is '/home/runner/actions-runner/_work/atlas/atlas'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6539236Z [command]/usr/bin/git version
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6653305Z git version 2.51.2
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6682115Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6697206Z Temporarily overriding HOME='/home/runner/actions-runner/_work/_temp/136aee3d-8272-4cf3-a9aa-b3bf5c82aa0b' before making global git config changes
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6700619Z Adding repository directory to the temporary git global config as a safe directory
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6705409Z [command]/usr/bin/git config --global --add safe.directory /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6750223Z Deleting the contents of '/home/runner/actions-runner/_work/atlas/atlas'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6777124Z ##[group]Initializing the repository
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.6831755Z [command]/usr/bin/git init /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7248633Z hint: Using 'master' as the name for the initial branch. This default branch name
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7251672Z hint: is subject to change. To configure the initial branch name to use in all
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7252528Z hint: of your new repositories, which will suppress this warning, call:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7253191Z hint:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7254038Z hint: 	git config --global init.defaultBranch <name>
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7254591Z hint:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7255831Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7256823Z hint: 'development'. The just-created branch can be renamed via this command:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7257462Z hint:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7257818Z hint: 	git branch -m <name>
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7258219Z hint:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7258751Z hint: Disable this message with "git config set advice.defaultBranchName false"
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7259659Z Initialized empty Git repository in /home/runner/actions-runner/_work/atlas/atlas/.git/
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7262511Z [command]/usr/bin/git remote add origin https://github.com/hashicorp/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7304119Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7306512Z ##[group]Disabling automatic garbage collection
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7307761Z [command]/usr/bin/git config --local gc.auto 0
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7341722Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7342416Z ##[group]Setting up auth
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7350773Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.7391301Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.8444639Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.8482315Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.8859605Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.8921579Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.8922693Z ##[group]Fetching the repository
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:16.8928569Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +161a2b5672724975f8ea9590f5a7a5881639f88c:refs/remotes/origin/deanmarano/mirage-exploration
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3446797Z From https://github.com/hashicorp/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3450625Z  * [new ref]         161a2b5672724975f8ea9590f5a7a5881639f88c -> origin/deanmarano/mirage-exploration
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3501489Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3502595Z ##[group]Determining the checkout info
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3512355Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3513338Z [command]/usr/bin/git sparse-checkout disable
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3556387Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3594711Z ##[group]Checking out the ref
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:20.3599137Z [command]/usr/bin/git checkout --progress --force -B deanmarano/mirage-exploration refs/remotes/origin/deanmarano/mirage-exploration
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.2735334Z Switched to a new branch 'deanmarano/mirage-exploration'
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.2739134Z branch 'deanmarano/mirage-exploration' set up to track 'origin/deanmarano/mirage-exploration'.
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.2772192Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.2834796Z [command]/usr/bin/git log -1 --format=%H
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.2856556Z 161a2b5672724975f8ea9590f5a7a5881639f88c
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3128274Z ##[group]Run echo "## Accessibility Violations Summary" >> $GITHUB_STEP_SUMMARY
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3136059Z [36;1mecho "## Accessibility Violations Summary" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3136418Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3136627Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3136829Z [36;1mecho "Fetching a11y violations from test logs..."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3137075Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3137301Z [36;1m# Fetch logs from all ember-tests jobs and extract a11y violations[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3137898Z [36;1mJOBS=$(gh api "/repos/hashicorp/atlas/actions/runs/20316992961/jobs" --jq '.jobs[] | select(.name | startswith("ember-tests")) | .id')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3138374Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3138523Z [36;1mecho "Found jobs: $JOBS"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3138710Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3138878Z [36;1mRAW_LOGS=$(mktemp)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3139067Z [36;1mVIOLATIONS_FILE=$(mktemp)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3139305Z [36;1mRULES_SUMMARY=$(mktemp)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3139491Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3139657Z [36;1mfor job_id in $JOBS; do[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3139895Z [36;1m  echo "Fetching logs for job $job_id..."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3140468Z [36;1m  LOG=$(gh api "/repos/hashicorp/atlas/actions/jobs/${job_id}/logs" 2>/dev/null || echo "")[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3140884Z [36;1m  if [ -n "$LOG" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3141094Z [36;1m    echo "$LOG" >> "$RAW_LOGS"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3141286Z [36;1m  fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3141426Z [36;1mdone[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3141574Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3141761Z [36;1m# Extract violations with their rules and elements[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3142062Z [36;1mgrep -B 0 -A 2 '\[A11Y - VIOLATION\]' "$RAW_LOGS" | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3142310Z [36;1m  sed 's/.*"text":"\\n//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3142748Z [36;1m  sed 's/.*"text":"//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3142947Z [36;1m  sed 's/".*//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3143130Z [36;1m  sed 's/\\n/\n/g' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3143345Z [36;1m  grep -v '^--$' >> "$VIOLATIONS_FILE" || true[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3143576Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3143723Z [36;1mTESTS_RESULT="failure"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3143895Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3144050Z [36;1mif [ -s "$VIOLATIONS_FILE" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3144280Z [36;1m  echo "Processing violations..."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3144482Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3144628Z [36;1m  # Count violations per rule[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3144866Z [36;1m  grep -E '^\s+[a-z-]+:' "$VIOLATIONS_FILE" | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3145099Z [36;1m    sed 's/^[[:space:]]*//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3145295Z [36;1m    sed 's/:.*//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3145506Z [36;1m    sort | uniq -c | sort -rn > "$RULES_SUMMARY"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3145727Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3145964Z [36;1m  TOTAL_TESTS=$(grep -c '\[A11Y - VIOLATION\]' "$VIOLATIONS_FILE" || echo "0")[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3146298Z [36;1m  echo "Found violations in $TOTAL_TESTS test(s)"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3146532Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3146716Z [36;1m  # Write summary table (sorted by count descending)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3146974Z [36;1m  echo "Writing summary table..."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3147265Z [36;1m  echo "### Accessibility Violations by Rule" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3147558Z [36;1m  echo "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3147792Z [36;1m  echo "| Rule | Count |" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3148057Z [36;1m  echo "|------|-------|" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3148277Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3148429Z [36;1m  if [ -s "$RULES_SUMMARY" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3148670Z [36;1m    # Calculate total violations[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3148984Z [36;1m    TOTAL_VIOLATIONS=$(awk '{sum += $1} END {print sum}' "$RULES_SUMMARY")[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3149515Z [36;1m    echo "| **Total** | **$TOTAL_VIOLATIONS** |" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3149796Z [36;1m    [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3149983Z [36;1m    # Already sorted by count descending from earlier[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3150240Z [36;1m    while read -r count rule; do[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3150625Z [36;1m      echo "| $rule | $count |" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3150881Z [36;1m    done < "$RULES_SUMMARY"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3151121Z [36;1m    echo "Summary table written successfully"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3151347Z [36;1m  else[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3151584Z [36;1m    echo "ERROR: Rules summary file is empty!" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3151899Z [36;1m    echo "ERROR: Rules summary file is empty!"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3152144Z [36;1m  fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3152316Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3152485Z [36;1m  echo "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3152775Z [36;1m  echo "### Detailed Violations by Rule" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3153067Z [36;1m  echo "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3153270Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3153482Z [36;1m  # Process violations and group by rule (alphabetically)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3153783Z [36;1m  echo "Processing detailed violations..."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3154025Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3154200Z [36;1m  # Get unique rules in alphabetical order[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3154503Z [36;1m  UNIQUE_RULES=$(grep -E '^\s+[a-z-]+:' "$VIOLATIONS_FILE" | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3154783Z [36;1m    sed 's/^[[:space:]]*//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3154991Z [36;1m    sed 's/:.*//' | \[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3155172Z [36;1m    sort -u)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3155333Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3155511Z [36;1m  # For each rule, find all violations[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3155737Z [36;1m  for rule in $UNIQUE_RULES; do[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3156161Z [36;1m    echo "<details>" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3156483Z [36;1m    echo "<summary><strong>$rule</strong></summary>" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3156809Z [36;1m    echo "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3157011Z [36;1m    [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3157196Z [36;1m    # Collect unique test names for this rule[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3157437Z [36;1m    TESTS_FILE=$(mktemp)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3157631Z [36;1m    current_test=""[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3157838Z [36;1m    while IFS= read -r line; do[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3158077Z [36;1m      if [[ "$line" =~ ^\[A11Y\ -\ VIOLATION\] ]]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3158343Z [36;1m        # Remove the [A11Y - VIOLATION] prefix[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3158636Z [36;1m        current_test=$(echo "$line" | sed 's/^\[A11Y - VIOLATION\] //')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3159007Z [36;1m      elif [[ "$line" =~ ^[[:space:]]+([a-z-]+):[[:space:]]*([0-9]+)[[:space:]]*violation ]]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3159387Z [36;1m        found_rule=$(echo "$line" | sed 's/^[[:space:]]*//' | sed 's/:.*//')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3159725Z [36;1m        if [ "$found_rule" = "$rule" ] && [ -n "$current_test" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3160015Z [36;1m          echo "$current_test" >> "$TESTS_FILE"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3160232Z [36;1m        fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3160522Z [36;1m      fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3160695Z [36;1m    done < "$VIOLATIONS_FILE"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3160891Z [36;1m    [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3161079Z [36;1m    # De-duplicate and output with GitHub links[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3161360Z [36;1m    sort -u "$TESTS_FILE" | while IFS= read -r test; do[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3161649Z [36;1m      # Try to generate a GitHub link for the test[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3161914Z [36;1m      if [[ "$test" =~ ^([^:]+):[[:space:]]*(.+)$ ]]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3162169Z [36;1m        module_name="${BASH_REMATCH[1]}"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3162414Z [36;1m        test_name="${BASH_REMATCH[2]}"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3162754Z [36;1m        [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3162999Z [36;1m        # First, search for files that contain the module declaration[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3163405Z [36;1m        # e.g., module('Acceptance | index route', ...) or multiline module(\n  'Acceptance | ...',[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3163878Z [36;1m        # Escape special characters for grep (not / though, it's fine in grep patterns)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3164289Z [36;1m        escaped_module_name=$(echo "$module_name" | sed 's/[]$*.^[]/\\&/g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3164565Z [36;1m        [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3164818Z [36;1m        # Find the test file by searching for the module declaration (single line)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3165274Z [36;1m        test_file=$(grep -rl "module('$escaped_module_name'" frontend/atlas/tests/ 2>/dev/null | head -n1)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3165627Z [36;1m        [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3165939Z [36;1m        # If not found, try without 'private-library/' in the path (it's in file paths but not module names)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3166330Z [36;1m        if [ -z "$test_file" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3166809Z [36;1m          module_without_private_library=$(echo "$module_name" | sed 's|/private-library/|/|g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3167225Z [36;1m          if [ "$module_without_private_library" != "$module_name" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3167627Z [36;1m            escaped_alt_module=$(echo "$module_without_private_library" | sed 's/[]$*.^[]/\\&/g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3168113Z [36;1m            test_file=$(grep -rl "module('$escaped_alt_module'" frontend/atlas/tests/ 2>/dev/null | head -n1)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3168468Z [36;1m          fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3168629Z [36;1m        fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3168777Z [36;1m        [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3169069Z [36;1m        # If not found, try multi-line format (use -A option instead of -Pzo for compatibility)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3169561Z [36;1m        if [ -z "$test_file" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3170024Z [36;1m          test_file=$(grep -rl "module(" frontend/atlas/tests/ 2>/dev/null | xargs grep -l "'$escaped_module_name'" 2>/dev/null | head -n1)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3170747Z [36;1m        fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3170921Z [36;1m        [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3171213Z [36;1m        # If still not found and module contains >, try searching for just the part before >[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3171606Z [36;1m        if [ -z "$test_file" ] && [[ "$module_name" =~ ^([^>]+)\> ]]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3171897Z [36;1m          parent_module="${BASH_REMATCH[1]}"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3172150Z [36;1m          # Trim trailing whitespace[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3172449Z [36;1m          parent_module=$(echo "$parent_module" | sed 's/[[:space:]]*$//')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3172828Z [36;1m          escaped_parent_module=$(echo "$parent_module" | sed 's/[]$*.^[]/\\&/g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3173306Z [36;1m          test_file=$(grep -rl "module('$escaped_parent_module'" frontend/atlas/tests/ 2>/dev/null | head -n1)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3173739Z [36;1m          # Try without private-library for parent module too[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3174024Z [36;1m          if [ -z "$test_file" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3174366Z [36;1m            parent_without_private=$(echo "$parent_module" | sed 's|/private-library/|/|g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3174757Z [36;1m            if [ "$parent_without_private" != "$parent_module" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3175129Z [36;1m              escaped_parent_alt=$(echo "$parent_without_private" | sed 's/[]$*.^[]/\\&/g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3175598Z [36;1m              test_file=$(grep -rl "module('$escaped_parent_alt'" frontend/atlas/tests/ 2>/dev/null | head -n1)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3175962Z [36;1m            fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3176129Z [36;1m          fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3176290Z [36;1m        fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3176442Z [36;1m        [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3176610Z [36;1m        if [ -n "$test_file" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3177030Z [36;1m          # Now find the line number of the test within that file[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3177386Z [36;1m          escaped_test_name=$(echo "$test_name" | sed 's/[]\/$*.^[]/\\&/g')[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3177810Z [36;1m          line_num=$(grep -n "test('$escaped_test_name'" "$test_file" 2>/dev/null | head -n1 | cut -d: -f1)[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3178160Z [36;1m          [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3178340Z [36;1m          if [ -n "$line_num" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3178859Z [36;1m            github_url="https://github.com/hashicorp/atlas/blob/161a2b5672724975f8ea9590f5a7a5881639f88c/${test_file}#L${line_num}"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3179411Z [36;1m            echo "- $test [[Github Test]]($github_url)" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3179698Z [36;1m          else[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3179930Z [36;1m            # Module found but test not found, still link to the file[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3180583Z [36;1m            github_url="https://github.com/hashicorp/atlas/blob/161a2b5672724975f8ea9590f5a7a5881639f88c/${test_file}"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3181139Z [36;1m            echo "- $test [[Github Module]]($github_url)" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3181423Z [36;1m          fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3181580Z [36;1m        else[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3181799Z [36;1m          # Could not find the file, output without link and log[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3182136Z [36;1m          echo "⚠️ Could not find test file for module: $module_name"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3182444Z [36;1m          echo "- $test" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3182682Z [36;1m        fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3182834Z [36;1m      else[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3183019Z [36;1m        echo "- $test" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3183243Z [36;1m      fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3183396Z [36;1m    done[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3183672Z [36;1m    [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3183837Z [36;1m    rm -f "$TESTS_FILE"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3184026Z [36;1m    [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3184209Z [36;1m    echo "</details>" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3184452Z [36;1m    echo "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3184659Z [36;1m  done[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3184816Z [36;1m  [0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3185022Z [36;1m  echo "Detailed violations processed successfully"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3185269Z [36;1melse[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3191298Z [36;1m  if [ "$TESTS_RESULT" = "success" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3191616Z [36;1m    echo "✅ No exempt accessibility violations found."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3191988Z [36;1m    echo "✅ No exempt accessibility violations found." >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3192292Z [36;1m  else[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3192599Z [36;1m    echo "⚠️ No exempt accessibility violations found, but some tests failed for other reasons."[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3193189Z [36;1m    echo "⚠️ No exempt accessibility violations found, but some tests failed for other reasons." >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3193589Z [36;1m  fi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3193753Z [36;1m  echo "" >> $GITHUB_STEP_SUMMARY[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3193949Z [36;1mfi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3194082Z [36;1m[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3194274Z [36;1mrm -f "$RAW_LOGS" "$VIOLATIONS_FILE" "$RULES_SUMMARY"[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3225423Z shell: /usr/bin/bash -e {0}
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3225642Z env:
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3226053Z   GH_TOKEN: ***
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3226221Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:21.3297467Z Fetching a11y violations from test logs...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6534069Z Found jobs: 58363187201
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6534893Z 58363516238
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6535301Z 58363516246
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6535861Z 58363516248
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6542598Z 58363516251
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6542853Z 58363516253
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6543092Z 58363516264
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6543358Z 58363516265
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6543595Z 58363516283
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6543826Z 58364628004
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:22.6597867Z Fetching logs for job 58363187201...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:23.3595316Z Fetching logs for job 58363516238...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:24.5509978Z Fetching logs for job 58363516246...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:25.6878695Z Fetching logs for job 58363516248...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:26.4633034Z Fetching logs for job 58363516251...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:27.5540510Z Fetching logs for job 58363516253...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:28.6138893Z Fetching logs for job 58363516264...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:29.5989406Z Fetching logs for job 58363516265...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:30.6118656Z Fetching logs for job 58363516283...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:31.7612339Z Fetching logs for job 58364628004...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:32.0640643Z Processing violations...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:32.0740019Z Found violations in 341 test(s)
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:32.0747821Z Writing summary table...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:32.0794121Z Summary table written successfully
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:12:32.0795950Z Processing detailed violations...
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3196010Z Detailed violations processed successfully
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3433895Z ##[group]Run if [ "true" = "false" ]; then
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3434201Z [36;1mif [ "true" = "false" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3434422Z [36;1m  exit 0[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3434581Z [36;1mfi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3434742Z [36;1mif [ "failure" = "success" ]; then[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3434955Z [36;1m  exit 0[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3435104Z [36;1mfi[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3435249Z [36;1mexit 1[0m
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3461553Z shell: /usr/bin/bash -e {0}
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3461756Z ##[endgroup]
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3521752Z ##[error]Process completed with exit code 1.
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.3607643Z Post job cleanup.
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4512914Z [command]/usr/bin/git version
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4556523Z git version 2.51.2
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4602396Z Temporarily overriding HOME='/home/runner/actions-runner/_work/_temp/25bbd83c-2975-4796-96bd-cebfd3ce1276' before making global git config changes
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4604652Z Adding repository directory to the temporary git global config as a safe directory
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4611122Z [command]/usr/bin/git config --global --add safe.directory /home/runner/actions-runner/_work/atlas/atlas
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4656197Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.4696381Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.5049250Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.5076533Z http.https://github.com/.extraheader
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.5093690Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.5131774Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+ember-tests / ember-tests-summary	UNKNOWN STEP	2025-12-17T21:13:21.5636982Z Cleaning up orphan processes

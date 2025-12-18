@@ -29,7 +29,7 @@ All the foundational work for async mode is complete:
    - Methods support async: `create`, `all`, `find`, `findBy`, `findOrCreateBy`, `where`, `first`
    - Added `_isAsync` getter for internal async detection
 
-5. **Codemod** (`codemods/async-migration.js`)
+5. **Codemod** (`codemods/async-migration.cjs`)
    - Automatic migration tool built with jscodeshift
    - Adds `async: true` to Server configs
    - Converts route handlers to async functions
@@ -79,7 +79,7 @@ createServer({
 ## Migration Path
 
 1. **Enable async mode**: Add `async: true` to server config
-2. **Run codemod**: `npx jscodeshift -t codemods/async-migration.js src/`
+2. **Run codemod**: `npx jscodeshift -t codemods/async-migration.cjs src/`
 3. **Test**: Run your test suite
 4. **Deploy**: Ship with confidence
 
@@ -130,7 +130,7 @@ createServer({
 - `lib/utils/async-helpers.js` - Utility functions
 
 ### Tooling
-- `codemods/async-migration.js` - Migration codemod
+- `codemods/async-migration.cjs` - Migration codemod
 - `codemods/README.md` - Codemod usage guide
 - `codemods/__tests__/async-migration.test.js` - Codemod tests
 

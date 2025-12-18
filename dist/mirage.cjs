@@ -2924,6 +2924,12 @@ class Model {
    */
   save() {
     let collection = this._schema.toInternalCollectionName(this.modelName);
+    let isAsync = this._schema._isAsync;
+    if (isAsync) {
+      return this._saveAsync(collection);
+    }
+
+    // Sync mode (original behavior)
     if (this.isNew()) {
       // Update the attrs with the db response
       this.attrs = this._schema.db[collection].insert(this.attrs);
@@ -2933,6 +2939,21 @@ class Model {
     } else {
       this._schema.isSaving[this.toString()] = true;
       this._schema.db[collection].update(this.attrs.id, this.attrs);
+    }
+    this._saveAssociations();
+    this._schema.isSaving[this.toString()] = false;
+    return this;
+  }
+  async _saveAsync(collection) {
+    if (this.isNew()) {
+      // Update the attrs with the db response
+      this.attrs = await this._schema.db[collection].insert(this.attrs);
+
+      // Ensure the id getter/setter is set
+      this._definePlainAttribute("id");
+    } else {
+      this._schema.isSaving[this.toString()] = true;
+      await this._schema.db[collection].update(this.attrs.id, this.attrs);
     }
     this._saveAssociations();
     this._schema.isSaving[this.toString()] = false;
@@ -6897,7 +6918,7 @@ class Server {
     let modelOrRecord;
     if (this.schema && this.schema[this.schema.toCollectionName(type)]) {
       let modelClass = this.schema[this.schema.toCollectionName(type)];
-      modelOrRecord = modelClass.create(attrs);
+      modelOrRecord = await modelClass.create(attrs);
     } else {
       let collection, collectionName;
       if (collectionFromCreateList) {
@@ -6907,7 +6928,7 @@ class Server {
         collection = this.db[collectionName];
       }
       assert(collection, `You called server.create('${type}') but no model or factory was found.`);
-      modelOrRecord = collection.insert(attrs);
+      modelOrRecord = await collection.insert(attrs);
     }
     let OriginalFactory = this.factoryFor(type);
     if (OriginalFactory) {

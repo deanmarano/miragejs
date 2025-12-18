@@ -1129,6 +1129,51 @@ module.exports = function transformer(file, api) {
       }
     });
     
+    // Track this.property assignments from server.create() in test hooks
+    // Pattern: this.organization = await this.server.create('organization-v2', ...)
+    j(funcNode).find(j.AssignmentExpression).forEach(assignPath => {
+      const left = assignPath.value.left;
+      const right = assignPath.value.right;
+      
+      // Check if left side is this.propertyName
+      if (left.type === 'MemberExpression' && 
+          left.object.type === 'ThisExpression' && 
+          left.property.type === 'Identifier') {
+        
+        let arg = null;
+        
+        // Check awaited assignments
+        if (right.type === 'AwaitExpression' && right.argument.type === 'CallExpression') {
+          arg = right.argument;
+        }
+        // Also track non-awaited assignments
+        else if (right.type === 'CallExpression') {
+          arg = right;
+        }
+        
+        if (arg && arg.callee.type === 'MemberExpression') {
+          const methodName = arg.callee.property.name;
+          
+          // Track this.server.create() and this.server.createList()
+          if (methodName === 'create' || methodName === 'createList') {
+            const isServerCall = arg.callee.object.type === 'MemberExpression' &&
+                                  arg.callee.object.object.type === 'ThisExpression' &&
+                                  arg.callee.object.property.name === 'server';
+            
+            if (isServerCall && arg.arguments.length > 0) {
+              const modelNameArg = arg.arguments[0];
+              if (modelNameArg.type === 'Literal' || modelNameArg.type === 'StringLiteral') {
+                // Track as this.propertyName -> modelType
+                // We'll need to handle this differently in buildAwaitedMemberChain
+                const propertyName = left.property.name;
+                modelVariables.set(`this.${propertyName}`, modelNameArg.value);
+              }
+            }
+          }
+        }
+      }
+    });
+    
     // Track arrow function parameters when they're callbacks on collection methods
     // e.g., `previousRuns.filter(run => ...)` - the `run` parameter should be type 'runs'
     // Find all arrow functions and check if they're used as callbacks
@@ -1202,8 +1247,15 @@ module.exports = function transformer(file, api) {
       // First, determine the type of the object (what we're accessing the property on)
       let objectType = null;
       
+      // Check if this is a this.property pattern
+      if (expr.object.type === 'ThisExpression' && expr.property.type === 'Identifier') {
+        const thisKey = `this.${expr.property.name}`;
+        if (modelVariables.has(thisKey)) {
+          objectType = modelVariables.get(thisKey);
+        }
+      }
       // If the object is an identifier, check if it's a tracked model variable
-      if (expr.object.type === 'Identifier' && modelVariables.has(expr.object.name)) {
+      else if (expr.object.type === 'Identifier' && modelVariables.has(expr.object.name)) {
         objectType = modelVariables.get(expr.object.name);
       }
       // If the object is a member expression, we need to trace through the chain
@@ -1215,7 +1267,37 @@ module.exports = function transformer(file, api) {
           chain.unshift(current.property.name);
           current = current.object;
         }
-        if (current.type === 'Identifier' && modelVariables.has(current.name)) {
+        
+        // Check if the root is this.property (e.g., this.organization in this.organization.entitlementSet)
+        if (current.type === 'ThisExpression' && chain.length > 0) {
+          const thisKey = `this.${chain[0]}`;
+          if (modelVariables.has(thisKey)) {
+            objectType = modelVariables.get(thisKey);
+            // Now trace through the rest of the chain (skip the first element since it's the this.property)
+            for (let i = 1; i < chain.length; i++) {
+              const propName = chain[i];
+              if (objectType && modelRelationshipMap.has(objectType)) {
+                const relationships = modelRelationshipMap.get(objectType);
+                if (relationships.has(propName)) {
+                  objectType = propName;
+                  if (!modelRelationshipMap.has(objectType)) {
+                    const singularForm = propName.endsWith('s') ? propName.slice(0, -1) : propName;
+                    if (modelRelationshipMap.has(singularForm)) {
+                      objectType = singularForm;
+                    }
+                  }
+                } else {
+                  objectType = null;
+                  break;
+                }
+              } else {
+                objectType = null;
+                break;
+              }
+            }
+          }
+        }
+        else if (current.type === 'Identifier' && modelVariables.has(current.name)) {
           // Now trace through the relationships to determine the final type
           objectType = modelVariables.get(current.name);
           for (const propName of chain) {
@@ -1303,6 +1385,11 @@ module.exports = function transformer(file, api) {
           return modelVariables.has(expr.name) ? expr.name : null;
         }
         if (expr.type === 'MemberExpression') {
+          // Check if this is a this.property pattern
+          if (expr.object.type === 'ThisExpression' && expr.property.type === 'Identifier') {
+            const thisKey = `this.${expr.property.name}`;
+            return modelVariables.has(thisKey) ? thisKey : null;
+          }
           return startsWithModelVariable(expr.object);
         }
         return null;
@@ -1322,6 +1409,13 @@ module.exports = function transformer(file, api) {
       while (parent) {
         const pValue = parent.value;
         
+        if (pValue.type === 'CallExpression') {
+          // Transform if this is the callee (method being called)
+          if (pValue.callee === memberPath.value) {
+            shouldTransform = true;
+          }
+          break;
+        }
         if (pValue.type === 'IfStatement') {
           shouldTransform = true;
           break;
@@ -1735,8 +1829,24 @@ module.exports = function transformer(file, api) {
       transformRelationshipAccess(func, modelRelationshipMap);
     }
   });
+  
+  // Final pass: Process all async functions to handle relationship property access
+  // This catches test hooks and other async functions that were already async
+  // Run this pass even if hasChanges is false, because it can make additional transformations
+  let relationshipChanges = false;
+  const asyncFunctions = root.find(j.FunctionExpression, { async: true });
+  asyncFunctions.forEach(path => {
+    transformRelationshipAccess(path.value, modelRelationshipMap);
+    // Assume changes were made since transformRelationshipAccess modifies the AST in place
+    relationshipChanges = true;
+  });
+  
+  root.find(j.ArrowFunctionExpression, { async: true }).forEach(path => {
+    transformRelationshipAccess(path.value, modelRelationshipMap);
+    relationshipChanges = true;
+  });
 
-  return hasChanges ? root.toSource({ quote: 'single' }) : null;
+  return (hasChanges || relationshipChanges) ? root.toSource({ quote: 'single' }) : null;
 };
 
 module.exports.parser = 'babel';

@@ -343,7 +343,7 @@ const result = await doSomethingWith(model);
 
 ## Next Steps
 
-1. **Implement Fix #1 in codemod** (async-migration.js)
+1. **Implement Fix #1 in codemod** (async-migration.cjs)
    - Add return statement insertion logic
    - Handle parameter name extraction
    - Preserve existing return statements
@@ -382,7 +382,7 @@ const result = await doSomethingWith(model);
 ## Files to Modify
 
 ### Codemod:
-- `codemods/async-migration.js` - Add return statement insertion
+- `codemods/async-migration.cjs` - Add return statement insertion
 
 ### Test Suite:
 - `codemods/__tests__/async-migration.test.js` - Add test case #36

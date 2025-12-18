@@ -43,6 +43,7 @@
     "prepublishOnly": "pnpm run build",
     "test:run": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:types": "tsd -f 'tests/*.ts' -t index.d.ts types",
+    "test:codemod": "node codemods/__tests__/async-migration.test.cjs",
     "test": "run-s build test:types test:run",
     "ci": "run-s lint prettier:check test"
   },
